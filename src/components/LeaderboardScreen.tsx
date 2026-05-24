@@ -22,7 +22,7 @@ export default function LeaderboardScreen({ onGoHome, currentPlayerName }: Leade
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5 }}
-          className="text-3xl sm:text-4xl font-cinzel font-bold tracking-tight text-[#F7EAC8] mb-2 uppercase"
+          className="text-3xl sm:text-4xl font-cinzel font-bold tracking-tight text-[#FFF5E0] mb-2 uppercase"
         >
           Dicsőségtábla
         </motion.h1>
@@ -53,7 +53,7 @@ export default function LeaderboardScreen({ onGoHome, currentPlayerName }: Leade
             </p>
             <button
               onClick={onGoHome}
-              className="mt-6 px-6 py-3 bg-[#6B1010] hover:bg-[#801515] text-[#F7EAC8] font-cinzel font-bold uppercase tracking-widest rounded-none border border-[#B8860B] transition-colors text-xs"
+              className="mt-6 px-6 py-3 bg-[#6B1010] hover:bg-[#801515] text-[#FFF5E0] font-cinzel font-bold uppercase tracking-widest rounded-none border border-[#B8860B] transition-colors text-xs"
             >
               Vissza a kezdőlapra
             </button>
@@ -62,7 +62,7 @@ export default function LeaderboardScreen({ onGoHome, currentPlayerName }: Leade
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="border-b-2 border-[#B8860B]/40 text-[#6B1010] font-cinzel font-bold text-[10px] uppercase tracking-widest">
+                <tr className="border-b-2 border-[#B8860B]/40 text-[#6B1010] font-cinzel font-bold text-[11px] uppercase tracking-widest">
                   <th className="p-3 text-center w-16">Hely.</th>
                   <th className="p-3">Név</th>
                   <th className="p-3">Eredmény</th>
@@ -102,14 +102,14 @@ export default function LeaderboardScreen({ onGoHome, currentPlayerName }: Leade
                         <div className="font-cinzel font-bold text-[#1C0E04] text-sm sm:text-base">
                           {entry.name}
                         </div>
-                        <div className="text-[9px] text-[#6B1010]/70 uppercase tracking-widest font-cinzel sm:hidden mt-0.5">
+                        <div className="text-[11px] text-[#6B1010]/70 uppercase tracking-widest font-cinzel sm:hidden mt-0.5">
                           {entry.topic.length > 20 ? entry.topic.substring(0, 20) + "..." : entry.topic}
                         </div>
                       </td>
                       <td className="p-3">
                         <div className="flex items-center gap-2">
                           <span className="font-cinzel font-extrabold text-[#6B1010] text-sm sm:text-base">{entry.pct}%</span>
-                          <span className="text-[10px] font-bold text-[#1C0E04]/60 bg-white/40 px-1.5 py-0.5 border border-[#B8860B]/20">
+                          <span className="text-[11px] font-bold text-[#1C0E04]/60 bg-white/40 px-1.5 py-0.5 border border-[#B8860B]/20">
                             {entry.xp} XP
                           </span>
                         </div>
@@ -118,7 +118,7 @@ export default function LeaderboardScreen({ onGoHome, currentPlayerName }: Leade
                         <span className="block truncate max-w-[200px]" title={entry.topic}>
                           {entry.topic}
                         </span>
-                        <span className="text-[9px] font-cinzel text-[#6B1010]/70 uppercase tracking-widest block mt-0.5">
+                        <span className="text-[11px] font-cinzel text-[#6B1010]/70 uppercase tracking-widest block mt-0.5">
                           {entry.grade}
                         </span>
                       </td>

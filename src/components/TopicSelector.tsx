@@ -60,7 +60,7 @@ export function TopicSelector({ selectedTopic, onTopicChange, onGradeChange }: T
             onClick={() => handleMainChange(main)}
             className={`flex-1 py-3 px-4 rounded-[3px] border-2 font-cinzel font-bold text-sm uppercase tracking-wider transition-all duration-200 ${
               mainCategory === main
-                ? "bg-[#6B1010] text-[#F7EAC8] border-[#B8860B] shadow-md transform scale-[1.02]"
+                ? "bg-[#6B1010] text-[#FFF5E0] border-[#B8860B] shadow-md transform scale-[1.02]"
                 : "bg-[#FFF5D0] text-[#1C0E04] border-[#B8860B]/30 hover:border-[#B8860B]/60 hover:bg-[#FFF5D0]/80"
             }`}
           >
@@ -102,10 +102,10 @@ export function TopicSelector({ selectedTopic, onTopicChange, onGradeChange }: T
               <button
                 key={t}
                 onClick={() => onTopicChange(t)}
-                className={`text-left px-3 py-2.5 rounded-[3px] text-xs font-lora font-bold transition-all border-2 ${
+                className={`text-left px-4 py-3 rounded-[3px] text-[15px] font-lora font-bold transition-all border-2 ${
                   isActive
-                    ? "bg-[#6B1010] text-[#F7EAC8] border-[#B8860B] shadow-md transform scale-[1.02]"
-                    : "bg-[#FFF5D0] text-[#1C0E04] border-[#B8860B]/30 hover:border-[#B8860B]"
+                    ? "bg-[#6B1010] text-[#FFE8A0] border-[#D4A017] shadow-md transform scale-[1.02]"
+                    : "bg-[#2A0F0F] text-[#F5EDD0] border-[#D4A017] hover:brightness-125"
                 }`}
               >
                 {t}

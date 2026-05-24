@@ -228,7 +228,7 @@ CSAK valid JSON hiba nélkül:
                       <rect x="35" y="80" width="30" height="15" fill="currentColor" />
                       <path d="M70 70 Q80 60 85 45 Q75 55 65 65 Z" fill="currentColor" />
                     </svg>
-                    <span className="font-cinzel text-[10px] text-[#D4A017]">{data?.chronicler}</span>
+                    <span className="font-cinzel text-[11px] text-[#D4A017]">{data?.chronicler}</span>
                  </div>
               </div>
 
@@ -237,7 +237,7 @@ CSAK valid JSON hiba nélkül:
                 {/* Atmosphere */}
                 {revealChars > 0 && (
                   <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="text-center">
-                    <p className="italic text-[#D4A017] text-[15px] max-w-2xl mx-auto leading-relaxed">
+                    <p className="italic text-[#D4A017] text-[15px] max-w-2xl mx-auto leading-[1.8]">
                       {ch.atmosphere.substring(0, revealChars)}
                     </p>
                     {revealChars >= ch.atmosphere.length && (
@@ -317,7 +317,7 @@ CSAK valid JSON hiba nélkül:
                            <p className="font-cinzel font-bold text-lg text-[#1A0A00]">
                              {(answersMatch(selectedAnswer, ch.question.correct) || String(selectedAnswer).toLowerCase() === String(ch.question.correct).toLowerCase()) ? '⚔️ Jól tudod vitéz!' : '📜 Nem egészen vitéz...'}
                            </p>
-                           <p className="mt-2 text-[15px] leading-relaxed">
+                           <p className="mt-2 text-[15px] leading-[1.8]">
                              {(answersMatch(selectedAnswer, ch.question.correct) || String(selectedAnswer).toLowerCase() === String(ch.question.correct).toLowerCase()) ? ch.question.chroniclerResponse.correct : ch.question.chroniclerResponse.wrong}
                            </p>
                            <p className="mt-4 italic text-[#8B1515] font-bold text-sm">
@@ -359,21 +359,21 @@ CSAK valid JSON hiba nélkül:
                    <text x="50" y="55" fontFamily="Cinzel" fontSize="14" fill="#D4A017" textAnchor="middle" fontWeight="bold">TörténÉSZ</text>
                 </svg>
 
-                <p className="text-xl italic text-[#FDF3DC]/90 mb-10 leading-relaxed font-lora text-justify">
+                <p className="text-xl italic text-[#FDF3DC]/90 mb-10 leading-[1.8] font-lora text-justify">
                   "Így végződik e korszak históriája, vitéz. Remélem, hogy e sorok segítenek megérteni a múlt nagy titkait..."
                 </p>
 
                 <div className="grid grid-cols-2 gap-4 mb-10">
                    <div className="bg-[#D4A017]/10 border border-[#D4A017]/30 p-4 rounded">
-                      <div className="text-[10px] uppercase font-cinzel tracking-widest text-[#D4A017]">Helyes Válaszok</div>
+                      <div className="text-[11px] uppercase font-cinzel tracking-widest text-[#D4A017]">Helyes Válaszok</div>
                       <div className="text-3xl font-cinzel font-bold mt-1">{correctCount} <span className="text-lg">/ {data?.chapters.length}</span></div>
                    </div>
                    <div className="bg-[#D4A017]/10 border border-[#D4A017]/30 p-4 rounded">
-                      <div className="text-[10px] uppercase font-cinzel tracking-widest text-[#D4A017]">Szerzett XP</div>
+                      <div className="text-[11px] uppercase font-cinzel tracking-widest text-[#D4A017]">Szerzett XP</div>
                       <div className="text-3xl font-cinzel font-bold text-[#FF9500] mt-1">+{totalXp}</div>
                    </div>
                    <div className="bg-[#D4A017]/10 border border-[#D4A017]/30 p-4 rounded col-span-2">
-                      <div className="text-[10px] uppercase font-cinzel tracking-widest text-[#D4A017]">Pontosság</div>
+                      <div className="text-[11px] uppercase font-cinzel tracking-widest text-[#D4A017]">Pontosság</div>
                       <div className="text-xl font-cinzel font-bold mt-1">{Math.round((correctCount / (data?.chapters.length || 1)) * 100)}%</div>
                    </div>
                 </div>
@@ -402,19 +402,19 @@ CSAK valid JSON hiba nélkül:
       {phase === "reading" && data && (
         <div className="fixed bottom-0 left-0 right-0 bg-[#0A0500] border-t border-[#D4A017]/20 p-4 flex justify-between items-center z-40">
            <div className="max-w-4xl mx-auto w-full flex justify-between items-center sm:px-4">
-              <div className="w-24 text-[10px] font-cinzel text-[#8B1515] uppercase">{currentChapterIdx > 0 ? "← Előző" : ""}</div>
+              <div className="w-24 text-[11px] font-cinzel text-[#8B1515] uppercase">{currentChapterIdx > 0 ? "← Előző" : ""}</div>
               <div className="flex gap-3">
                  {data.chapters.map((c, i) => (
                    <div key={i} className="relative group cursor-pointer" onClick={() => {}}>
                      <div className={`w-3 h-3 rounded-full border border-[#D4A017] transition-all ${i === currentChapterIdx ? 'bg-[#D4A017] shadow-[0_0_10px_rgba(212,160,23,0.8)]' : i < currentChapterIdx ? 'bg-[#D4A017]/40' : 'bg-transparent'}`} />
                      {/* Tooltip */}
-                     <div className="absolute bottom-6 left-1/2 -translate-x-1/2 bg-[#1A0A00] border border-[#D4A017] text-[#D4A017] text-[10px] font-cinzel whitespace-nowrap px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity rounded pointer-events-none">
+                     <div className="absolute bottom-6 left-1/2 -translate-x-1/2 bg-[#1A0A00] border border-[#D4A017] text-[#D4A017] text-[11px] font-cinzel whitespace-nowrap px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity rounded pointer-events-none">
                        {c.title}
                      </div>
                    </div>
                  ))}
               </div>
-              <div className="w-24 text-right text-[10px] font-cinzel text-[#8B1515] uppercase">{currentChapterIdx < data.chapters.length - 1 ? "Következő →" : ""}</div>
+              <div className="w-24 text-right text-[11px] font-cinzel text-[#8B1515] uppercase">{currentChapterIdx < data.chapters.length - 1 ? "Következő →" : ""}</div>
            </div>
         </div>
       )}

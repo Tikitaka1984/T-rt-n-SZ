@@ -394,10 +394,10 @@ Format: {"questions":[{"id":"q1","type":"multiple_choice","question":"Kérdés?"
             <div className="absolute bottom-10 left-6 right-6 max-w-lg mx-auto bg-[#1A0A00]/80 p-5 rounded-xl border border-[#D4A017]/30 flex gap-3 items-start justify-start shadow-xl backdrop-blur-md">
               <Sparkles className="w-6 h-6 text-[#D4A017] shrink-0 mt-0.5" />
               <div>
-                <span className="block text-[10px] font-bold font-cinzel text-[#D4A017] tracking-wider uppercase mb-1">
+                <span className="block text-[11px] font-bold font-cinzel text-[#D4A017] tracking-wider uppercase mb-1">
                   Tudtad, Vitéz?
                 </span>
-                <p className="text-sm text-[#FDF3DC] leading-relaxed font-lora">
+                <p className="text-sm text-[#FDF3DC] leading-[1.8] font-lora">
                   {HISTORICAL_FACTS[funnyFactIdx]}
                 </p>
               </div>
@@ -408,8 +408,8 @@ Format: {"questions":[{"id":"q1","type":"multiple_choice","question":"Kérdés?"
         {/* TOP LEVEL ERROR BANNER */}
         {error && (
           <div className="max-w-xl mx-auto mt-6 px-4">
-            <div className="bg-[#6B1010] border-2 border-[#B8860B] text-[#F7EAC8] px-4 py-3.5 rounded-none flex items-center gap-3 font-lora">
-              <AlertCircle className="w-5 h-5 text-[#F7EAC8] shrink-0" />
+            <div className="bg-[#6B1010] border-2 border-[#B8860B] text-[#FFF5E0] px-4 py-3.5 rounded-none flex items-center gap-3 font-lora">
+              <AlertCircle className="w-5 h-5 text-[#FFF5E0] shrink-0" />
               <div className="text-xs sm:text-sm">
                 <p className="font-bold font-cinzel text-lg">Hiba történt</p>
                 <p className="mt-1">{error}</p>

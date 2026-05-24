@@ -513,12 +513,12 @@ CSAK valid JSON válaszolj, formázás és sallang nélkül, ebben a formátumba
       <div className="mb-6 flex justify-between items-center">
         <button
           onClick={onGoHome}
-          className="inline-flex items-center gap-2 text-xs font-cinzel text-[#F7EAC8] uppercase tracking-widest hover:text-white transition-colors border border-amber-500/20 px-3 py-1.5 bg-[#4A0808]/40"
+          className="inline-flex items-center gap-2 text-xs font-cinzel text-[#FFF5E0] uppercase tracking-widest hover:text-white transition-colors border border-amber-500/20 px-3 py-1.5 bg-[#4A0808]/40"
         >
           <ArrowLeft className="w-3.5 h-3.5" />
           <span>Főmenü</span>
         </button>
-        <span className="font-cinzel text-[10px] text-[#B8860B] uppercase tracking-widest border-b border-[#B8860B]/30 pb-0.5">
+        <span className="font-cinzel text-[11px] text-[#B8860B] uppercase tracking-widest border-b border-[#B8860B]/30 pb-0.5">
           ⚔️ TÖRTÉNELMI SZEREPJÁTÉK
         </span>
       </div>
@@ -538,7 +538,7 @@ CSAK valid JSON válaszolj, formázás és sallang nélkül, ebben a formátumba
               <h1 className="text-3xl sm:text-4xl font-cinzel font-bold text-[#6B1010] mb-2 leading-none">
                 Történelmi Szerepjáték
               </h1>
-              <p className="text-sm text-[#1C0E04] font-lora italic leading-relaxed">
+              <p className="text-sm text-[#1C0E04] font-lora italic leading-[1.8]">
                 Lépj be a történelembe! Hozz döntéseket és alakítsd a történelmet!
               </p>
             </div>
@@ -554,7 +554,7 @@ CSAK valid JSON válaszolj, formázás és sallang nélkül, ebben a formátumba
               {/* Right Column: Difficulty Selection & Start button */}
               <div className="space-y-6 flex flex-col justify-between">
                 <div>
-                  <label className="block font-cinzel font-bold text-[10px] uppercase tracking-wider text-[#6B1010]/80 mb-2">
+                  <label className="block font-cinzel font-bold text-[11px] uppercase tracking-wider text-[#6B1010]/80 mb-2">
                     Döntési Pontok Száma (Nehézség)
                   </label>
                   <div className="grid grid-cols-3 gap-2">
@@ -569,20 +569,20 @@ CSAK valid JSON válaszolj, formázás és sallang nélkül, ebben a formátumba
                         onClick={() => setDifficulty(d.name as any)}
                         className={`py-3 px-2 flex flex-col items-center justify-center border cursor-pointer transition-all ${
                           difficulty === d.name
-                            ? "bg-[#6B1010] text-[#F7EAC8] border-[#B8860B]"
+                            ? "bg-[#6B1010] text-[#FFF5E0] border-[#B8860B]"
                             : "bg-[#FFFDD0]/30 hover:bg-[#FFFDD0]/60 border-[#B8860B]/30 text-[#1C0E04]"
                         }`}
                       >
-                        <span className="font-cinzel font-bold text-[10px]">{d.name}</span>
-                        <span className="text-[9px] font-mono opacity-80 mt-0.5">{d.desc}</span>
+                        <span className="font-cinzel font-bold text-[11px]">{d.name}</span>
+                        <span className="text-[11px] font-mono opacity-80 mt-0.5">{d.desc}</span>
                       </button>
                     ))}
                   </div>
                 </div>
 
                 <div className="bg-[#4A0808]/5 border border-[#B8860B]/20 p-4 rounded-none">
-                  <span className="font-cinzel font-bold text-[9px] text-[#6B1010] block mb-1 uppercase tracking-widest">PEDAGÓGIAI ALAPOK</span>
-                  <p className="font-lora text-[11px] text-[#1C0E04]/80 leading-relaxed">
+                  <span className="font-cinzel font-bold text-[11px] text-[#6B1010] block mb-1 uppercase tracking-widest">PEDAGÓGIAI ALAPOK</span>
+                  <p className="font-lora text-[11px] text-[#1C0E04]/80 leading-[1.8]">
                     A szcenáriók a 2020-as Nemzeti Alaptanterv (NAT) törzsanyagaira épülnek. A döntések során figyelembe kell venni a valós történelmi körülményeket és geopolitikai érdekeket.
                   </p>
                 </div>
@@ -592,7 +592,7 @@ CSAK valid JSON válaszolj, formázás és sallang nélkül, ebben a formátumba
             <div className="mt-8 pt-6 border-t border-[#B8860B]/25">
               <button
                 onClick={handleStartAdventure}
-                className="w-full bg-[#6B1010] hover:bg-[#801515] text-[#F7EAC8] font-cinzel font-bold uppercase tracking-[0.2em] px-6 py-5 border border-[#B8860B] rounded-none shadow-md cursor-pointer transition-all flex items-center justify-center gap-3 text-sm btn-shine-effect"
+                className="w-full bg-[#6B1010] hover:bg-[#801515] text-[#FFF5E0] font-cinzel font-bold uppercase tracking-[0.2em] px-6 py-5 border border-[#B8860B] rounded-none shadow-md cursor-pointer transition-all flex items-center justify-center gap-3 text-sm btn-shine-effect"
               >
                 <Play className="w-4 h-4 fill-current" />
                 <span>Kaland indítása</span>
@@ -618,10 +618,10 @@ CSAK valid JSON válaszolj, formázás és sallang nélkül, ebben a formátumba
             <h3 className="font-cinzel font-bold text-lg text-[#6B1010] mb-2 uppercase tracking-widest">
               Árpád lovag üzeni:
             </h3>
-            <p className="text-[#1C0E04] font-lora text-sm max-w-md italic leading-relaxed">
+            <p className="text-[#1C0E04] font-lora text-sm max-w-md italic leading-[1.8]">
               &quot;{loadingText}&quot;
             </p>
-            <div className="mt-6 text-[10px] font-cinzel text-[#8A6F27] tracking-widest uppercase animate-pulse">
+            <div className="mt-6 text-[11px] font-cinzel text-[#8A6F27] tracking-widest uppercase animate-pulse">
               A történelem fonalának összefonása...
             </div>
           </motion.div>
@@ -661,11 +661,11 @@ CSAK valid JSON válaszolj, formázás és sallang nélkül, ebben a formátumba
                   {/* Show Opening scene on 1st slide, or standard scene situation */}
                   {currentDecisionIndex === 0 && decisionsHistory.length === 0 ? (
                     <div className="space-y-4 animate-fadeIn">
-                      <p className="font-lora text-sm sm:text-base leading-relaxed text-justify italic font-medium pt-2">
+                      <p className="font-lora text-sm sm:text-base leading-[1.8] text-justify italic font-medium pt-2">
                         {loadedScenario.opening}
                       </p>
                       <div className="bg-[#6B1010]/5 border border-[#6B1010]/15 p-3.5 my-3">
-                        <span className="block font-cinzel font-bold text-[9px] text-[#6B1010] tracking-widest uppercase mb-1">
+                        <span className="block font-cinzel font-bold text-[11px] text-[#6B1010] tracking-widest uppercase mb-1">
                           Karaktered és Szereped:
                         </span>
                         <p className="font-cinzel font-bold text-xs text-[#1C0E04]">
@@ -678,7 +678,7 @@ CSAK valid JSON válaszolj, formázás és sallang nélkül, ebben a formátumba
                   {/* Standard situation text */}
                   {(currentDecisionIndex > 0 || decisionsHistory.length > 0) && (
                     <div className="space-y-4">
-                      <p className="font-lora text-sm sm:text-base leading-relaxed text-[#1C0E04] text-justify">
+                      <p className="font-lora text-sm sm:text-base leading-[1.8] text-[#1C0E04] text-justify">
                         {loadedScenario.decisions[currentDecisionIndex].situation}
                       </p>
                     </div>
@@ -686,10 +686,10 @@ CSAK valid JSON válaszolj, formázás és sallang nélkül, ebben a formátumba
 
                   {/* The core Historical dilemma statement */}
                   <div className="mt-6 bg-[#6B1010]/10 border-l-4 border-[#6B1010] p-4">
-                    <span className="font-cinzel font-bold text-[9px] tracking-wider uppercase text-[#6B1010] block mb-1">
+                    <span className="font-cinzel font-bold text-[11px] tracking-wider uppercase text-[#6B1010] block mb-1">
                       Kihívás előtt állsz:
                     </span>
-                    <p className="font-lora font-bold text-xs text-[#1C0E04] leading-relaxed italic">
+                    <p className="font-lora font-bold text-xs text-[#1C0E04] leading-[1.8] italic">
                       &quot;{loadedScenario.decisions[currentDecisionIndex].dilemma}&quot;
                     </p>
                   </div>
@@ -703,7 +703,7 @@ CSAK valid JSON válaszolj, formázás és sallang nélkül, ebben a formátumba
                       style={{ width: `${((currentDecisionIndex) / loadedScenario.decisions.length) * 100}%` }}
                     />
                   </div>
-                  <span className="text-[9px] font-cinzel font-bold text-[#8C6D12]/80 uppercase tracking-widest block text-right mt-1.5">
+                  <span className="text-[11px] font-cinzel font-bold text-[#8C6D12]/80 uppercase tracking-widest block text-right mt-1.5">
                     {currentDecisionIndex} / {loadedScenario.decisions.length} döntés végrehajtva
                   </span>
                 </div>
@@ -718,14 +718,14 @@ CSAK valid JSON válaszolj, formázás és sallang nélkül, ebben a formátumba
                   {getEraSilhouette()}
                 </div>
                 <div className="absolute bottom-2 text-center">
-                  <span className="font-cinzel text-[9px] tracking-widest uppercase text-[#F7EAC8]/60 block">Személyes profil</span>
-                  <span className="font-cinzel font-bold text-xs text-[#F7EAC8]">{loadedScenario.character}</span>
+                  <span className="font-cinzel text-[11px] tracking-widest uppercase text-[#FFF5E0]/60 block">Személyes profil</span>
+                  <span className="font-cinzel font-bold text-xs text-[#FFF5E0]">{loadedScenario.character}</span>
                 </div>
               </div>
 
               {/* Action buttons list */}
               <div className="space-y-3 flex-1 flex flex-col justify-end">
-                <span className="font-cinzel font-bold text-[9px] uppercase tracking-wider text-[#F7EAC8]/70 block mb-1">
+                <span className="font-cinzel font-bold text-[11px] uppercase tracking-wider text-[#FFF5E0]/70 block mb-1">
                   Válassz egy megoldást és vállald a következményét:
                 </span>
                 {loadedScenario.decisions[currentDecisionIndex].choices.map((choice) => (
@@ -763,14 +763,14 @@ CSAK valid JSON válaszolj, formázás és sallang nélkül, ebben a formátumba
           >
             <div className="border-b border-[#B8860B]/20 pb-4 mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
               <div>
-                <span className="text-[10px] font-cinzel font-bold text-[#8C6D12] block uppercase tracking-wide">
+                <span className="text-[11px] font-cinzel font-bold text-[#8C6D12] block uppercase tracking-wide">
                   DÖNTÉSED KÖVETKEZMÉNYE · {selectedChoice.isHistorical ? "BÖLCS DÖNTÉS" : "ALTERNATÍV ÖSVÉNY"}
                 </span>
                 <h3 className="text-xl font-cinzel font-bold text-[#6B1010] mt-1">
                   {selectedChoice.label}
                 </h3>
               </div>
-              <div className={`px-3 py-1 text-[10px] font-cinzel font-bold uppercase tracking-widest ${
+              <div className={`px-3 py-1 text-[11px] font-cinzel font-bold uppercase tracking-widest ${
                 selectedChoice.isHistorical ? "bg-emerald-900/10 text-emerald-800 border-emerald-500/30" : "bg-amber-900/10 text-amber-800 border-amber-500/30"
               } border`}>
                 {selectedChoice.isHistorical ? "📜 Történelmi Választás" : "🌀 Eltérő alternatíva"}
@@ -781,7 +781,7 @@ CSAK valid JSON válaszolj, formázás és sallang nélkül, ebben a formátumba
             <div className="bg-[#FFFEE0] border-l-4 border-[#B8860B] p-4 my-6 flex items-start gap-3">
               <span className="text-2xl pt-1">🛡️</span>
               <div className="space-y-1">
-                <span className="block font-cinzel font-bold text-[9px] uppercase tracking-wider text-[#6B1010]">
+                <span className="block font-cinzel font-bold text-[11px] uppercase tracking-wider text-[#6B1010]">
                   Árpád lovag reakciója:
                 </span>
                 <p className="font-lora italic text-[13px] text-[#1C0E04] font-medium">
@@ -795,14 +795,14 @@ CSAK valid JSON válaszolj, formázás és sallang nélkül, ebben a formátumba
             <div className="space-y-6 font-lora text-sm text-[#1C0E04]">
               {/* Consequences text */}
               <div>
-                <span className="font-cinzel text-[10px] font-bold tracking-wider uppercase text-[#6B1010]/80 block mb-1">Aminek fültanúja lettél:</span>
-                <p className="leading-relaxed text-[#1C0E04]">
+                <span className="font-cinzel text-[11px] font-bold tracking-wider uppercase text-[#6B1010]/80 block mb-1">Aminek fültanúja lettél:</span>
+                <p className="leading-[1.8] text-[#1C0E04]">
                   {selectedChoice.consequence}
                 </p>
               </div>
 
               {/* Golden Fact box */}
-              <div className="border-2 border-dashed border-[#B8860B] bg-[#FDFAF4] p-5 sm:p-6 text-xs text-[#1C0E04] leading-relaxed relative overflow-hidden">
+              <div className="border-2 border-dashed border-[#B8860B] bg-[#FDFAF4] p-5 sm:p-6 text-xs text-[#1C0E04] leading-[1.8] relative overflow-hidden">
                 <div className="absolute top-2 right-2 opacity-10">
                   <Scroll className="w-16 h-16 text-[#6B1010]" />
                 </div>
@@ -824,7 +824,7 @@ CSAK valid JSON válaszolj, formázás és sallang nélkül, ebben a formátumba
             <div className="mt-8 pt-6 border-t border-[#B8860B]/25 flex justify-end">
               <button
                 onClick={handleNextStep}
-                className="bg-[#6B1010] hover:bg-[#801515] text-[#F7EAC8] font-cinzel font-bold uppercase tracking-[0.2em] px-6 py-4 border border-[#B8860B] rounded-none cursor-pointer transition-colors"
+                className="bg-[#6B1010] hover:bg-[#801515] text-[#FFF5E0] font-cinzel font-bold uppercase tracking-[0.2em] px-6 py-4 border border-[#B8860B] rounded-none cursor-pointer transition-colors"
               >
                 Folytatás
               </button>
@@ -846,7 +846,7 @@ CSAK valid JSON válaszolj, formázás és sallang nélkül, ebben a formátumba
               <h2 className="text-3xl font-cinzel font-bold text-[#1C0E04] leading-none mb-1">
                 Kaland Sikeresen Befejezve!
               </h2>
-              <span className="font-cinzel text-[10px] text-[#6B1010] uppercase tracking-widest block">
+              <span className="font-cinzel text-[11px] text-[#6B1010] uppercase tracking-widest block">
                 {loadedScenario.title} krónikája lezárult
               </span>
             </div>
@@ -868,13 +868,13 @@ CSAK valid JSON válaszolj, formázás és sallang nélkül, ebben a formátumba
             {/* Score Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-xl mx-auto my-6 text-left">
               <div className="bg-white/40 p-4 border border-[#B8860B]/20">
-                <span className="block font-cinzel text-[9px] uppercase tracking-wider text-[#6B1010]">Történelmi Hűség</span>
+                <span className="block font-cinzel text-[11px] uppercase tracking-wider text-[#6B1010]">Történelmi Hűség</span>
                 <span className="text-lg font-cinzel font-bold text-[#1C0E04]">
                   {correctCount} / {loadedScenario.decisions.length} döntés ({Math.round((correctCount / loadedScenario.decisions.length) * 100)}%)
                 </span>
               </div>
               <div className="bg-white/40 p-4 border border-[#B8860B]/20">
-                <span className="block font-cinzel text-[9px] uppercase tracking-wider text-[#6B1010]">Tudásszint növekedés</span>
+                <span className="block font-cinzel text-[11px] uppercase tracking-wider text-[#6B1010]">Tudásszint növekedés</span>
                 <span className="text-lg font-cinzel font-bold text-[#6B1010]">
                   +{xpEarnedTotal} XP szerzett
                 </span>
@@ -907,21 +907,21 @@ CSAK valid JSON válaszolj, formázás és sallang nélkül, ebben a formátumba
             {/* Ratings and concluding summaries */}
             <div className="bg-[#FFFEE0]/50 border border-[#B8860B]/30 p-5 sm:p-6 text-left max-w-xl mx-auto space-y-4 my-6">
               <div>
-                <span className="font-cinzel text-[9px] font-bold text-[#6B1010] tracking-wider uppercase block mb-1">Te így döntöttél az ösvényen:</span>
-                <p className="font-lora text-[13px] text-[#1C0E04] leading-relaxed italic">
+                <span className="font-cinzel text-[11px] font-bold text-[#6B1010] tracking-wider uppercase block mb-1">Te így döntöttél az ösvényen:</span>
+                <p className="font-lora text-[13px] text-[#1C0E04] leading-[1.8] italic">
                   &quot;Bátran kísérleteztél a döntéseiddel. Törekedtél megtalálni az egykori vezetők logikáját.&quot;
                 </p>
               </div>
 
               <div>
-                <span className="font-cinzel text-[9px] font-bold text-[#6B1010] tracking-wider uppercase block mb-1">A történelemben valójában:</span>
-                <p className="font-lora text-[12px] text-[#1C0E04]/95 leading-relaxed">
+                <span className="font-cinzel text-[11px] font-bold text-[#6B1010] tracking-wider uppercase block mb-1">A történelemben valójában:</span>
+                <p className="font-lora text-[12px] text-[#1C0E04]/95 leading-[1.8]">
                   {loadedScenario.historicalOutcome}
                 </p>
               </div>
 
               <div className="pt-2 border-t border-[#B8860B]/15">
-                <span className="font-cinzel text-[9px] font-bold text-[#6B1010] tracking-wider uppercase block mb-1">Történelmi Értékelés:</span>
+                <span className="font-cinzel text-[11px] font-bold text-[#6B1010] tracking-wider uppercase block mb-1">Történelmi Értékelés:</span>
                 <p className="font-lora text-[12px] text-[#1C0E04]">
                   {loadedScenario.conclusion}
                 </p>
@@ -931,14 +931,14 @@ CSAK valid JSON válaszolj, formázás és sallang nélkül, ebben a formátumba
             <div className="mt-8 pt-6 border-t border-[#B8860B]/25 flex flex-col sm:flex-row justify-center gap-3 max-w-xl mx-auto">
               <button
                 onClick={() => setPhase("settings")}
-                className="flex-1 bg-[#1C0E04]/90 hover:bg-[#1C0E04] text-[#F7EAC8] font-cinzel font-bold uppercase tracking-wider px-6 py-4 border border-[#B8860B]/50 rounded-none cursor-pointer text-xs flex items-center justify-center gap-2"
+                className="flex-1 bg-[#1C0E04]/90 hover:bg-[#1C0E04] text-[#FFF5E0] font-cinzel font-bold uppercase tracking-wider px-6 py-4 border border-[#B8860B]/50 rounded-none cursor-pointer text-xs flex items-center justify-center gap-2"
               >
                 <RotateCcw className="w-3.5 h-3.5" />
                 <span>Új kaland</span>
               </button>
               <button
                 onClick={onGoHome}
-                className="flex-1 bg-[#6B1010] hover:bg-[#801515] text-[#F7EAC8] font-cinzel font-bold uppercase tracking-wider px-6 py-4 border border-[#B8860B]/50 rounded-none cursor-pointer text-xs flex items-center justify-center gap-2"
+                className="flex-1 bg-[#6B1010] hover:bg-[#801515] text-[#FFF5E0] font-cinzel font-bold uppercase tracking-wider px-6 py-4 border border-[#B8860B]/50 rounded-none cursor-pointer text-xs flex items-center justify-center gap-2"
               >
                 Főmenü
               </button>

@@ -436,7 +436,7 @@ CSAK JSON:
               ) : relatedModalData ? (
                 <div className="space-y-4">
                   <div className="flex items-start gap-3">
-                    <div className="px-3 py-1 bg-[#1A0A03] border border-[#B8860B] text-[#F7EAC8] font-cinzel font-bold tracking-wider rounded-[2px] whitespace-nowrap mt-1">
+                    <div className="px-3 py-1 bg-[#1A0A03] border border-[#B8860B] text-[#FFF5E0] font-cinzel font-bold tracking-wider rounded-[2px] whitespace-nowrap mt-1">
                       {relatedModalData.year}
                     </div>
                     <div>
@@ -446,12 +446,12 @@ CSAK JSON:
                     </div>
                   </div>
 
-                  <p className="font-lora text-sm text-[#1C0E04]/90 leading-relaxed">
+                  <p className="font-lora text-sm text-[#1C0E04]/90 leading-[1.8]">
                     {relatedModalData.description}
                   </p>
 
                   <div className="bg-[#1A0A03]/5 border-l-4 border-[#B8860B] p-3 rounded-r-[3px]">
-                    <h4 className="text-[10px] font-cinzel font-bold text-[#6B1010] uppercase tracking-wider mb-1">
+                    <h4 className="text-[11px] font-cinzel font-bold text-[#6B1010] uppercase tracking-wider mb-1">
                       Történelmi jelentőség
                     </h4>
                     <p className="font-lora text-xs text-[#1C0E04]/80 italic">
@@ -486,7 +486,7 @@ CSAK JSON:
                         setRelatedModalOpen(false);
                         generateTimeline(relatedModalData.relatedTopic);
                       }}
-                      className="flex-1 py-3 px-3 border border-[#B8860B] bg-[#1A0A03] hover:bg-black text-[#F7EAC8] text-xs font-cinzel font-bold uppercase tracking-wide rounded-[2px] cursor-pointer transition-colors"
+                      className="flex-1 py-3 px-3 border border-[#B8860B] bg-[#1A0A03] hover:bg-black text-[#FFF5E0] text-xs font-cinzel font-bold uppercase tracking-wide rounded-[2px] cursor-pointer transition-colors"
                     >
                       🔍 Új időszalag erről
                     </button>
@@ -507,7 +507,7 @@ CSAK JSON:
           <button
             onClick={() => generateTimeline()}
             disabled={loading}
-            className="w-full md:w-auto px-6 py-2.5 bg-[#6B1010] hover:bg-[#801515] text-[#F7EAC8] font-cinzel font-bold uppercase tracking-widest rounded-[2px] border border-[#B8860B] disabled:opacity-50 flex justify-center items-center gap-2 text-xs transition-colors cursor-pointer"
+            className="w-full md:w-auto px-6 py-2.5 bg-[#6B1010] hover:bg-[#801515] text-[#FFF5E0] font-cinzel font-bold uppercase tracking-widest rounded-[2px] border border-[#B8860B] disabled:opacity-50 flex justify-center items-center gap-2 text-xs transition-colors cursor-pointer"
           >
             {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Clock className="w-4 h-4" />}
             Időszalag generálása
@@ -518,7 +518,7 @@ CSAK JSON:
       {/* 3. Filter buttons (also serves as Categories legend) */}
       {events.length > 0 && !loading && (
         <div className="mb-4">
-          <p className="text-[10px] font-cinzel font-bold uppercase tracking-wider text-[#F7EAC8]/50 mb-2">
+          <p className="text-[11px] font-cinzel font-bold uppercase tracking-wider text-[#FFF5E0]/50 mb-2">
             Szűrés kategóriák szerint:
           </p>
           <div className="flex flex-wrap gap-2">
@@ -532,8 +532,8 @@ CSAK JSON:
                 }}
                 className={`px-3 py-1.5 text-xs font-cinzel font-bold tracking-wider rounded-[3px] cursor-pointer transition-colors border flex items-center justify-center gap-1.5 ${
                   selectedCategory === cat.id
-                    ? "text-[#F7EAC8] shadow-md"
-                    : "bg-[#1C0E04]/60 hover:bg-[#1C0E04] text-[#F7EAC8]/80 hover:text-[#F7EAC8]"
+                    ? "text-[#FFF5E0] shadow-md"
+                    : "bg-[#1C0E04]/60 hover:bg-[#1C0E04] text-[#FFF5E0]/80 hover:text-[#FFF5E0]"
                 }`}
               >
                 {selectedCategory !== cat.id && (
@@ -555,7 +555,7 @@ CSAK JSON:
               className={`px-4 py-1.5 text-xs font-cinzel font-bold tracking-wider rounded-[3px] cursor-pointer transition-colors border flex items-center justify-center gap-1.5 font-bold ${
                 showMapView
                   ? "bg-[#B8860B] text-[#1C0E04] border-[#B8860B]"
-                  : "bg-[#1C0E04]/60 hover:bg-[#1C0E04] text-[#F7EAC8] border-[#B8860B]/40"
+                  : "bg-[#1C0E04]/60 hover:bg-[#1C0E04] text-[#FFF5E0] border-[#B8860B]/40"
               }`}
             >
               <span>🗺️ Térkép</span>
@@ -574,12 +574,12 @@ CSAK JSON:
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="Esemény keresése..."
-              className="w-full pl-10 pr-10 py-2.5 bg-transparent text-[#F7EAC8] font-lora text-sm focus:outline-none"
+              className="w-full pl-10 pr-10 py-2.5 bg-transparent text-[#FFF5E0] font-lora text-sm focus:outline-none"
             />
             {searchTerm && (
               <button
                 onClick={() => setSearchTerm("")}
-                className="absolute right-3 p-1 text-[#B8860B] hover:text-[#F7EAC8]"
+                className="absolute right-3 p-1 text-[#B8860B] hover:text-[#FFF5E0]"
               >
                 <X className="w-4 h-4 text-[#B8860B]" />
               </button>
@@ -591,7 +591,7 @@ CSAK JSON:
       {/* 5. Result count */}
       {events.length > 0 && !loading && (
         <div className="mb-6">
-          <p className="text-xs font-lora text-[#F7EAC8]/60 italic">
+          <p className="text-xs font-lora text-[#FFF5E0]/60 italic">
             {filteredEvents.length} esemény
           </p>
         </div>
@@ -601,7 +601,7 @@ CSAK JSON:
       {loading ? (
         <div className="text-center py-20 flex flex-col items-center">
           <Loader2 className="w-12 h-12 text-[#B8860B] animate-spin mb-4" />
-          <p className="text-[#F7EAC8]/70 font-cinzel font-bold text-sm uppercase tracking-widest">Krónikák felkutatása...</p>
+          <p className="text-[#FFF5E0]/70 font-cinzel font-bold text-sm uppercase tracking-widest">Krónikák felkutatása...</p>
         </div>
       ) : events.length > 0 ? (
         <>
@@ -610,10 +610,10 @@ CSAK JSON:
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
               <div>
                 <div className="flex items-center gap-3 mb-2">
-                  <span className="px-2.5 py-1 bg-[#6B1010] text-[#F7EAC8] text-xs font-bold rounded-[2px] border border-[#B8860B]/50">{grade}</span>
+                  <span className="px-2.5 py-1 bg-[#6B1010] text-[#FFF5E0] text-xs font-bold rounded-[2px] border border-[#B8860B]/50">{grade}</span>
                   <span className="text-[#B8860B] font-bold text-xs">{events.length} történelmi esemény</span>
                 </div>
-                <h2 className="font-cinzel text-xl sm:text-2xl font-bold text-[#F7EAC8] tracking-widest">{topic}</h2>
+                <h2 className="font-cinzel text-xl sm:text-2xl font-bold text-[#FFF5E0] tracking-widest">{topic}</h2>
               </div>
             </div>
           </div>
@@ -623,14 +623,14 @@ CSAK JSON:
             <div className="mb-8 p-5 sm:p-6 bg-[#1A0A03] border-2 border-[#B8860B]/70 rounded-[4px] shadow-2xl space-y-6">
               <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-[#B8860B]/20 pb-4 gap-2">
                 <div>
-                  <h3 className="font-cinzel font-bold text-sm sm:text-base text-[#F7EAC8] tracking-widest uppercase">
+                  <h3 className="font-cinzel font-bold text-sm sm:text-base text-[#FFF5E0] tracking-widest uppercase">
                     🗺️ Történelmi Térkép
                   </h3>
                   <p className="font-lora text-xs text-[#B8860B] italic mt-0.5">
                     Korszak: {topic}
                   </p>
                 </div>
-                <span className="text-[10px] font-mono text-[#F7EAC8]/40">
+                <span className="text-[11px] font-mono text-[#FFF5E0]/40">
                   Forrás: Wikimedia Commons / AI Kartográfia
                 </span>
               </div>
@@ -646,7 +646,7 @@ CSAK JSON:
                     <p className="font-lora text-xs text-[#1C0E04]/70 mt-1">
                       Témakör: {topic}
                     </p>
-                    <p className="font-lora text-[10px] text-[#1C0E04]/50 italic mt-2 max-w-sm">
+                    <p className="font-lora text-[11px] text-[#1C0E04]/50 italic mt-2 max-w-sm">
                       Úgy tűnik, ehhez a specifikus témakörhöz nem tartozik beágyazott illusztráció, de az AI magyarázatot alább olvashatod!
                     </p>
                   </div>
@@ -659,7 +659,7 @@ CSAK JSON:
                       referrerPolicy="no-referrer"
                       className="w-full max-h-[400px] object-contain border-2 border-[#B8860B] rounded-[4px] shadow-lg bg-[#2A1005]"
                     />
-                    <p className="font-lora text-xs text-[#F7EAC8]/70 italic text-center mt-1">
+                    <p className="font-lora text-xs text-[#FFF5E0]/70 italic text-center mt-1">
                       {HISTORICAL_MAPS[topic].caption}
                     </p>
                   </div>
@@ -671,7 +671,7 @@ CSAK JSON:
                 {mapLoading ? (
                   <div className="flex flex-col items-center justify-center py-12 bg-[#FFF5D0]/5 border border-[#B8860B]/30 rounded-[3px]">
                     <Loader2 className="w-8 h-8 text-[#B8860B] animate-spin mb-2" />
-                    <p className="text-xs font-cinzel text-[#F7EAC8]/80 uppercase tracking-widest">
+                    <p className="text-xs font-cinzel text-[#FFF5E0]/80 uppercase tracking-widest">
                       AI Kartográfus elemzése...
                     </p>
                   </div>
@@ -679,10 +679,10 @@ CSAK JSON:
                   <div className="space-y-4">
                     {/* Explanation text in parchment box */}
                     <div className="bg-[#FFF5D0] border border-[#B8860B] p-5 rounded-[4px] shadow-inner text-[#1C0E04]">
-                      <h4 className="text-[10px] font-cinzel font-bold text-[#8B1A1A] uppercase tracking-wider mb-2">
+                      <h4 className="text-[11px] font-cinzel font-bold text-[#8B1A1A] uppercase tracking-wider mb-2">
                         Az Ábrázolt Korszak Jelentősége:
                       </h4>
-                      <p className="font-lora text-xs sm:text-sm leading-relaxed whitespace-pre-line">
+                      <p className="font-lora text-xs sm:text-sm leading-[1.8] whitespace-pre-line">
                         {mapExplanation.explanation}
                       </p>
                     </div>
@@ -692,14 +692,14 @@ CSAK JSON:
                       {mapExplanation.keyPlaces && mapExplanation.keyPlaces.length > 0 && (
                         <div className="w-full md:w-1/2 bg-[#2A1005] border border-[#B8860B]/30 p-4 rounded-[3px] flex flex-col justify-between">
                           <div>
-                            <h5 className="text-[10px] font-cinzel font-bold text-[#F7EAC8]/70 uppercase tracking-wider mb-2">
+                            <h5 className="text-[11px] font-cinzel font-bold text-[#FFF5E0]/70 uppercase tracking-wider mb-2">
                               📍 Kulcsfontosságú Helyszínek:
                             </h5>
                             <div className="flex flex-wrap gap-2">
                               {mapExplanation.keyPlaces.map((place, pIdx) => (
                                 <span
                                   key={pIdx}
-                                  className="px-2 py-1 bg-[#B8860B]/10 hover:bg-[#B8860B]/20 text-[#F7EAC8] text-[11px] font-lora border border-[#B8860B]/30 rounded-[3px] shadow-sm flex items-center gap-1 transition-colors"
+                                  className="px-2 py-1 bg-[#B8860B]/10 hover:bg-[#B8860B]/20 text-[#FFF5E0] text-[11px] font-lora border border-[#B8860B]/30 rounded-[3px] shadow-sm flex items-center gap-1 transition-colors"
                                 >
                                   📍 {place}
                                 </span>
@@ -711,10 +711,10 @@ CSAK JSON:
 
                       {mapExplanation.historicalContext && (
                         <div className="w-full md:w-1/2 bg-[#2A1005] border border-[#B8860B]/30 p-4 rounded-[3px] flex flex-col justify-center">
-                          <h5 className="text-[10px] font-cinzel font-bold text-[#F7EAC8]/70 uppercase tracking-wider mb-1">
+                          <h5 className="text-[11px] font-cinzel font-bold text-[#FFF5E0]/70 uppercase tracking-wider mb-1">
                             📜 Történelmi Háttér:
                           </h5>
-                          <p className="font-lora text-xs text-[#F7EAC8]/90 leading-relaxed italic border-l-2 border-[#B8860B]/40 pl-3">
+                          <p className="font-lora text-xs text-[#FFF5E0]/90 leading-[1.8] italic border-l-2 border-[#B8860B]/40 pl-3">
                             {mapExplanation.historicalContext}
                           </p>
                         </div>
@@ -722,7 +722,7 @@ CSAK JSON:
                     </div>
                   </div>
                 ) : (
-                  <div className="text-center py-6 text-xs font-lora text-[#F7EAC8]/40">
+                  <div className="text-center py-6 text-xs font-lora text-[#FFF5E0]/40">
                     Sikertelen betöltés, de megnézheted az alatta lévő idővonalat!
                   </div>
                 )}
@@ -733,7 +733,7 @@ CSAK JSON:
           {/* If no search results found */}
           {filteredEvents.length === 0 && searchTerm.trim() && (
             <div className="text-center py-12 bg-[#1A0A03] border border-[#6B1010]/30 rounded-sm mb-6">
-              <p className="font-lora text-[#F7EAC8]/70 text-sm">
+              <p className="font-lora text-[#FFF5E0]/70 text-sm">
                 Nincs találat erre: <strong className="text-[#B8860B]">'{searchTerm}'</strong>
               </p>
             </div>
@@ -765,7 +765,7 @@ CSAK JSON:
                   const dotColor = isHigh ? "bg-[#B8860B] shadow-[0_0_12px_rgba(184,134,11,0.8)]" : (isLow ? "bg-gray-400" : "bg-[#8B1A1A]");
                   const dotWrapperSize = isHigh ? "w-8 h-8" : (isLow ? "w-4 h-4" : "w-6 h-6");
                   
-                  const yearBadgeBg = isHigh ? "bg-[#6B1010] border-[#B8860B] text-[#F7EAC8] py-1.5 px-3" : (isLow ? "bg-[#4A4A4A] border-[#2A2A2A] text-[#F7EAC8] py-0.5 px-1.5" : "bg-[#3A2210] border-[#1C0E04] text-[#F7EAC8] py-1 px-2.5");
+                  const yearBadgeBg = isHigh ? "bg-[#6B1010] border-[#B8860B] text-[#FFF5E0] py-1.5 px-3" : (isLow ? "bg-[#4A4A4A] border-[#2A2A2A] text-[#FFF5E0] py-0.5 px-1.5" : "bg-[#3A2210] border-[#1C0E04] text-[#FFF5E0] py-1 px-2.5");
                   const yearFontSize = isHigh ? "text-lg" : (isLow ? "text-xs" : "text-sm");
 
                   return (
@@ -804,7 +804,7 @@ CSAK JSON:
                               {ev.year}
                             </span>
                             <span 
-                              className="px-2 py-0.5 rounded-full text-[10px] font-bold text-white shadow-sm flex items-center gap-1"
+                              className="px-2 py-0.5 rounded-full text-[11px] font-bold text-white shadow-sm flex items-center gap-1"
                               style={{ backgroundColor: catData.color }}
                             >
                               {catData.label}
@@ -815,7 +815,7 @@ CSAK JSON:
                             {ev.title}
                           </h3>
                           
-                          <p className="font-lora text-[#1C0E04]/80 text-sm leading-relaxed mb-3">
+                          <p className="font-lora text-[#1C0E04]/80 text-sm leading-[1.8] mb-3">
                             {ev.description}
                           </p>
                           
@@ -849,8 +849,8 @@ CSAK JSON:
                               ) : expandedDetail ? (
                                 <div className="space-y-4">
                                   <div>
-                                    <h4 className="text-[10px] font-cinzel font-bold text-[#8B1A1A] uppercase tracking-wider block mb-1">Részletek:</h4>
-                                    <p className="font-lora text-xs sm:text-sm text-[#1C0E04]/90 leading-relaxed whitespace-pre-wrap">
+                                    <h4 className="text-[11px] font-cinzel font-bold text-[#8B1A1A] uppercase tracking-wider block mb-1">Részletek:</h4>
+                                    <p className="font-lora text-xs sm:text-sm text-[#1C0E04]/90 leading-[1.8] whitespace-pre-wrap">
                                       {expandedDetail.detail}
                                     </p>
                                   </div>
@@ -858,10 +858,10 @@ CSAK JSON:
                                   {(expandedDetail.significance || ev.significance) && (
                                     <div className="bg-[#FFF8E7] border border-[#B8860B]/40 p-3 rounded-[3px] shadow-sm relative overflow-hidden">
                                       <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#B8860B]"></div>
-                                      <h4 className="text-[10px] font-cinzel font-bold text-[#8B1A1A] uppercase tracking-widest block mb-1">
+                                      <h4 className="text-[11px] font-cinzel font-bold text-[#8B1A1A] uppercase tracking-widest block mb-1">
                                         Érettségi szempontból:
                                       </h4>
-                                      <p className="font-lora text-xs leading-relaxed italic text-[#1C0E04]">
+                                      <p className="font-lora text-xs leading-[1.8] italic text-[#1C0E04]">
                                         {expandedDetail.significance || ev.significance}
                                       </p>
                                     </div>
@@ -869,7 +869,7 @@ CSAK JSON:
 
                                   {expandedDetail.relatedEvents && expandedDetail.relatedEvents.length > 0 && (
                                     <div>
-                                      <h4 className="text-[10px] font-cinzel font-bold text-[#8B1A1A] uppercase tracking-wider block mb-1.5">
+                                      <h4 className="text-[11px] font-cinzel font-bold text-[#8B1A1A] uppercase tracking-wider block mb-1.5">
                                         Kapcsolódó események:
                                       </h4>
                                       <div className="flex flex-wrap gap-1.5">
@@ -880,7 +880,7 @@ CSAK JSON:
                                               e.stopPropagation();
                                               handleRelatedClick(related);
                                             }}
-                                            className="px-2 py-1 bg-[#1C0E04]/10 hover:bg-[#6B1010]/20 text-[#6B1010] text-[10px] font-bold rounded-[3px] cursor-pointer transition-all border border-[#1C0E04]/10"
+                                            className="px-2 py-1 bg-[#1C0E04]/10 hover:bg-[#6B1010]/20 text-[#6B1010] text-[11px] font-bold rounded-[3px] cursor-pointer transition-all border border-[#1C0E04]/10"
                                           >
                                             {related}
                                           </button>
@@ -900,7 +900,7 @@ CSAK JSON:
                                     setExpandedTitle(null);
                                     setExpandedDetail(null);
                                   }}
-                                  className="px-3 py-1.5 text-[10px] font-cinzel font-bold uppercase tracking-wider text-red-800 border border-red-800/30 hover:bg-red-800 hover:text-[#FFF5D0] rounded-[2px] transition-colors cursor-pointer"
+                                  className="px-3 py-1.5 text-[11px] font-cinzel font-bold uppercase tracking-wider text-red-800 border border-red-800/30 hover:bg-red-800 hover:text-[#FFF5D0] rounded-[2px] transition-colors cursor-pointer"
                                 >
                                   Bezárás
                                 </button>
@@ -922,13 +922,13 @@ CSAK JSON:
               <div className="absolute top-0 right-0 p-4 opacity-10 pointer-events-none">
                 <Calendar className="w-32 h-32 text-[#B8860B]" />
               </div>
-              <h3 className="font-cinzel font-bold text-xl text-[#F7EAC8] mb-6 uppercase tracking-widest flex items-center gap-2">
+              <h3 className="font-cinzel font-bold text-xl text-[#FFF5E0] mb-6 uppercase tracking-widest flex items-center gap-2">
                 <span>📊</span> Időszalag összefoglalója
               </h3>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div>
-                  <h4 className="text-xs font-cinzel font-bold text-[#F7EAC8]/60 uppercase tracking-widest mb-3">Események eloszlása</h4>
+                  <h4 className="text-xs font-cinzel font-bold text-[#FFF5E0]/60 uppercase tracking-widest mb-3">Események eloszlása</h4>
                   <div className="space-y-2">
                     {CATEGORIES.map(cat => {
                       const count = events.filter(e => {
@@ -939,11 +939,11 @@ CSAK JSON:
                       const percentage = (count / events.length) * 100;
                       return (
                         <div key={cat.id} className="flex items-center gap-3">
-                          <span className="text-[10px] w-20 text-[#F7EAC8]/80 font-bold">{cat.label.split(' ')[1]}</span>
+                          <span className="text-[11px] w-20 text-[#FFF5E0]/80 font-bold">{cat.label.split(' ')[1]}</span>
                           <div className="flex-1 h-3 bg-[#2A1005] rounded-full overflow-hidden border border-[#B8860B]/20">
                             <div className="h-full rounded-full" style={{ width: `${percentage}%`, backgroundColor: cat.color }}></div>
                           </div>
-                          <span className="text-[10px] text-[#B8860B] w-4 text-right font-mono">{count}</span>
+                          <span className="text-[11px] text-[#B8860B] w-4 text-right font-mono">{count}</span>
                         </div>
                       );
                     })}
@@ -952,13 +952,13 @@ CSAK JSON:
                 
                 <div className="flex flex-col justify-between">
                   <div>
-                    <h4 className="text-xs font-cinzel font-bold text-[#F7EAC8]/60 uppercase tracking-widest mb-2">Időkeret</h4>
+                    <h4 className="text-xs font-cinzel font-bold text-[#FFF5E0]/60 uppercase tracking-widest mb-2">Időkeret</h4>
                     <p className="font-lora text-lg text-[#B8860B] font-bold bg-[#2A1005] border border-[#B8860B]/40 px-4 py-2 rounded-[2px] inline-block mb-6 shadow-sm">
                       {events[0]?.year} – {events[events.length - 1]?.year}
                     </p>
                     
-                    <h4 className="text-xs font-cinzel font-bold text-[#F7EAC8]/60 uppercase tracking-widest mb-2">Kulcsfontosságú esemény</h4>
-                    <p className="font-lora text-sm text-[#F7EAC8] italic border-l-2 border-[#8B1A1A] pl-3 py-1">
+                    <h4 className="text-xs font-cinzel font-bold text-[#FFF5E0]/60 uppercase tracking-widest mb-2">Kulcsfontosságú esemény</h4>
+                    <p className="font-lora text-sm text-[#FFF5E0] italic border-l-2 border-[#8B1A1A] pl-3 py-1">
                       {events.find(e => e.importance === 'high')?.title || events[0]?.title}
                     </p>
                   </div>
@@ -977,8 +977,8 @@ CSAK JSON:
       ) : (
         <div className="text-center py-20 bg-[#1A0A03] border border-[#B8860B]/20">
           <Clock className="w-16 h-16 text-[#B8860B]/30 mx-auto mb-4" />
-          <p className="text-[#F7EAC8]/70 font-cinzel font-bold text-lg uppercase tracking-widest">Az időszalag még üres</p>
-          <p className="font-lora text-[#F7EAC8]/50 mt-2">Válassz egy témakört, és utazz el a múltba!</p>
+          <p className="text-[#FFF5E0]/70 font-cinzel font-bold text-lg uppercase tracking-widest">Az időszalag még üres</p>
+          <p className="font-lora text-[#FFF5E0]/50 mt-2">Válassz egy témakört, és utazz el a múltba!</p>
         </div>
       )}
     </div>

@@ -279,7 +279,7 @@ export default function LessonScreen({ onGoHome }: LessonScreenProps) {
 
                   <button 
                     onClick={() => handleStartLesson(lesson.title)}
-                    className="mt-auto bg-[#1C0E04] hover:bg-black text-[#F7EAC8] py-2 px-4 font-cinzel font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 rounded transition-colors"
+                    className="mt-auto bg-[#1C0E04] hover:bg-black text-[#FFF5E0] py-2 px-4 font-cinzel font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 rounded transition-colors"
                   >
                     <Play className="w-4 h-4" /> Indítás
                   </button>
@@ -344,7 +344,7 @@ function CardRenderer({ card, onNext, onCorrect }: { card: any, onNext: () => vo
           </div>
         ) : (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.2 }} className="flex-1 flex flex-col items-center justify-center p-8">
-            <div className="text-[15px] text-[#C8C8D8] mb-6 leading-relaxed">{card.question}</div>
+            <div className="text-[15px] text-[#C8C8D8] mb-6 leading-[1.8]">{card.question}</div>
             <div className="text-[18px] font-bold font-lora text-[#D4A017] mb-8 border-t border-b border-[#5C3A10] py-6 w-full drop-shadow-sm">{card.answer}</div>
             <button onClick={(e) => { e.stopPropagation(); onNext(); }} className="mt-auto bg-[linear-gradient(135deg,#5C0A0A,#3D0505)] hover:bg-[#3D0505] text-[#FDF3DC] p-4 w-full rounded-lg font-bold font-cinzel transition-all duration-200 border-2 border-[#D4A017] flex items-center justify-center gap-2 shadow-[0_4px_10px_rgba(0,0,0,0.5)] option-btn">
               Tovább <ArrowRight className="w-4 h-4" />
@@ -414,7 +414,7 @@ function CardRenderer({ card, onNext, onCorrect }: { card: any, onNext: () => vo
                 </div>
               )}
               
-              <p className="text-sm font-lora text-white/90 leading-relaxed">{card.explanation}</p>
+              <p className="text-[14px] font-lora text-[#D4D0C8] leading-[1.8]">{card.explanation}</p>
               
               <button onClick={onNext} className="mt-2 bg-[#1A0A00] hover:bg-black text-[#FDF3DC] p-3 w-full rounded font-bold font-cinzel uppercase transition-colors option-btn text-sm border border-[#D4A017]/30">
                 Tovább
@@ -429,7 +429,7 @@ function CardRenderer({ card, onNext, onCorrect }: { card: any, onNext: () => vo
   if (card.type === "true_false") {
     return (
       <div className="bg-[#1A1A2E] p-6 rounded-lg border border-gray-700 shadow-xl min-h-[400px] flex flex-col text-center">
-        <h2 className="text-2xl font-bold font-lora font-white mb-10 leading-relaxed mx-auto my-auto">{card.statement || card.question}</h2>
+        <h2 className="text-2xl font-bold font-lora font-white mb-10 leading-[1.8] mx-auto my-auto">{card.statement || card.question}</h2>
         
         {!answered ? (
           <div className="flex gap-4 mt-auto pb-4">
@@ -451,7 +451,7 @@ function CardRenderer({ card, onNext, onCorrect }: { card: any, onNext: () => vo
              <div className="font-bold flex items-center gap-2 mb-2 font-cinzel">
                 {isCorrect ? "✅ Helyes!" : `❌ Helytelen! Helyes: ${card.correct}`}
              </div>
-             <p className="text-sm font-lora opacity-90">{card.explanation}</p>
+             <p className="text-[14px] font-lora text-[#D4D0C8] leading-[1.8]">{card.explanation}</p>
              <button onClick={onNext} className="mt-4 bg-gray-800 border border-gray-600 hover:bg-gray-700 text-white py-2 px-4 w-full rounded font-bold font-cinzel text-xs flex items-center justify-center gap-2">Tovább <ArrowRight className="w-4 h-4" /></button>
           </motion.div>
         )}
@@ -467,7 +467,7 @@ function CardRenderer({ card, onNext, onCorrect }: { card: any, onNext: () => vo
           <h2 className="text-2xl font-cinzel font-bold text-yellow-500 mb-8 flex items-center justify-center gap-2">
             <span className="text-3xl">{card.icon || "💡"}</span> Tudtad?
           </h2>
-          <div className="text-gray-300 font-lora text-xl leading-relaxed mx-auto italic">
+          <div className="text-gray-300 font-lora text-xl leading-[1.8] mx-auto italic">
             "{card.content}"
           </div>
         </div>

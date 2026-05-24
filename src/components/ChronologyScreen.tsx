@@ -111,7 +111,7 @@ export function DraggableAvailableCard({
         <h4 className="font-cinzel font-bold text-xs text-[#1C0E04] leading-normal tracking-wide pr-2">
           {event}
         </h4>
-        <p className="text-[10px] font-lora text-[#1C0E04]/70 leading-relaxed mt-1 line-clamp-2">
+        <p className="text-[11px] font-lora text-[#1C0E04]/70 leading-[1.8] mt-1 line-clamp-2">
           {description}
         </p>
       </div>
@@ -181,7 +181,7 @@ export function DraggableSlotCard({
         <h5 className="font-cinzel font-bold text-xs text-[#1C0E04] leading-normal">
           {event}
         </h5>
-        <p className="text-[9px] font-lora text-[#1C0E04]/60 line-clamp-1 mt-0.5">
+        <p className="text-[11px] font-lora text-[#1C0E04]/60 line-clamp-1 mt-0.5">
           {description}
         </p>
       </div>
@@ -191,7 +191,7 @@ export function DraggableSlotCard({
           e.stopPropagation();
           onRemove();
         }}
-        className="text-[10px] text-red-800 hover:text-red-600 font-cinzel uppercase tracking-tighter absolute right-1.5 top-1 p-1 cursor-pointer z-15"
+        className="text-[11px] text-red-800 hover:text-red-600 font-cinzel uppercase tracking-tighter absolute right-1.5 top-1 p-1 cursor-pointer z-15"
       >
         ✖
       </div>
@@ -733,7 +733,7 @@ CSAK valid JSON választható el más szövegek nélkül:
           <div className="mb-4">
             <button 
               onClick={onGoHome}
-              className="text-[#F7EAC8] hover:text-[#B8860B] transition-colors font-cinzel text-xs uppercase tracking-wider flex items-center gap-1 cursor-pointer"
+              className="text-[#FFF5E0] hover:text-[#B8860B] transition-colors font-cinzel text-xs uppercase tracking-wider flex items-center gap-1 cursor-pointer"
             >
               ← Vissza a főoldalra
             </button>
@@ -767,12 +767,12 @@ CSAK valid JSON választható el más szövegek nélkül:
                     onClick={() => setDifficulty(opt.label as Difficulty)}
                     className={`py-2 px-1 text-center font-cinzel font-bold rounded-[2px] transition-colors cursor-pointer text-xs flex flex-col items-center justify-center gap-0.5 border ${
                       difficulty === opt.label 
-                        ? "bg-[#6B1010] text-[#F7EAC8] border-[#B8860B]" 
+                        ? "bg-[#6B1010] text-[#FFF5E0] border-[#B8860B]" 
                         : "bg-[#FFF5D0] text-[#1C0E04] border-[#B8860B]/40 hover:bg-[#F0E6BD]"
                     }`}
                   >
                     <span>{opt.label}</span>
-                    <span className="text-[10px] opacity-75">({opt.count} esemény)</span>
+                    <span className="text-[11px] opacity-75">({opt.count} esemény)</span>
                   </button>
                 ))}
               </div>
@@ -780,7 +780,7 @@ CSAK valid JSON választható el más szövegek nélkül:
 
             <div className="bg-[#FFF5D0]/80 border-l-4 border-[#B8860B] p-4 rounded-[2px] text-xs text-[#1C0E04]">
               <span className="font-cinzel font-bold text-[#6B1010] block mb-1">SZABÁLYOK:</span>
-              <p className="font-lora leading-relaxed">
+              <p className="font-lora leading-[1.8]">
                 Rendezd időrendi sorrendbe a történelmi eseményeket! Húzd a kártyákat a megfelelő helyre.
                 Mobil eszközön először koppints egy kártyára a kiválasztáshoz, majd kattints a cél helyére történő beillesztéshez.
               </p>
@@ -788,7 +788,7 @@ CSAK valid JSON választható el más szövegek nélkül:
 
             <button
               onClick={handleStartGame}
-              className="w-full py-4 mt-4 bg-[#6B1010] hover:bg-[#801515] text-[#F7EAC8] rounded-[3px] border-1.5 border-[#B8860B] font-cinzel font-bold uppercase tracking-widest flex justify-center items-center gap-2 transition-colors cursor-pointer text-sm"
+              className="w-full py-4 mt-4 bg-[#6B1010] hover:bg-[#801515] text-[#FFF5E0] rounded-[3px] border-1.5 border-[#B8860B] font-cinzel font-bold uppercase tracking-widest flex justify-center items-center gap-2 transition-colors cursor-pointer text-sm"
             >
               <Play className="w-4 h-4 fill-current" /> Játék indítása
             </button>
@@ -801,7 +801,7 @@ CSAK valid JSON választható el más szövegek nélkül:
         <div className="text-center py-24 flex flex-col items-center justify-center">
           <Loader2 className="w-14 h-14 text-[#B8860B] animate-spin mb-6" />
           <div className="bg-[#FFF5D0] border-2 border-[#B8860B] p-6 rounded-[4px] relative max-w-sm shadow-[0_4px_25px_rgba(0,0,0,0.35)]">
-            <p className="text-sm font-cinzel font-bold text-[#6B1010] text-center tracking-wider leading-relaxed">
+            <p className="text-sm font-cinzel font-bold text-[#6B1010] text-center tracking-wider leading-[1.8]">
               Árpád lovag: „Események betöltése...”
             </p>
             <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-[#FFF5D0] border-r-2 border-b-2 border-[#B8860B] rotate-45"></div>
@@ -814,9 +814,9 @@ CSAK valid JSON választható el más szövegek nélkül:
         <div className="space-y-6">
           
           {/* Header Bar Area */}
-          <div className="w-full bg-[#1A0A03]/90 border-2 border-[#B8860B]/70 rounded-[4px] p-4 flex flex-col sm:flex-row justify-between items-center gap-4 text-[#F7EAC8] shadow-md">
+          <div className="w-full bg-[#1A0A03]/90 border-2 border-[#B8860B]/70 rounded-[4px] p-4 flex flex-col sm:flex-row justify-between items-center gap-4 text-[#FFF5E0] shadow-md">
             <div>
-              <span className="text-[10px] font-cinzel font-bold tracking-widest text-[#B8860B] uppercase">KRONOLÓGIA</span>
+              <span className="text-[11px] font-cinzel font-bold tracking-widest text-[#B8860B] uppercase">KRONOLÓGIA</span>
               <h3 className="font-cinzel font-bold text-sm sm:text-base leading-none tracking-wide text-white block mt-1">{topic}</h3>
             </div>
             
@@ -836,14 +836,14 @@ CSAK valid JSON választható el más szövegek nélkül:
                 stopTimer();
                 onGoHome();
               }}
-              className="px-3 py-1.5 border border-red-500/40 hover:bg-red-900/10 text-red-100 rounded-[2px] font-cinzel text-[10px] uppercase font-bold tracking-wider transition-colors cursor-pointer"
+              className="px-3 py-1.5 border border-red-500/40 hover:bg-red-900/10 text-red-100 rounded-[2px] font-cinzel text-[11px] uppercase font-bold tracking-wider transition-colors cursor-pointer"
             >
               Kilépés
             </button>
           </div>
 
           <div className="text-center">
-            <h2 className="text-xl sm:text-2xl font-cinzel font-bold text-[#F7EAC8] uppercase tracking-wide">
+            <h2 className="text-xl sm:text-2xl font-cinzel font-bold text-[#FFF5E0] uppercase tracking-wide">
               Rendezd időrendbe a kártyákat!
             </h2>
             <p className="text-xs font-loror text-[#FFF5D0]/70 italic mt-1">
@@ -856,12 +856,12 @@ CSAK valid JSON választható el más szövegek nélkül:
             
             {/* Left Hand: Available Events pile */}
             <div className="lg:col-span-5 bg-black/35 border-2 border-[#B8860B]/30 rounded-[4px] p-4 min-h-[300px] lg:sticky lg:top-4">
-              <div className="border-b border-[#B8860B]/20 pb-2 mb-4 flex justify-between items-center text-[#F7EAC8]">
+              <div className="border-b border-[#B8860B]/20 pb-2 mb-4 flex justify-between items-center text-[#FFF5E0]">
                 <span className="text-[11px] font-cinzel font-bold tracking-wider uppercase block">
                   Elérhető eseménykártyák ({availableIds.length} db)
                 </span>
                 {selectedCardId && (
-                  <span className="text-[10px] font-lora text-[#B8860B] italic animate-pulse">
+                  <span className="text-[11px] font-lora text-[#B8860B] italic animate-pulse">
                     Válassz cél helyet!
                   </span>
                 )}
@@ -871,7 +871,7 @@ CSAK valid JSON választható el más szövegek nélkül:
                 <div className="h-44 flex flex-col items-center justify-center text-center opacity-65" data-available-pile="true">
                   <ListOrdered className="w-10 h-10 text-[#B8860B] mb-2" />
                   <p className="text-xs font-lora text-white">Mindegyik esemény elhelyezve a listában!</p>
-                  <p className="text-[10px] font-lora text-white/70 italic mt-0.5">Nyomd meg az Ellenőrzést a pontozáshoz.</p>
+                  <p className="text-[11px] font-lora text-white/70 italic mt-0.5">Nyomd meg az Ellenőrzést a pontozáshoz.</p>
                 </div>
               ) : (
                 <div 
@@ -912,7 +912,7 @@ CSAK valid JSON választható el más szövegek nélkül:
 
             {/* Right Hand: 1 to N Sorted Placements List */}
             <div className="lg:col-span-7 bg-[#FFF5D0]/10 border-2 border-[#B8860B]/30 rounded-[4px] p-4">
-              <span className="text-[11px] font-cinzel font-bold tracking-wider text-[#F7EAC8] uppercase block border-b border-[#B8860B]/20 pb-2 mb-4">
+              <span className="text-[11px] font-cinzel font-bold tracking-wider text-[#FFF5E0] uppercase block border-b border-[#B8860B]/20 pb-2 mb-4">
                 IDŐRENDI LÉPCSŐFOKOK (korábbitól a legújabbig)
               </span>
 
@@ -997,7 +997,7 @@ CSAK valid JSON választható el más szövegek nélkül:
                             }}
                           />
                         ) : (
-                          <div className="w-full text-center text-[10px] font-cinzel uppercase tracking-widest text-[#B8860B]/50">
+                          <div className="w-full text-center text-[11px] font-cinzel uppercase tracking-widest text-[#B8860B]/50">
                             {selectedCardId ? "Koppints ide az elhelyezéshez" : "Húzz ide kártyát..."}
                           </div>
                         )}
@@ -1014,14 +1014,14 @@ CSAK valid JSON választható el más szövegek nélkül:
                   onClick={handleCheckResults}
                   className={`w-full max-w-sm py-4 rounded-[3px] border-1.5 font-cinzel font-bold uppercase tracking-widest text-xs flex justify-center items-center gap-2 transition-all duration-200 cursor-pointer ${
                     isAllSlotsFilled()
-                      ? "bg-green-700 hover:bg-green-600 text-[#F7EAC8] border-green-500 shadow-lg"
-                      : "bg-[#4A0808]/15 text-[#F7EAC8]/45 border-[#B8860B]/20 cursor-not-allowed"
+                      ? "bg-green-700 hover:bg-green-600 text-[#FFF5E0] border-green-500 shadow-lg"
+                      : "bg-[#4A0808]/15 text-[#FFF5E0]/45 border-[#B8860B]/20 cursor-not-allowed"
                   }`}
                 >
                   <Check className="w-4 h-4" /> Ellenőrzés
                 </button>
                 {!isAllSlotsFilled() && (
-                  <p className="text-[10px] text-red-300 font-lora italic text-center mt-2 font-medium">
+                  <p className="text-[11px] text-red-300 font-lora italic text-center mt-2 font-medium">
                     Töltsd ki az összes pozíciót ({slots.filter(s=>s!==null).length}/{slots.length} kész) az ellenőrzés futtatásához!
                   </p>
                 )}
@@ -1047,8 +1047,8 @@ CSAK valid JSON választható el más szövegek nélkül:
 
             {/* Big Verdict Mascot box */}
             <div className="my-6 max-w-md mx-auto bg-[#FFF5D0] border-2 border-[#B8860B] p-4 rounded-[4px] relative shadow-md">
-              <span className="text-[9px] font-cinzel font-bold text-[#B8860B] block tracking-widest mb-1 uppercase">ÁRPÁD LOVAG SZÓL:</span>
-              <p className="text-sm font-cinzel font-bold text-[#6B1010] text-center leading-relaxed">
+              <span className="text-[11px] font-cinzel font-bold text-[#B8860B] block tracking-widest mb-1 uppercase">ÁRPÁD LOVAG SZÓL:</span>
+              <p className="text-sm font-cinzel font-bold text-[#6B1010] text-center leading-[1.8]">
                 „{getMascotVerdictSpeech(stars)}”
               </p>
               <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-[#FFF5D0] border-r-2 border-b-2 border-[#B8860B] rotate-45"></div>
@@ -1072,28 +1072,28 @@ CSAK valid JSON választható el más szövegek nélkül:
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-2xl mx-auto my-6">
               
               <div className="bg-white/40 p-4 border border-[#B8860B]/20 text-center">
-                <span className="block text-[#1C0E04]/60 text-[10px] uppercase font-cinzel tracking-wider font-bold mb-1">PONTOS HELY</span>
+                <span className="block text-[#1C0E04]/60 text-[11px] uppercase font-cinzel tracking-wider font-bold mb-1">PONTOS HELY</span>
                 <span className="text-xl font-cinzel font-bold text-[#6B1010]">
                   {correctPositionsCount} / {slots.length}
                 </span>
               </div>
 
               <div className="bg-white/40 p-4 border border-[#B8860B]/20 text-center">
-                <span className="block text-[#1C0E04]/60 text-[10px] uppercase font-cinzel tracking-wider font-bold mb-1">TELJES PONT</span>
+                <span className="block text-[#1C0E04]/60 text-[11px] uppercase font-cinzel tracking-wider font-bold mb-1">TELJES PONT</span>
                 <span className="text-xl font-cinzel font-bold text-green-800">
                   {finalScore} pont
                 </span>
               </div>
 
               <div className="bg-white/40 p-4 border border-[#B8860B]/20 text-center">
-                <span className="block text-[#1C0E04]/60 text-[10px] uppercase font-cinzel tracking-wider font-bold mb-1">IDŐERŐ</span>
+                <span className="block text-[#1C0E04]/60 text-[11px] uppercase font-cinzel tracking-wider font-bold mb-1">IDŐERŐ</span>
                 <span className="text-xl font-mono font-bold text-slate-800">
                   {formatTimer(elapsedSeconds)}
                 </span>
               </div>
 
               <div className="bg-white/40 p-4 border border-[#B8860B]/20 text-center">
-                <span className="block text-[#1C0E04]/60 text-[10px] uppercase font-cinzel tracking-wider font-bold mb-1">szerzett XP</span>
+                <span className="block text-[#1C0E04]/60 text-[11px] uppercase font-cinzel tracking-wider font-bold mb-1">szerzett XP</span>
                 <span className="text-xl font-cinzel font-bold text-amber-800 flex items-center justify-center gap-1">
                   +{xpAwarded} XP
                 </span>
@@ -1116,14 +1116,14 @@ CSAK valid JSON választható el más szövegek nélkül:
             <div className="flex flex-col sm:flex-row justify-center gap-3 max-w-md mx-auto">
               <button
                 onClick={() => setShowTimelineReview(!showTimelineReview)}
-                className="flex-1 py-3 bg-[#B8860B] hover:bg-[#8A6305] text-[#F7EAC8] rounded-[3px] font-cinzel font-bold uppercase tracking-wider transition-colors cursor-pointer text-xs"
+                className="flex-1 py-3 bg-[#B8860B] hover:bg-[#8A6305] text-[#FFF5E0] rounded-[3px] font-cinzel font-bold uppercase tracking-wider transition-colors cursor-pointer text-xs"
               >
                 {showTimelineReview ? "Sorrend elrejtése" : "Helyes sorrend megtekintése"}
               </button>
               
               <button
                 onClick={handleRestart}
-                className="flex-1 py-3 bg-[#6B1010] hover:bg-[#801515] text-[#F7EAC8] border border-[#B8860B] rounded-[3px] font-cinzel font-bold uppercase tracking-wider transition-colors cursor-pointer text-xs"
+                className="flex-1 py-3 bg-[#6B1010] hover:bg-[#801515] text-[#FFF5E0] border border-[#B8860B] rounded-[3px] font-cinzel font-bold uppercase tracking-wider transition-colors cursor-pointer text-xs"
               >
                 Újra próbálom
               </button>
@@ -1140,7 +1140,7 @@ CSAK valid JSON választható el más szövegek nélkül:
 
           {/* Correct Placements Map for Visual Feedback */}
           <div className="bg-black/35 border-2 border-[#B8860B]/40 rounded-[4px] p-6 transition-all">
-            <h3 className="text-base font-cinzel font-bold text-[#F7EAC8] uppercase tracking-wider border-b border-[#B8860B]/30 pb-2 mb-6 text-center">
+            <h3 className="text-base font-cinzel font-bold text-[#FFF5E0] uppercase tracking-wider border-b border-[#B8860B]/30 pb-2 mb-6 text-center">
               Kiértékelt elrendezésed eredménye
             </h3>
             
@@ -1199,24 +1199,24 @@ CSAK valid JSON választható el más szövegek nélkül:
                         <span className="font-mono text-xs font-bold text-yellow-500 bg-black/40 px-2 py-0.5 border border-[#B8860B]/20">
                           Slot #{idx + 1}
                         </span>
-                        <h4 className="font-cinzel font-bold text-[#F7EAC8] text-xs sm:text-sm">
+                        <h4 className="font-cinzel font-bold text-[#FFF5E0] text-xs sm:text-sm">
                           {userEvt.event}
                         </h4>
                       </div>
-                      <p className="text-[11px] font-lora text-[#FFF5D0]/80 leading-relaxed mt-1">
+                      <p className="text-[11px] font-lora text-[#FFF5D0]/80 leading-[1.8] mt-1">
                         {userEvt.description}
                       </p>
                     </div>
 
                     {!isCorrect && correctEventAtThisIndex && (
                       <div className="md:w-56 bg-black/45 border border-red-500/25 p-2 rounded-[2px] mt-2 md:mt-0 flex flex-col gap-0.5">
-                        <span className="text-[9px] font-cinzel text-red-400 font-bold uppercase tracking-wider block leading-none mb-1">
+                        <span className="text-[11px] font-cinzel text-red-400 font-bold uppercase tracking-wider block leading-none mb-1">
                           IDE KELLENE KERÜLNIE:
                         </span>
                         <span className="font-cinzel font-bold text-white text-[11px] leading-tight block truncate">
                           e.g., {correctEventAtThisIndex.event}
                         </span>
-                        <span className="font-mono text-yellow-500 text-[10px] font-bold">
+                        <span className="font-mono text-yellow-500 text-[11px] font-bold">
                           Évszám: {correctEventAtThisIndex.displayYear || correctEventAtThisIndex.year}
                         </span>
                       </div>
@@ -1231,7 +1231,7 @@ CSAK valid JSON választható el más szövegek nélkül:
           {showTimelineReview && (
             <div className="bg-[#1A0A03]/90 border-2 border-[#B8860B] rounded-[4px] p-6 text-center animate-fade-in transition-all">
               <div className="border-b border-[#B8860B]/30 pb-2 mb-6">
-                <span className="text-[10px] font-cinzel font-bold tracking-widest text-yellow-500 uppercase">KRONOLÓGIKUS REZEPTÚRA</span>
+                <span className="text-[11px] font-cinzel font-bold tracking-widest text-yellow-500 uppercase">KRONOLÓGIKUS REZEPTÚRA</span>
                 <h3 className="font-cinzel font-bold text-base text-white mt-1">A KORSZAK VALÓS IDŐSZALAGJA</h3>
                 <p className="text-xs font-loror text-[#FFF5D0]/60 italic">Helyes kronológiai sorrend évszámokkal és részletekkel</p>
               </div>
@@ -1261,7 +1261,7 @@ CSAK valid JSON választható el más szövegek nélkül:
                               <h4 className="font-cinzel font-bold text-white text-xs sm:text-sm tracking-wide">
                                 {evt.event}
                               </h4>
-                              <p className="text-[10px] font-lora text-white/70 italic mt-0.5 leading-relaxed line-clamp-3">
+                              <p className="text-[11px] font-lora text-white/70 italic mt-0.5 leading-[1.8] line-clamp-3">
                                 {evt.description}
                               </p>
                             </div>
@@ -1279,7 +1279,7 @@ CSAK valid JSON választható el más szövegek nélkül:
                               <h4 className="font-cinzel font-bold text-white text-xs sm:text-sm tracking-wide">
                                 {evt.event}
                               </h4>
-                              <p className="text-[10px] font-lora text-white/70 italic mt-0.5 leading-relaxed line-clamp-3">
+                              <p className="text-[11px] font-lora text-white/70 italic mt-0.5 leading-[1.8] line-clamp-3">
                                 {evt.description}
                               </p>
                             </div>

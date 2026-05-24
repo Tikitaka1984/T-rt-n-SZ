@@ -222,7 +222,7 @@ export default function PairQuizScreen({ onGoHome }: PairQuizScreenProps) {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8 text-left">
             <div className="space-y-1">
-               <label className="text-[10px] font-cinzel font-bold tracking-widest text-[#6B1010] uppercase">Nehézség</label>
+               <label className="text-[11px] font-cinzel font-bold tracking-widest text-[#6B1010] uppercase">Nehézség</label>
                <select className="w-full bg-white/50 border border-[#B8860B] rounded-sm px-3 py-2 text-[#1C0E04]" value={settings.difficulty} onChange={e => setSettings({...settings, difficulty: e.target.value as Difficulty})}>
                  <option value="Könnyű">Könnyű</option>
                  <option value="Közepes">Közepes</option>
@@ -230,7 +230,7 @@ export default function PairQuizScreen({ onGoHome }: PairQuizScreenProps) {
                </select>
             </div>
             <div className="space-y-1">
-               <label className="text-[10px] font-cinzel font-bold tracking-widest text-[#6B1010] uppercase">Kártyák száma</label>
+               <label className="text-[11px] font-cinzel font-bold tracking-widest text-[#6B1010] uppercase">Kártyák száma</label>
                <select className="w-full bg-white/50 border border-[#B8860B] rounded-sm px-3 py-2 text-[#1C0E04]" value={settings.count} onChange={e => setSettings({...settings, count: parseInt(e.target.value)})}>
                  <option value={5}>5 Kártya</option>
                  <option value={8}>8 Kártya</option>
@@ -238,7 +238,7 @@ export default function PairQuizScreen({ onGoHome }: PairQuizScreenProps) {
                </select>
             </div>
             <div className="space-y-1 sm:col-span-2">
-               <label className="text-[10px] font-cinzel font-bold tracking-widest text-[#6B1010] uppercase">Idő kérdésenként</label>
+               <label className="text-[11px] font-cinzel font-bold tracking-widest text-[#6B1010] uppercase">Idő kérdésenként</label>
                <select className="w-full bg-white/50 border border-[#B8860B] rounded-sm px-3 py-2 text-[#1C0E04]" value={settings.timePerQuestion} onChange={e => setSettings({...settings, timePerQuestion: parseInt(e.target.value)})}>
                  <option value={60}>1 perc</option>
                  <option value={120}>2 perc</option>
@@ -246,7 +246,7 @@ export default function PairQuizScreen({ onGoHome }: PairQuizScreenProps) {
             </div>
           </div>
 
-          <button onClick={handleStartGenerate} className="w-full bg-[#6B1010] hover:bg-[#8B1A1A] text-[#F7EAC8] font-cinzel font-bold uppercase py-4 border border-[#B8860B] shadow-md flex justify-center items-center gap-2">
+          <button onClick={handleStartGenerate} className="w-full bg-[#6B1010] hover:bg-[#8B1A1A] text-[#FFF5E0] font-cinzel font-bold uppercase py-4 border border-[#B8860B] shadow-md flex justify-center items-center gap-2">
             <Play className="w-5 h-5 fill-current" /> Játék indítása
           </button>
         </div>
@@ -255,7 +255,7 @@ export default function PairQuizScreen({ onGoHome }: PairQuizScreenProps) {
       {phase === "loading" && (
         <div className="text-center py-20">
           <Loader2 className="w-16 h-16 animate-spin text-[#B8860B] mx-auto mb-4" />
-          <h2 className="text-[#F7EAC8] font-cinzel font-bold text-xl uppercase tracking-widest">Kártyák előkészítése...</h2>
+          <h2 className="text-[#FFF5E0] font-cinzel font-bold text-xl uppercase tracking-widest">Kártyák előkészítése...</h2>
         </div>
       )}
 
@@ -268,7 +268,7 @@ export default function PairQuizScreen({ onGoHome }: PairQuizScreenProps) {
           <h2 className="text-4xl font-cinzel font-bold text-[#1C0E04] mb-8">
             2. játékos: {phase === "intro1" ? "VÁLASZOLÓ" : "KÉRDEZŐ"}
           </h2>
-          <button onClick={handleStartRound} className="mx-auto w-full max-w-sm bg-[#6B1010] text-[#F7EAC8] font-cinzel font-bold py-4 uppercase flex justify-center items-center gap-2">
+          <button onClick={handleStartRound} className="mx-auto w-full max-w-sm bg-[#6B1010] text-[#FFF5E0] font-cinzel font-bold py-4 uppercase flex justify-center items-center gap-2">
             <Play className="w-5 h-5 fill-current" /> Játék kezdése
           </button>
         </div>
@@ -277,18 +277,18 @@ export default function PairQuizScreen({ onGoHome }: PairQuizScreenProps) {
       {phase === "active" && (
         <div className="flex flex-col md:flex-row gap-6 items-stretch">
           {/* Left panel - Kérdező */}
-          <div className="flex-1 bg-[#1A0A03] border border-[#B8860B]/50 p-6 rounded-sm shadow-xl flex flex-col relative text-[#F7EAC8]">
-            <h3 className="text-[10px] font-cinzel font-bold text-[#B8860B] uppercase tracking-widest mb-4">Kérdező (Látja)</h3>
+          <div className="flex-1 bg-[#1A0A03] border border-[#B8860B]/50 p-6 rounded-sm shadow-xl flex flex-col relative text-[#FFF5E0]">
+            <h3 className="text-[11px] font-cinzel font-bold text-[#B8860B] uppercase tracking-widest mb-4">Kérdező (Látja)</h3>
             <p className="font-cinzel text-xl sm:text-2xl font-bold leading-tight mb-4">
               {currentCard.question}
             </p>
-            <p className="font-lora text-[#F7EAC8]/80 italic mb-6 text-sm">
+            <p className="font-lora text-[#FFF5E0]/80 italic mb-6 text-sm">
               Súgó válasz: {currentCard.answer}
             </p>
 
             <div className="mt-auto">
               <div className="flex justify-between items-center mb-2">
-                <span className="text-xs font-bold font-cinzel text-[#F7EAC8]/70">
+                <span className="text-xs font-bold font-cinzel text-[#FFF5E0]/70">
                   {foundKeywords.length} / {currentCard.keywords.length} kulcsszó
                 </span>
                 <button onClick={() => setShowHint(!showHint)} className="text-xs underline text-[#B8860B]">
@@ -310,7 +310,7 @@ export default function PairQuizScreen({ onGoHome }: PairQuizScreenProps) {
                       key={i}
                       disabled={isFound || !timerActive}
                       onClick={() => handleKeywordClick(kw)}
-                      className={`min-h-[44px] px-4 py-2 border rounded-sm font-cinzel text-sm font-bold transition-all flex items-center gap-2 ${isFound ? 'bg-[#2E8B57] text-[#FFF] border-[#2E8B57]' : 'bg-[#FFF5D0]/10 text-[#F7EAC8] border-[#B8860B] hover:bg-[#B8860B]/20'}`}
+                      className={`min-h-[44px] px-4 py-2 border rounded-sm font-cinzel text-sm font-bold transition-all flex items-center gap-2 ${isFound ? 'bg-[#2E8B57] text-[#FFF] border-[#2E8B57]' : 'bg-[#FFF5D0]/10 text-[#FFF5E0] border-[#B8860B] hover:bg-[#B8860B]/20'}`}
                     >
                       {kw} {isFound && <Check className="w-4 h-4" />}
                     </button>
@@ -329,7 +329,7 @@ export default function PairQuizScreen({ onGoHome }: PairQuizScreenProps) {
 
           {/* Right panel - Válaszoló */}
           <div className="flex-1 bg-[#FFF5D0] border border-[#B8860B] p-6 rounded-sm shadow-xl flex flex-col items-center justify-center relative text-[#1C0E04]">
-            <h3 className="text-[10px] font-cinzel font-bold text-[#6B1010] uppercase tracking-widest absolute top-6 left-6">Válaszoló</h3>
+            <h3 className="text-[11px] font-cinzel font-bold text-[#6B1010] uppercase tracking-widest absolute top-6 left-6">Válaszoló</h3>
             
             <p className="font-cinzel text-2xl font-bold leading-tight mt-10 mb-10 text-center">
               {currentCard.question}
@@ -350,7 +350,7 @@ export default function PairQuizScreen({ onGoHome }: PairQuizScreenProps) {
             )}
 
             {!timerActive && (
-              <button onClick={handleNextCard} className="w-full bg-[#6B1010] text-[#F7EAC8] py-4 uppercase font-cinzel font-bold flex justify-center items-center gap-2 mt-auto border border-[#B8860B]">
+              <button onClick={handleNextCard} className="w-full bg-[#6B1010] text-[#FFF5E0] py-4 uppercase font-cinzel font-bold flex justify-center items-center gap-2 mt-auto border border-[#B8860B]">
                 Következő kártya <ArrowRight className="w-4 h-4" />
               </button>
             )}
@@ -378,7 +378,7 @@ export default function PairQuizScreen({ onGoHome }: PairQuizScreenProps) {
           <h2 className="text-3xl font-cinzel font-bold text-[#6B1010] mb-8">
             CSERE! Most te kérdezel!
           </h2>
-          <button onClick={handleSwap} className="mx-auto w-full max-w-sm bg-[#6B1010] hover:bg-[#8B1A1A] text-[#F7EAC8] font-cinzel font-bold py-4 uppercase flex justify-center items-center gap-2 border border-[#B8860B]">
+          <button onClick={handleSwap} className="mx-auto w-full max-w-sm bg-[#6B1010] hover:bg-[#8B1A1A] text-[#FFF5E0] font-cinzel font-bold py-4 uppercase flex justify-center items-center gap-2 border border-[#B8860B]">
             Folytatás <Play className="w-4 h-4 fill-current"/>
           </button>
         </div>
@@ -412,10 +412,10 @@ export default function PairQuizScreen({ onGoHome }: PairQuizScreenProps) {
           </div>
 
           <div className="flex gap-4">
-             <button onClick={() => setPhase("settings")} className="flex-1 border-2 border-[#6B1010] text-[#6B1010] hover:bg-[#6B1010] hover:text-[#F7EAC8] py-4 uppercase font-cinzel font-bold transition-colors">
+             <button onClick={() => setPhase("settings")} className="flex-1 border-2 border-[#6B1010] text-[#6B1010] hover:bg-[#6B1010] hover:text-[#FFF5E0] py-4 uppercase font-cinzel font-bold transition-colors">
                Újra játszani
              </button>
-             <button onClick={onGoHome} className="flex-1 bg-[#6B1010] text-[#F7EAC8] py-4 uppercase font-cinzel font-bold">
+             <button onClick={onGoHome} className="flex-1 bg-[#6B1010] text-[#FFF5E0] py-4 uppercase font-cinzel font-bold">
                Főmenü
              </button>
           </div>

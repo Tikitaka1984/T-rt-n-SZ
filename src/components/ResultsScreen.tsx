@@ -140,7 +140,7 @@ export default function ResultsScreen({
         animate={{ opacity: 1, y: 0 }}
         className="medieval-card p-6 sm:p-8 text-center mb-8 relative"
       >
-        <span className="text-[10px] text-[#6B1010]/80 font-cinzel font-bold block uppercase mb-1 tracking-[0.2em]">Kiértékelés</span>
+        <span className="text-[11px] text-[#6B1010]/80 font-cinzel font-bold block uppercase mb-1 tracking-[0.2em]">Kiértékelés</span>
         <h2 className="text-2xl sm:text-3xl font-cinzel font-bold text-[#6B1010] mb-1">Kvantitatív Összegzés</h2>
         <span className="text-[11px] font-cinzel text-[#1C0E04]/60 block uppercase mb-6 tracking-wider">
           {gradeSelection} • {topicSelection} ({difficultySelection})
@@ -150,10 +150,10 @@ export default function ResultsScreen({
         <div className="flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-12 mb-6">
           <div className="relative flex items-center justify-center w-36 h-36 rounded-full border-2 border-[#B8860B] shadow-md bg-[#FFF5D0]">
             <div className="text-center">
-              <span className="block text-4xl font-cinzel font-bold text-[#6B1010] leading-none mb-1">
+              <span className="block text-6xl font-cinzel font-[900] text-[#1A0800] leading-none mb-2">
                 {scorePercent}%
               </span>
-              <span className="text-[9px] text-[#1C0E04]/70 font-cinzel tracking-wider uppercase block mt-1">
+              <span className="text-[11px] text-[#1C0E04]/70 font-cinzel tracking-wider uppercase block mt-1">
                 {totalObjective > 0 ? `${correctCount} / ${totalObjective} helyes` : "Esszé Fókusz"}
               </span>
             </div>
@@ -166,11 +166,11 @@ export default function ResultsScreen({
                 {gradeInfo.label} ({gradeInfo.gradeNum})
               </span>
             </div>
-            <p className="text-xs sm:text-sm font-lora italic text-[#1C0E04] max-w-sm leading-relaxed">
+            <p className="text-xs sm:text-sm font-lora italic text-[#1C0E04] max-w-sm leading-[1.8]">
               {gradeInfo.desc}
             </p>
             {essayCount > 0 && (
-              <span className="text-[10px] text-[#1C0E04]/80 bg-[#FFF5D0] border border-[#B8860B]/40 px-3 py-2 rounded-none font-cinzel font-bold uppercase tracking-wide block mt-3">
+              <span className="text-[11px] text-[#1C0E04]/80 bg-[#FFF5D0] border border-[#B8860B]/40 px-3 py-2 rounded-none font-cinzel font-bold uppercase tracking-wide block mt-3">
                 ✍️ {essayCount} db kifejtős esszéd rögzítésre került. Az AI értékelést az egyes kérdéseknél találod.
               </span>
             )}
@@ -184,7 +184,7 @@ export default function ResultsScreen({
               <Sparkles className="w-4 h-4 text-[#B8860B]" />
               <span>Szerzett XP: +{xpResult.earnedXp}</span>
               {xpResult.perfectBonus > 0 && (
-                <span className="text-[10px] bg-[#2D6A4F]/10 text-[#2D6A4F] px-2 py-0.5 border border-[#2D6A4F]/30 uppercase tracking-widest ml-2">Hibátlan bónusz!</span>
+                <span className="text-[11px] bg-[#2D6A4F]/10 text-[#2D6A4F] px-2 py-0.5 border border-[#2D6A4F]/30 uppercase tracking-widest ml-2">Hibátlan bónusz!</span>
               )}
             </div>
             
@@ -200,7 +200,7 @@ export default function ResultsScreen({
             )}
 
             {xpResult.currentStreak > 0 && (
-              <div className="text-[10px] text-[#1C0E04]/70 font-cinzel uppercase tracking-[0.2em] font-bold mt-2">
+              <div className="text-[11px] text-[#1C0E04]/70 font-cinzel uppercase tracking-[0.2em] font-bold mt-2">
                 🔥 {xpResult.currentStreak} napos sorozat
               </div>
             )}
@@ -247,14 +247,14 @@ export default function ResultsScreen({
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <button
               onClick={onRestart}
-              className="flex-1 px-6 py-4 bg-[#6B1010] hover:bg-[#801515] text-[#F7EAC8] font-cinzel border-1.5 border-[#B8860B] font-bold uppercase tracking-[0.18em] rounded-[3px] text-xs flex items-center justify-center gap-2 transition-colors cursor-pointer shadow-md btn-shine-effect"
+              className="flex-1 px-6 py-4 bg-[#6B1010] hover:bg-[#801515] text-[#FFF5E0] font-cinzel border-1.5 border-[#B8860B] font-bold uppercase tracking-[0.18em] rounded-[3px] text-xs flex items-center justify-center gap-2 transition-colors cursor-pointer shadow-md btn-shine-effect"
             >
               <RotateCcw className="w-3.5 h-3.5" />
               <span>Új krónika</span>
             </button>
             <button
                onClick={() => setShowQRModal(true)}
-               className="flex-1 px-6 py-4 bg-[#1C0E04]/60 hover:bg-[#1C0E04] text-[#F7EAC8] font-cinzel border border-[#B8860B]/50 font-bold uppercase tracking-widest rounded-[3px] text-xs flex items-center justify-center gap-2 transition-colors cursor-pointer btn-shine-effect"
+               className="flex-1 px-6 py-4 bg-[#1C0E04]/60 hover:bg-[#1C0E04] text-[#FFF5E0] font-cinzel border border-[#B8860B]/50 font-bold uppercase tracking-widest rounded-[3px] text-xs flex items-center justify-center gap-2 transition-colors cursor-pointer btn-shine-effect"
             >
               <Share2 className="w-3.5 h-3.5" />
               <span>Megosztás</span>
@@ -270,7 +270,7 @@ export default function ResultsScreen({
              <button
                onClick={() => handlePrintWorksheet(false)}
                disabled={isPrinting}
-               className="flex-1 px-4 py-3 bg-[#1C0E04]/40 hover:bg-[#1C0E04]/60 text-[#F7EAC8] font-cinzel border border-[#B8860B]/40 font-bold uppercase tracking-wider rounded-[3px] text-[10px] flex items-center justify-center gap-2 transition-colors cursor-pointer disabled:opacity-50 btn-shine-effect"
+               className="flex-1 px-4 py-3 bg-[#1C0E04]/40 hover:bg-[#1C0E04]/60 text-[#FFF5E0] font-cinzel border border-[#B8860B]/40 font-bold uppercase tracking-wider rounded-[3px] text-[11px] flex items-center justify-center gap-2 transition-colors cursor-pointer disabled:opacity-50 btn-shine-effect"
              >
                <Printer className="w-3.5 h-3.5" />
                <span>Nyomtatható feladatlap</span>
@@ -278,7 +278,7 @@ export default function ResultsScreen({
              <button
                onClick={() => handlePrintWorksheet(true)}
                disabled={isPrinting}
-               className="flex-1 px-4 py-3 bg-[#1C0E04]/40 hover:bg-[#1C0E04]/60 text-[#F7EAC8] font-cinzel border border-[#B8860B]/40 font-bold uppercase tracking-wider rounded-[3px] text-[10px] flex items-center justify-center gap-2 transition-colors cursor-pointer disabled:opacity-50 btn-shine-effect"
+               className="flex-1 px-4 py-3 bg-[#1C0E04]/40 hover:bg-[#1C0E04]/60 text-[#FFF5E0] font-cinzel border border-[#B8860B]/40 font-bold uppercase tracking-wider rounded-[3px] text-[11px] flex items-center justify-center gap-2 transition-colors cursor-pointer disabled:opacity-50 btn-shine-effect"
              >
                <CheckCircle2 className="w-3.5 h-3.5" />
                <span>Megoldókulcs nyomtatása</span>
@@ -289,7 +289,7 @@ export default function ResultsScreen({
 
       {/* DETAILED QUESTION REVIEW */}
       <div className="space-y-4" id="results-detailed-review">
-        <h3 className="font-cinzel font-bold text-[#F7EAC8] text-lg mb-4 flex items-center gap-2">
+        <h3 className="font-cinzel font-bold text-[#FFF5E0] text-lg mb-4 flex items-center gap-2">
           <span>KÉRDÉSEK FELÜLVIZSGÁLATA</span>
           <span className="text-xs text-[#FFF5D0]/60 font-cinzel uppercase font-bold tracking-widest">({questions.length} feladat)</span>
         </h3>
@@ -323,7 +323,7 @@ export default function ResultsScreen({
                     #{idx + 1}
                   </span>
                   <div>
-                    <span className="text-[9px] font-cinzel font-bold tracking-widest uppercase block text-[#6B1010]/70 mb-1">
+                    <span className="text-[11px] font-cinzel font-bold tracking-widest uppercase block text-[#6B1010]/70 mb-1">
                       {q.type === "multiple_choice" ? "Feleletválasztós" : q.type === "true_false" ? "Igaz-Hamis" : "Esszé kérdés"}
                     </span>
                     <p className="font-lora font-bold text-[#1C0E04] text-sm sm:text-base leading-snug">
@@ -334,24 +334,24 @@ export default function ResultsScreen({
 
                 <div className="flex items-center gap-2 shrink-0">
                   {xpResult?.xpPerQuestion[q.id] > 0 && (
-                     <span className="text-[10px] font-cinzel font-bold text-[#6B1010] min-w-max mr-1">
+                     <span className="text-[11px] font-cinzel font-bold text-[#6B1010] min-w-max mr-1">
                        +{xpResult.xpPerQuestion[q.id]} XP
                      </span>
                   )}
                   {isEssay ? (
-                    <span className="text-[10px] font-cinzel font-bold uppercase tracking-wider text-[#1C0E04]/75 bg-[#E8CB88]/30 px-2 py-1 rounded-none border border-[#B8860B]/35">Rögzített</span>
+                    <span className="text-[11px] font-cinzel font-bold uppercase tracking-wider text-[#1C0E04]/75 bg-[#E8CB88]/30 px-2 py-1 rounded-none border border-[#B8860B]/35">Rögzített</span>
                   ) : isCorrect ? (
-                    <span className="text-[10px] font-cinzel font-bold uppercase tracking-widest text-[#2D6A4F] bg-[#2D6A4F]/10 border-1.5 border-[#2D6A4F] px-2.5 py-1 rounded-none flex items-center gap-1">
+                    <span className="text-[11px] font-cinzel font-bold uppercase tracking-widest text-[#2D6A4F] bg-[#2D6A4F]/10 border-1.5 border-[#2D6A4F] px-2.5 py-1 rounded-none flex items-center gap-1">
                       <CheckCircle2 className="w-3.5 h-3.5 text-green-700" />
                       <span>Helyes</span>
                     </span>
                   ) : isSkippedOrTimeout ? (
-                    <span className="text-[10px] font-cinzel font-bold uppercase tracking-widest text-[#8B1A1A] bg-[#8B1A1A]/10 border-1.5 border-[#8B1A1A] px-2.5 py-1 rounded-none flex items-center gap-1">
+                    <span className="text-[11px] font-cinzel font-bold uppercase tracking-widest text-[#8B1A1A] bg-[#8B1A1A]/10 border-1.5 border-[#8B1A1A] px-2.5 py-1 rounded-none flex items-center gap-1">
                       <XCircle className="w-3.5 h-3.5 text-red-700" />
                       <span>Lejárt</span>
                     </span>
                   ) : (
-                    <span className="text-[10px] font-cinzel font-bold uppercase tracking-widest text-[#8B1A1A] bg-[#8B1A1A]/10 border-1.5 border-[#8B1A1A] px-2.5 py-1 rounded-none flex items-center gap-1">
+                    <span className="text-[11px] font-cinzel font-bold uppercase tracking-widest text-[#8B1A1A] bg-[#8B1A1A]/10 border-1.5 border-[#8B1A1A] px-2.5 py-1 rounded-none flex items-center gap-1">
                       <XCircle className="w-3.5 h-3.5 text-red-700" />
                       <span>Hibás</span>
                     </span>
@@ -375,11 +375,11 @@ export default function ResultsScreen({
                       {!isEssay ? (
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pb-2">
                           <div className="p-3 bg-white/40 border border-[#B8860B]/20 rounded-none">
-                            <span className="text-[#6B1010] font-cinzel font-bold block text-[9px] uppercase tracking-wider mb-1">TE VÁLASZOD:</span>
-                            <span className={`font-lora italic font-bold text-sm ${isCorrect ? "text-[#2D6A4F]" : "text-[#8B1A1A]"}`}>
+                            <span className="text-[#6B1010] font-cinzel font-bold block text-[11px] uppercase tracking-wider mb-1">TE VÁLASZOD:</span>
+                            <span className={`font-lora italic font-bold text-[14px] ${isCorrect ? "text-[#2D6A4F]" : "text-[#8B1A1A]"}`}>
                               {studentAns === "" ? "[Nem érkezett válasz]" : studentAns}
                               {q.type === "multiple_choice" && studentAns !== "" && q.options && (
-                                <span className="font-lora not-italic font-medium text-xs text-neutral-800 block mt-1">
+                                <span className="font-lora not-italic font-medium text-[13px] text-[#3D1A00] block mt-1">
                                   {q.options[["A", "B", "C", "D"].indexOf(studentAns)]}
                                 </span>
                               )}
@@ -387,11 +387,11 @@ export default function ResultsScreen({
                           </div>
 
                           <div className="p-3 bg-white/40 border border-[#B8860B]/20 rounded-none">
-                            <span className="text-[#6B1010] font-cinzel font-bold block text-[9px] uppercase tracking-wider mb-1">HELYES VÁLASZ:</span>
-                            <span className="font-lora italic font-bold text-neutral-900 text-sm">
+                            <span className="text-[#6B1010] font-cinzel font-bold block text-[11px] uppercase tracking-wider mb-1">HELYES VÁLASZ:</span>
+                            <span className="font-lora italic font-bold text-[#1A0800] text-[14px]">
                               {q.correctAnswer}
                               {q.type === "multiple_choice" && q.options && (
-                                <span className="font-lora not-italic font-medium text-xs text-neutral-800 block mt-1">
+                                <span className="font-lora not-italic font-medium text-[13px] text-[#3D1A00] block mt-1">
                                   {q.options[["A", "B", "C", "D"].indexOf(q.correctAnswer || "A")]}
                                 </span>
                               )}
@@ -402,8 +402,8 @@ export default function ResultsScreen({
                         // Essay answer presentation
                         <div className="p-4 bg-white/40 border border-[#B8860B]/20 rounded-none space-y-4">
                           <div>
-                            <span className="text-[#6B1010] font-cinzel font-bold block text-[9px] uppercase tracking-wider mb-1.5">TE ESSZÉ VÁLASZOD:</span>
-                            <blockquote className="italic font-lora text-neutral-900 border-l border-[#B8860B] pl-3 leading-relaxed py-1">
+                            <span className="text-[#6B1010] font-cinzel font-bold block text-[11px] uppercase tracking-wider mb-1.5">TE ESSZÉ VÁLASZOD:</span>
+                            <blockquote className="italic font-lora text-neutral-900 border-l border-[#B8860B] pl-3 leading-[1.8] py-1">
                               {studentAns || "[Nem írtál be választ]"}
                             </blockquote>
                           </div>
@@ -417,29 +417,29 @@ export default function ResultsScreen({
                                     <Sparkles className="w-4 h-4 text-[#B8860B]" />
                                     <span>AI TANÍTÓI ÉRTÉKELÉS (Eredmény: {evals[q.id].scorePercent}%)</span>
                                   </span>
-                                  <span className="px-2 py-0.5 rounded-none font-bold uppercase tracking-wide text-[10px] text-[#F7EAC8] bg-[#6B1010] border border-[#B8860B]">
+                                  <span className="px-2 py-0.5 rounded-none font-bold uppercase tracking-wide text-[11px] text-[#FFF5E0] bg-[#6B1010] border border-[#B8860B]">
                                     {getHungarianGradeLabel(evals[q.id].scorePercent).label}
                                   </span>
                                 </div>
 
-                                <p className="leading-relaxed text-neutral-950 italic font-lora">
+                                <p className="leading-[1.8] text-neutral-950 italic font-lora">
                                   {evals[q.id].scoreExplanation}
                                 </p>
 
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
                                   <div className="bg-white/40 border border-[#B8860B]/20 p-3 rounded-none">
-                                    <span className="font-bold font-cinzel uppercase tracking-wider text-[9px] text-[#2D6A4F] block mb-1">✔️ Erősségek:</span>
-                                    <p className="text-[#1C0E04] leading-relaxed text-xs font-lora italic">{evals[q.id].strengths}</p>
+                                    <span className="font-bold font-cinzel uppercase tracking-wider text-[11px] text-[#2D6A4F] block mb-1">✔️ Erősségek:</span>
+                                    <p className="text-[#1C0E04] leading-[1.8] text-xs font-lora italic">{evals[q.id].strengths}</p>
                                   </div>
                                   <div className="bg-white/40 border border-[#B8860B]/20 p-3 rounded-none">
-                                    <span className="font-bold font-cinzel uppercase tracking-wider text-[9px] text-[#8B1A1A] block mb-1">⚠️ Csiszolandó rész:</span>
-                                    <p className="text-[#1C0E04] leading-relaxed text-xs font-lora italic">{evals[q.id].weaknesses}</p>
+                                    <span className="font-bold font-cinzel uppercase tracking-wider text-[11px] text-[#8B1A1A] block mb-1">⚠️ Csiszolandó rész:</span>
+                                    <p className="text-[#1C0E04] leading-[1.8] text-xs font-lora italic">{evals[q.id].weaknesses}</p>
                                   </div>
                                 </div>
 
                                 <div className="bg-white/40 border border-[#B8860B]/20 p-3 rounded-none mt-2">
-                                  <span className="font-bold font-cinzel uppercase tracking-wider text-[9px] text-neutral-800 block mb-1">💡 Hogyan fejleszd tovább?</span>
-                                  <p className="text-[#1C0E04] leading-relaxed text-xs font-lora italic">{evals[q.id].improvements}</p>
+                                  <span className="font-bold font-cinzel uppercase tracking-wider text-[11px] text-neutral-800 block mb-1">💡 Hogyan fejleszd tovább?</span>
+                                  <p className="text-[#1C0E04] leading-[1.8] text-xs font-lora italic">{evals[q.id].improvements}</p>
                                 </div>
                               </div>
                             ) : (
@@ -447,22 +447,22 @@ export default function ResultsScreen({
                                 <button
                                   onClick={() => handleEvaluateEssay(q.id, q.question, studentAns)}
                                   disabled={loadingEvals[q.id] || studentAns.trim().length < 5}
-                                  className="w-full sm:w-auto px-5 py-2.5 bg-[#6B1010] hover:bg-[#801515] disabled:opacity-50 disabled:bg-[#9A6F0A]/25 text-[#F7EAC8] font-cinzel border-1.5 border-[#B8860B] font-bold uppercase tracking-wider rounded-[3px] text-[10px] flex items-center justify-center gap-1.5 transition-colors cursor-pointer shadow-none"
+                                  className="w-full sm:w-auto px-5 py-2.5 bg-[#6B1010] hover:bg-[#801515] disabled:opacity-50 disabled:bg-[#9A6F0A]/25 text-[#FFF5E0] font-cinzel border-1.5 border-[#B8860B] font-bold uppercase tracking-wider rounded-[3px] text-[11px] flex items-center justify-center gap-1.5 transition-colors cursor-pointer shadow-none"
                                 >
                                   {loadingEvals[q.id] ? (
                                     <>
-                                      <Loader2 className="w-3.5 h-3.5 animate-spin text-[#F7EAC8]/50" />
+                                      <Loader2 className="w-3.5 h-3.5 animate-spin text-[#FFF5E0]/50" />
                                       <span>Tanító AI elemez...</span>
                                     </>
                                   ) : (
                                     <>
-                                      <Sparkles className="w-3.5 h-3.5 text-[#F7EAC8]/75" />
+                                      <Sparkles className="w-3.5 h-3.5 text-[#FFF5E0]/75" />
                                       <span>Krónika AI-Kiértékelése</span>
                                     </>
                                   )}
                                 </button>
                                 {studentAns.trim().length < 5 && (
-                                  <span className="text-[10px] uppercase font-cinzel font-bold text-neutral-500">
+                                  <span className="text-[11px] uppercase font-cinzel font-bold text-neutral-500">
                                     (A válasz túl rövid, nem értékelhető)
                                   </span>
                                 )}
@@ -474,14 +474,14 @@ export default function ResultsScreen({
 
                       {/* Explanation Block */}
                       <div className="p-4 bg-[#FFF5D0]/60 border border-[#B8860B]/35 rounded-none">
-                        <span className="font-bold text-[#6B1010] block text-[9px] mb-1.5 uppercase tracking-widest font-cinzel">
+                        <span className="font-bold text-[#6B1010] block text-[11px] mb-1.5 uppercase tracking-widest font-cinzel">
                           TANTERVI ÚTMUTATÓ & MAGYARÁZAT:
                         </span>
-                        <p className="text-[#1C0E04] leading-relaxed font-lora italic text-xs">{q.explanation}</p>
+                        <p className="text-[#3D1A00] leading-[1.8] font-lora italic text-[13px]">{q.explanation}</p>
                       </div>
 
                       {/* Speed Metrics */}
-                      <div className="pt-1 text-right text-[10px] text-[#1C0E04]/60 font-cinzel">
+                      <div className="pt-1 text-right text-[11px] text-[#1C0E04]/60 font-cinzel">
                         Válaszadási idő: <strong className="font-semibold text-[#6B1010]">{elapsedTimes[q.id] || 0} mp</strong>
                       </div>
                     </div>
@@ -520,13 +520,13 @@ export default function ResultsScreen({
                     a.click();
                   }
                 }}
-                className="w-full bg-[#6B1010] hover:bg-[#801515] text-[#F7EAC8] py-3 text-xs font-cinzel font-bold uppercase transition-colors rounded-[3px] border border-[#B8860B]"
+                className="w-full bg-[#6B1010] hover:bg-[#801515] text-[#FFF5E0] py-3 text-xs font-cinzel font-bold uppercase transition-colors rounded-[3px] border border-[#B8860B]"
               >
                 QR kód letöltése
               </button>
               <button
                 onClick={() => setShowQRModal(false)}
-                className="w-full bg-transparent text-[#6B1010] border-2 border-[#6B1010] hover:bg-[#6B1010] hover:text-[#F7EAC8] py-3 text-xs font-cinzel font-bold uppercase transition-colors rounded-[3px]"
+                className="w-full bg-transparent text-[#6B1010] border-2 border-[#6B1010] hover:bg-[#6B1010] hover:text-[#FFF5E0] py-3 text-xs font-cinzel font-bold uppercase transition-colors rounded-[3px]"
               >
                 Bezárás
               </button>

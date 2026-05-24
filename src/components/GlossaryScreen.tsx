@@ -444,10 +444,10 @@ CSAK valid JSON-t adj vissza pontosan ebben a formátumban, markdown kódjelek n
     <div className="max-w-6xl mx-auto px-4 py-8 relative">
       
       {/* Breadcrumb Navigation Trail */}
-      <div className="flex flex-wrap items-center gap-2 mb-6 text-xs sm:text-sm font-cinzel text-[#F7EAC8]/60 transition-all duration-200">
+      <div className="flex flex-wrap items-center gap-2 mb-6 text-xs sm:text-sm font-cinzel text-[#FFF5E0]/60 transition-all duration-200">
         <button 
           onClick={handleResetExplorer}
-          className="hover:text-[#F7EAC8] active:scale-95 transition-transform cursor-pointer font-bold"
+          className="hover:text-[#FFF5E0] active:scale-95 transition-transform cursor-pointer font-bold"
         >
           FOGALOMKUTATÓ
         </button>
@@ -460,7 +460,7 @@ CSAK valid JSON-t adj vissza pontosan ebben a formátumban, markdown kódjelek n
                 setBreadcrumbs(targetPath);
                 handleSearch(b, true);
               }}
-              className={`hover:text-[#F7EAC8] hover:underline cursor-pointer active:scale-95 transition-transform ${
+              className={`hover:text-[#FFF5E0] hover:underline cursor-pointer active:scale-95 transition-transform ${
                 idx === breadcrumbs.length - 1 ? "text-[#B8860B] font-bold" : ""
               }`}
             >
@@ -474,11 +474,11 @@ CSAK valid JSON-t adj vissza pontosan ebben a formátumban, markdown kódjelek n
       <div className="bg-[#1A0A03] p-6 border-2 border-[#B8860B] rounded-[3px] shadow-2xl mb-8 relative medieval-card">
         <div className="flex flex-col md:flex-row gap-4 items-center justify-between mb-6 border-b border-[#B8860B]/30 pb-4">
           <div>
-            <h1 className="text-2xl font-cinzel font-bold text-[#F7EAC8] tracking-widest flex items-center gap-2">
+            <h1 className="text-2xl font-cinzel font-bold text-[#FFF5E0] tracking-widest flex items-center gap-2">
               <BookOpen className="w-6 h-6 text-[#B8860B]" />
               FOGALOMKUTATÓ
             </h1>
-            <p className="text-[#F7EAC8]/60 text-xs font-lora mt-1 italic">
+            <p className="text-[#FFF5E0]/60 text-xs font-lora mt-1 italic">
               Kutasd fel és vesd össze az érettségi legfontosabb történelmi fogalmait!
             </p>
           </div>
@@ -502,13 +502,13 @@ CSAK valid JSON-t adj vissza pontosan ebben a formátumban, markdown kódjelek n
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Írj be egy történelmi fogalmat (pl. Aranybulla, Rákosi-korszak)..."
-              className="w-full pl-12 pr-4 py-3 bg-transparent text-[#F7EAC8] font-lora text-sm focus:outline-none"
+              className="w-full pl-12 pr-4 py-3 bg-transparent text-[#FFF5E0] font-lora text-sm focus:outline-none"
             />
           </div>
           <button
             type="submit"
             disabled={loading}
-            className="bg-[#6B1010] hover:bg-[#801515] text-[#F7EAC8] font-cinzel font-bold tracking-wider text-xs px-6 py-3 cursor-pointer select-none transition-colors border-l border-[#B8860B] flex items-center gap-2"
+            className="bg-[#6B1010] hover:bg-[#801515] text-[#FFF5E0] font-cinzel font-bold tracking-wider text-xs px-6 py-3 cursor-pointer select-none transition-colors border-l border-[#B8860B] flex items-center gap-2"
           >
             {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : "KERESÉS"}
           </button>
@@ -516,13 +516,13 @@ CSAK valid JSON-t adj vissza pontosan ebben a formátumban, markdown kódjelek n
 
         {/* Suggested and scrollable Concept Chips */}
         <div className="mt-4">
-          <p className="text-[10px] font-cinzel font-bold uppercase tracking-wider text-[#F7EAC8]/50 mb-2">Javasolt történelmi fogalmak ebben a témakörben:</p>
+          <p className="text-[11px] font-cinzel font-bold uppercase tracking-wider text-[#FFF5E0]/50 mb-2">Javasolt történelmi fogalmak ebben a témakörben:</p>
           <div className="flex flex-wrap gap-1.5 max-h-24 overflow-y-auto pr-1">
             {activeSuggestions.map((term, i) => (
               <button
                 key={i}
                 onClick={() => handleSearch(term)}
-                className="px-2.5 py-1 text-xs bg-[#4A1E05] hover:bg-[#B8860B]/20 text-[#F7EAC8] border border-[#B8860B]/40 rounded-full cursor-pointer transition-colors active:scale-95"
+                className="px-2.5 py-1 text-xs bg-[#4A1E05] hover:bg-[#B8860B]/20 text-[#FFF5E0] border border-[#B8860B]/40 rounded-full cursor-pointer transition-colors active:scale-95"
               >
                 {term}
               </button>
@@ -554,10 +554,10 @@ CSAK valid JSON-t adj vissza pontosan ebben a formátumban, markdown kódjelek n
                 <Sparkles className="w-6 h-6 text-[#FFF5D0] animate-pulse" />
               </div>
             </div>
-            <p className="text-xl font-cinzel text-[#F7EAC8] tracking-widest uppercase font-bold text-center">
+            <p className="text-xl font-cinzel text-[#FFF5E0] tracking-widest uppercase font-bold text-center">
               {loadingPhrase}
             </p>
-            <p className="text-sm font-lora text-[#F7EAC8]/60 mt-2 text-center max-w-sm">
+            <p className="text-sm font-lora text-[#FFF5E0]/60 mt-2 text-center max-w-sm">
               Levelesládák megnyitása, kódexek újraírása, krónikák rendezése...
             </p>
           </motion.div>
@@ -572,17 +572,17 @@ CSAK valid JSON-t adj vissza pontosan ebben a formátumban, markdown kódjelek n
             className="text-center py-20 bg-[#1A0A03]/35 rounded-[3px] border border-[#B8860B]/20 px-6"
           >
             <BookOpenCheck className="w-16 h-16 text-[#B8860B]/30 mx-auto mb-4" />
-            <h2 className="text-[#F7EAC8] font-cinzel font-bold text-xl uppercase tracking-widest">
+            <h2 className="text-[#FFF5E0] font-cinzel font-bold text-xl uppercase tracking-widest">
               ⚔️ Mit szeretnél megismerni, vitéz?
             </h2>
-            <p className="font-lora text-[#F7EAC8]/60 mt-2 max-w-lg mx-auto text-sm sm:text-base">
+            <p className="font-lora text-[#FFF5E0]/60 mt-2 max-w-lg mx-auto text-sm sm:text-base">
               Írj be egy tetszőleges korszakot vagy fogalmat a fenti kutatóba, de akár rákattinthatsz az előzmények vagy a témakör javaslataira is!
             </p>
 
             {/* Quick search history list */}
             {searchHistory.length > 0 && (
               <div className="mt-8 max-w-md mx-auto">
-                <p className="text-xs font-cinzel font-bold uppercase tracking-wider text-[#F7EAC8]/40 mb-3 flex items-center justify-center gap-1.5">
+                <p className="text-xs font-cinzel font-bold uppercase tracking-wider text-[#FFF5E0]/40 mb-3 flex items-center justify-center gap-1.5">
                   <History className="w-3.5 h-3.5" /> Legutóbb keresett fogalmak:
                 </p>
                 <div className="flex flex-wrap justify-center gap-2">
@@ -590,7 +590,7 @@ CSAK valid JSON-t adj vissza pontosan ebben a formátumban, markdown kódjelek n
                     <button
                       key={idx}
                       onClick={() => handleSearch(histItem)}
-                      className="px-3 py-1.5 bg-[#4A1E05]/40 hover:bg-[#4A1E05] hover:text-[#FFF5D0] border border-[#B8860B]/30 text-xs text-[#F7EAC8]/80 cursor-pointer rounded-[3px] transition-colors"
+                      className="px-3 py-1.5 bg-[#4A1E05]/40 hover:bg-[#4A1E05] hover:text-[#FFF5D0] border border-[#B8860B]/30 text-xs text-[#FFF5E0]/80 cursor-pointer rounded-[3px] transition-colors"
                     >
                       {histItem}
                     </button>
@@ -614,7 +614,7 @@ CSAK valid JSON-t adj vissza pontosan ebben a formátumban, markdown kódjelek n
               <div className="flex items-center gap-2">
                 <button
                   onClick={handleResetExplorer}
-                  className="px-3 py-1.5 border border-[#B8860B]/40 bg-[#4A1E05]/30 hover:bg-[#4A1E05] text-[#F7EAC8] rounded-[2px] cursor-pointer text-xs font-cinzel flex items-center gap-1 transition-all"
+                  className="px-3 py-1.5 border border-[#B8860B]/40 bg-[#4A1E05]/30 hover:bg-[#4A1E05] text-[#FFF5E0] rounded-[2px] cursor-pointer text-xs font-cinzel flex items-center gap-1 transition-all"
                 >
                   <ChevronLeft className="w-4 h-4" /> Vissza
                 </button>
@@ -634,7 +634,7 @@ CSAK valid JSON-t adj vissza pontosan ebben a formátumban, markdown kódjelek n
                 className={`px-4 py-1.5 rounded-[2px] text-xs font-cinzel font-bold flex items-center gap-1.5 transition-colors cursor-pointer active:scale-95 ${
                   journal.some(j => j.term.toLowerCase() === activeArticle.title.toLowerCase())
                     ? "bg-green-800 text-white hover:bg-green-700"
-                    : "bg-[#6B1010] hover:bg-[#801515] text-[#F7EAC8] border border-[#B8860B]"
+                    : "bg-[#6B1010] hover:bg-[#801515] text-[#FFF5E0] border border-[#B8860B]"
                 }`}
               >
                 {journal.some(j => j.term.toLowerCase() === activeArticle.title.toLowerCase()) ? (
@@ -652,7 +652,7 @@ CSAK valid JSON-t adj vissza pontosan ebben a formátumban, markdown kódjelek n
             {/* Compare sliding input drawer */}
             {showCompareInput && (
               <div className="p-4 bg-[#2A1005] border border-[#B8860B] rounded-[3px] shadow-lg flex flex-col sm:flex-row gap-2 items-center">
-                <span className="text-xs font-cinzel text-[#F7EAC8] uppercase font-bold shrink-0">
+                <span className="text-xs font-cinzel text-[#FFF5E0] uppercase font-bold shrink-0">
                   Mivel hasonlítsam össze?
                 </span>
                 <input
@@ -661,11 +661,11 @@ CSAK valid JSON-t adj vissza pontosan ebben a formátumban, markdown kódjelek n
                   value={compareSearch}
                   onChange={(e) => setCompareSearch(e.target.value)}
                   placeholder="Írd be a másik fogalmat..."
-                  className="flex-1 px-3 py-1.5 bg-[#1A0A03] border border-[#B8860B]/50 text-[#F7EAC8] rounded-[3px] text-xs focus:outline-none focus:border-[#B8860B]"
+                  className="flex-1 px-3 py-1.5 bg-[#1A0A03] border border-[#B8860B]/50 text-[#FFF5E0] rounded-[3px] text-xs focus:outline-none focus:border-[#B8860B]"
                 />
                 <button
                   onClick={handleCompareSubmit}
-                  className="bg-[#6B1010] hover:bg-[#801515] text-[#F7EAC8] px-4 py-1.5 text-xs font-cinzel font-bold rounded-[3px] cursor-pointer transition-colors shrink-0"
+                  className="bg-[#6B1010] hover:bg-[#801515] text-[#FFF5E0] px-4 py-1.5 text-xs font-cinzel font-bold rounded-[3px] cursor-pointer transition-colors shrink-0"
                 >
                   Indítás
                 </button>
@@ -684,20 +684,20 @@ CSAK valid JSON-t adj vissza pontosan ebben a formátumban, markdown kódjelek n
                 </div>
 
                 <div className="border-b-2 border-[#1C0E04]/20 pb-4 mb-6 relative">
-                  <span className="text-[10px] font-cinzel font-bold text-[#6B1010] uppercase tracking-wider block mb-1">
+                  <span className="text-[11px] font-cinzel font-bold text-[#6B1010] uppercase tracking-wider block mb-1">
                     HISTÓRIÁS ENCIKLOPÉDIA • {grade}
                   </span>
                   <h2 className="text-3xl sm:text-4xl font-cinzel font-bold text-[#6B1010] tracking-tight">
                     {activeArticle.title}
                   </h2>
-                  <span className="inline-block mt-2 px-3 py-1 bg-[#2A1005] text-[#F7EAC8] text-[10px] sm:text-xs font-cinzel tracking-wider uppercase rounded-[2px] border border-[#B8860B]">
+                  <span className="inline-block mt-2 px-3 py-1 bg-[#2A1005] text-[#FFF5E0] text-[11px] sm:text-xs font-cinzel tracking-wider uppercase rounded-[2px] border border-[#B8860B]">
                     {activeArticle.subtitle || "Történelmi fogalom"}
                   </span>
                 </div>
 
                 {/* SUMMARY BOX: parchment layout */}
                 <div className="bg-[#1C0E04]/5 border-l-4 border-[#B8860B] p-4 mb-6 rounded-r-[3px]">
-                  <p className="font-lora italic text-sm sm:text-base leading-relaxed text-[#1C0E04]">
+                  <p className="font-lora italic text-sm sm:text-base leading-[1.8] text-[#1C0E04]">
                     {activeArticle.summary}
                   </p>
                 </div>
@@ -705,7 +705,7 @@ CSAK valid JSON-t adj vissza pontosan ebben a formátumban, markdown kódjelek n
                 {/* FACTS LIST (pills horizontal scroll) */}
                 {activeArticle.keyFacts && activeArticle.keyFacts.length > 0 && (
                   <div className="mb-6">
-                    <p className="text-[10px] font-cinzel font-bold text-[#6B1010] uppercase tracking-widest mb-2">FŐBB TÉNYEK • ADATOK:</p>
+                    <p className="text-[11px] font-cinzel font-bold text-[#6B1010] uppercase tracking-widest mb-2">FŐBB TÉNYEK • ADATOK:</p>
                     <div className="flex flex-wrap gap-2">
                       {activeArticle.keyFacts.map((fact, i) => (
                         <div key={i} className="px-3 py-1.5 bg-[#1C0E04]/10 rounded-[4px] text-xs font-lora">
@@ -724,7 +724,7 @@ CSAK valid JSON-t adj vissza pontosan ebben a formátumban, markdown kódjelek n
                       <h3 className="font-cinzel font-bold text-[#6B1010] text-lg border-b border-[#1C0E04]/10 pb-1 mb-2">
                         {sec.heading}
                       </h3>
-                      <p className="font-lora text-[#1C0E04]/90 text-sm sm:text-base leading-relaxed whitespace-pre-wrap">
+                      <p className="font-lora text-[#1C0E04]/90 text-sm sm:text-base leading-[1.8] whitespace-pre-wrap">
                         {renderContentWithLinks(sec.content)}
                       </p>
                     </div>
@@ -783,7 +783,7 @@ CSAK valid JSON-t adj vissza pontosan ebben a formátumban, markdown kódjelek n
                   <h3 className="text-xs font-cinzel font-bold text-green-800 uppercase tracking-widest border-b border-green-700/20 pb-2 mb-3 flex items-center gap-1.5">
                     <Award className="w-4 h-4" /> Érettségi szempontból:
                   </h3>
-                  <p className="font-lora text-xs sm:text-sm leading-relaxed italic text-green-900">
+                  <p className="font-lora text-xs sm:text-sm leading-[1.8] italic text-green-900">
                     {activeArticle.significance || "Kiemelten fontos érettségi kulcsfogalom, érdemes megjegyezni az esszéírásnál!"}
                   </p>
                 </div>
@@ -803,11 +803,11 @@ CSAK valid JSON-t adj vissza pontosan ebben a formátumban, markdown kódjelek n
             <div className="flex justify-between items-center gap-2">
               <button
                 onClick={() => setIsComparing(false)}
-                className="px-3 py-1.5 border border-[#B8860B]/40 bg-[#4A1E05]/30 hover:bg-[#4A1E05] text-[#F7EAC8] rounded-[2px] cursor-pointer text-xs font-cinzel flex items-center gap-1 transition-all"
+                className="px-3 py-1.5 border border-[#B8860B]/40 bg-[#4A1E05]/30 hover:bg-[#4A1E05] text-[#FFF5E0] rounded-[2px] cursor-pointer text-xs font-cinzel flex items-center gap-1 transition-all"
               >
                 <ChevronLeft className="w-4 h-4" /> Vissza a fogalomhoz
               </button>
-              <h2 className="text-xl font-cinzel font-bold text-[#F7EAC8] uppercase tracking-wider hidden sm:block">
+              <h2 className="text-xl font-cinzel font-bold text-[#FFF5E0] uppercase tracking-wider hidden sm:block">
                 TÖRTÉNELMI ÖSSZEHASONLÍTÓ TABELLA
               </h2>
             </div>
@@ -816,9 +816,9 @@ CSAK valid JSON-t adj vissza pontosan ebben a formátumban, markdown kódjelek n
             <div className="bg-[#FFF5D0] border-2 border-[#B8860B] rounded-[3px] shadow-2xl overflow-hidden text-[#1C0E04]">
               
               {/* Header Titles */}
-              <div className="grid grid-cols-2 bg-[#6B1010] text-[#F7EAC8] p-4 text-center border-b-2 border-[#B8860B]">
+              <div className="grid grid-cols-2 bg-[#6B1010] text-[#FFF5E0] p-4 text-center border-b-2 border-[#B8860B]">
                 <div className="border-r border-[#FFF5D0]/20 pb-1">
-                  <span className="text-[10px] font-cinzel tracking-wider text-[#B8860B] block">ELSŐ FOGALOM</span>
+                  <span className="text-[11px] font-cinzel tracking-wider text-[#B8860B] block">ELSŐ FOGALOM</span>
                   <button 
                     onClick={() => handleSearch(compareResult.concept1.title)}
                     className="text-lg sm:text-xl font-cinzel font-bold cursor-pointer hover:underline"
@@ -827,7 +827,7 @@ CSAK valid JSON-t adj vissza pontosan ebben a formátumban, markdown kódjelek n
                   </button>
                 </div>
                 <div className="pb-1">
-                  <span className="text-[10px] font-cinzel tracking-wider text-[#B8860B] block">MÁSODIK FOGALOM</span>
+                  <span className="text-[11px] font-cinzel tracking-wider text-[#B8860B] block">MÁSODIK FOGALOM</span>
                   <button 
                     onClick={() => handleSearch(compareResult.concept2.title)}
                     className="text-lg sm:text-xl font-cinzel font-bold cursor-pointer hover:underline"
@@ -842,7 +842,7 @@ CSAK valid JSON-t adj vissza pontosan ebben a formátumban, markdown kódjelek n
                 
                 {/* Row Korszak */}
                 <div className="p-4 bg-[#1C0E04]/5 flex flex-col items-center">
-                  <span className="text-[10px] font-cinzel font-bold text-[#6B1010] mb-2 tracking-widest block text-center bg-[#B8860B]/20 px-3 py-0.5 rounded">
+                  <span className="text-[11px] font-cinzel font-bold text-[#6B1010] mb-2 tracking-widest block text-center bg-[#B8860B]/20 px-3 py-0.5 rounded">
                     TÖRTÉNELMI KOR / KOROSZTÁLY
                   </span>
                   <div className="grid grid-cols-2 gap-6 w-full text-center sm:text-left">
@@ -857,7 +857,7 @@ CSAK valid JSON-t adj vissza pontosan ebben a formátumban, markdown kódjelek n
 
                 {/* Row Helyszin */}
                 <div className="p-4 flex flex-col items-center">
-                  <span className="text-[10px] font-cinzel font-bold text-[#6B1010] mb-2 tracking-widest block text-center bg-[#B8860B]/20 px-3 py-0.5 rounded">
+                  <span className="text-[11px] font-cinzel font-bold text-[#6B1010] mb-2 tracking-widest block text-center bg-[#B8860B]/20 px-3 py-0.5 rounded">
                     HELYSZÍN / TERÜLET
                   </span>
                   <div className="grid grid-cols-2 gap-6 w-full text-center sm:text-left">
@@ -872,7 +872,7 @@ CSAK valid JSON-t adj vissza pontosan ebben a formátumban, markdown kódjelek n
 
                 {/* Row Főszereplők */}
                 <div className="p-4 bg-[#1C0E04]/5 flex flex-col items-center">
-                  <span className="text-[10px] font-cinzel font-bold text-[#6B1010] mb-2 tracking-widest block text-center bg-[#B8860B]/20 px-3 py-0.5 rounded">
+                  <span className="text-[11px] font-cinzel font-bold text-[#6B1010] mb-2 tracking-widest block text-center bg-[#B8860B]/20 px-3 py-0.5 rounded">
                     FŐBB JÁTÉKOSOK / SZEREPLŐK
                   </span>
                   <div className="grid grid-cols-2 gap-6 w-full text-center sm:text-left">
@@ -887,7 +887,7 @@ CSAK valid JSON-t adj vissza pontosan ebben a formátumban, markdown kódjelek n
 
                 {/* Row Jelentőség */}
                 <div className="p-4 flex flex-col items-center">
-                  <span className="text-[10px] font-cinzel font-bold text-[#6B1010] mb-2 tracking-widest block text-center bg-[#B8860B]/20 px-3 py-0.5 rounded">
+                  <span className="text-[11px] font-cinzel font-bold text-[#6B1010] mb-2 tracking-widest block text-center bg-[#B8860B]/20 px-3 py-0.5 rounded">
                     JELENTŐSÉGE AZ ÉRETTSÉGIN
                   </span>
                   <div className="grid grid-cols-2 gap-6 w-full text-center sm:text-left font-semibold">
@@ -902,7 +902,7 @@ CSAK valid JSON-t adj vissza pontosan ebben a formátumban, markdown kódjelek n
 
                 {/* Row Következmények */}
                 <div className="p-4 bg-[#1C0E04]/5 flex flex-col items-center">
-                  <span className="text-[10px] font-cinzel font-bold text-[#6B1010] mb-2 tracking-widest block text-center bg-[#B8860B]/20 px-3 py-0.5 rounded">
+                  <span className="text-[11px] font-cinzel font-bold text-[#6B1010] mb-2 tracking-widest block text-center bg-[#B8860B]/20 px-3 py-0.5 rounded">
                     TÖRTÉNELMI KÖVETKEZMÉNYEK
                   </span>
                   <div className="grid grid-cols-2 gap-6 w-full text-center sm:text-left">
@@ -923,12 +923,12 @@ CSAK valid JSON-t adj vissza pontosan ebben a formátumban, markdown kódjelek n
       {/* Floating Concept Journal Floating Button Bottom Right (above standard components) */}
       <button
         onClick={() => setShowJournal(true)}
-        className="fixed bottom-24 right-4 z-40 bg-[#6B1010] hover:bg-[#801515] active:scale-95 text-[#F7EAC8] border-2 border-[#B8860B] w-12 h-12 rounded-full cursor-pointer shadow-2xl flex items-center justify-center transition-all group pointer-events-auto"
+        className="fixed bottom-24 right-4 z-40 bg-[#6B1010] hover:bg-[#801515] active:scale-95 text-[#FFF5E0] border-2 border-[#B8860B] w-12 h-12 rounded-full cursor-pointer shadow-2xl flex items-center justify-center transition-all group pointer-events-auto"
         title="Saját fogalomnaplóm megnyitása"
       >
         <span className="text-xl">📓</span>
         {journal.length > 0 && (
-          <span className="absolute -top-1 -right-1 bg-red-600 text-white text-[10px] font-bold font-sans rounded-full w-5 h-5 flex items-center justify-center border border-white">
+          <span className="absolute -top-1 -right-1 bg-red-600 text-white text-[11px] font-bold font-sans rounded-full w-5 h-5 flex items-center justify-center border border-white">
             {journal.length}
           </span>
         )}
@@ -960,11 +960,11 @@ CSAK valid JSON-t adj vissza pontosan ebben a formátumban, markdown kódjelek n
                   {journal.map((item, idx) => (
                     <div key={idx} className="pt-3 first:pt-0 flex justify-between items-start gap-3">
                       <div className="space-y-1">
-                        <span className="text-[10px] font-mono font-bold bg-[#1C0E04]/5 px-2 py-0.5 rounded border border-[#B8860B]/40">
+                        <span className="text-[11px] font-mono font-bold bg-[#1C0E04]/5 px-2 py-0.5 rounded border border-[#B8860B]/40">
                           {item.period}
                         </span>
                         <h4 className="font-cinzel font-bold text-[#1C0E04] text-base mt-1">{item.term}</h4>
-                        <p className="font-lora text-xs text-[#1C0E04]/80 leading-relaxed truncate max-w-sm sm:max-w-md">
+                        <p className="font-lora text-xs text-[#1C0E04]/80 leading-[1.8] truncate max-w-sm sm:max-w-md">
                           {item.definition}
                         </p>
                       </div>
@@ -973,7 +973,7 @@ CSAK valid JSON-t adj vissza pontosan ebben a formátumban, markdown kódjelek n
                           const updated = journal.filter(j => j.term.toLowerCase() !== item.term.toLowerCase());
                           saveJournal(updated);
                         }}
-                        className="p-1 px-2 border border-red-800 text-red-800 hover:bg-red-800 hover:text-white rounded-[3px] cursor-pointer text-[10px] flex items-center gap-1 transition-colors self-start"
+                        className="p-1 px-2 border border-red-800 text-red-800 hover:bg-red-800 hover:text-white rounded-[3px] cursor-pointer text-[11px] flex items-center gap-1 transition-colors self-start"
                       >
                         <Trash2 className="w-3 h-3" /> Törlés
                       </button>

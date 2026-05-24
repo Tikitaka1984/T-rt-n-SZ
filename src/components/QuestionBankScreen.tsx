@@ -239,19 +239,19 @@ export default function QuestionBankScreen({ onStartBankQuiz, onPrintWorksheet }
       <div className="flex gap-4 mb-6 sticky top-0 bg-[#F5E6CD] z-30 p-2 rounded border border-[#B8860B] shadow-sm">
         <button 
           onClick={() => setActiveTab("upload")}
-          className={`flex-1 py-2 px-4 rounded-[3px] font-cinzel font-bold text-sm tracking-wider transition-colors ${activeTab === 'upload' ? 'bg-[#6B1010] text-[#F7EAC8]' : 'bg-[#E3CBA8] text-[#1C0E04] hover:bg-[#D4B68E]'}`}
+          className={`flex-1 py-2 px-4 rounded-[3px] font-cinzel font-bold text-sm tracking-wider transition-colors ${activeTab === 'upload' ? 'bg-[#6B1010] text-[#FFF5E0]' : 'bg-[#E3CBA8] text-[#1C0E04] hover:bg-[#D4B68E]'}`}
         >
           📤 Feltöltés
         </button>
         <button 
           onClick={() => setActiveTab("saved")}
-          className={`flex-1 py-2 px-4 rounded-[3px] font-cinzel font-bold text-sm tracking-wider transition-colors ${activeTab === 'saved' ? 'bg-[#6B1010] text-[#F7EAC8]' : 'bg-[#E3CBA8] text-[#1C0E04] hover:bg-[#D4B68E]'}`}
+          className={`flex-1 py-2 px-4 rounded-[3px] font-cinzel font-bold text-sm tracking-wider transition-colors ${activeTab === 'saved' ? 'bg-[#6B1010] text-[#FFF5E0]' : 'bg-[#E3CBA8] text-[#1C0E04] hover:bg-[#D4B68E]'}`}
         >
           📋 Saját kérdések ({banks.length})
         </button>
         <button 
           onClick={() => setActiveTab("quiz")}
-          className={`flex-1 py-2 px-4 rounded-[3px] font-cinzel font-bold text-sm tracking-wider transition-colors ${activeTab === 'quiz' ? 'bg-[#6B1010] text-[#F7EAC8]' : 'bg-[#E3CBA8] text-[#1C0E04] hover:bg-[#D4B68E]'}`}
+          className={`flex-1 py-2 px-4 rounded-[3px] font-cinzel font-bold text-sm tracking-wider transition-colors ${activeTab === 'quiz' ? 'bg-[#6B1010] text-[#FFF5E0]' : 'bg-[#E3CBA8] text-[#1C0E04] hover:bg-[#D4B68E]'}`}
         >
           🎯 Kvíz ebből
         </button>
@@ -261,14 +261,14 @@ export default function QuestionBankScreen({ onStartBankQuiz, onPrintWorksheet }
         {activeTab === "upload" && (
           <div className="space-y-8">
             {/* METHOD A */}
-            <div className="bg-[#1A0A03] border border-[#B8860B] rounded p-6 text-[#F7EAC8]">
+            <div className="bg-[#1A0A03] border border-[#B8860B] rounded p-6 text-[#FFF5E0]">
               <h3 className="font-cinzel text-xl font-bold mb-4 flex items-center gap-2"><FileJson className="w-6 h-6 text-[#B8860B]" /> METHOD A: JSON Fájl Feltöltése</h3>
               
               <div className="flex flex-col md:flex-row gap-6">
                 <div className="flex-1 space-y-4">
                   <div className="relative p-8 border-2 border-dashed border-[#B8860B]/50 rounded-lg text-center hover:bg-[#B8860B]/10 transition-colors cursor-pointer group">
                     <input type="file" accept=".json" onChange={handleJsonUpload} className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" />
-                    <Upload className="w-10 h-10 mx-auto mb-2 text-[#B8860B] group-hover:text-[#F7EAC8] transition-colors" />
+                    <Upload className="w-10 h-10 mx-auto mb-2 text-[#B8860B] group-hover:text-[#FFF5E0] transition-colors" />
                     <p className="font-lora text-sm">Húzd ide a JSON fájlt vagy kattints a tallózáshoz</p>
                   </div>
                   {uploadError && <p className="text-red-400 font-bold text-sm">{uploadError}</p>}
@@ -373,7 +373,7 @@ export default function QuestionBankScreen({ onStartBankQuiz, onPrintWorksheet }
                 </div>
 
                 <div className="mt-4 flex justify-end">
-                  <button onClick={addManualQuestion} className="px-4 py-2 bg-[#6B1010] text-[#F7EAC8] rounded font-cinzel uppercase tracking-wider text-xs font-bold hover:bg-[#801515] transition-colors">
+                  <button onClick={addManualQuestion} className="px-4 py-2 bg-[#6B1010] text-[#FFF5E0] rounded font-cinzel uppercase tracking-wider text-xs font-bold hover:bg-[#801515] transition-colors">
                     ➕ Kérdés hozzáadása
                   </button>
                 </div>
@@ -383,7 +383,7 @@ export default function QuestionBankScreen({ onStartBankQuiz, onPrintWorksheet }
                 <span className="font-cinzel font-bold text-[#6B1010]">{manualQuestions.length} kérdés hozzáadva</span>
                 <div className="flex gap-2">
                   <button onClick={()=>setManualQuestions([])} className="px-3 py-2 border border-[#6B1010] text-[#6B1010] rounded text-xs font-bold uppercase hover:bg-[#6B1010]/10">🗑️ Törlés</button>
-                  <button onClick={saveManualBank} disabled={manualQuestions.length === 0} className="px-4 py-2 bg-[#1A0A03] text-[#F7EAC8] rounded text-xs font-bold font-cinzel uppercase tracking-wider disabled:opacity-50 flex items-center gap-1">
+                  <button onClick={saveManualBank} disabled={manualQuestions.length === 0} className="px-4 py-2 bg-[#1A0A03] text-[#FFF5E0] rounded text-xs font-bold font-cinzel uppercase tracking-wider disabled:opacity-50 flex items-center gap-1">
                    💾 Mentés Kérdésbankba
                   </button>
                 </div>
@@ -410,13 +410,13 @@ export default function QuestionBankScreen({ onStartBankQuiz, onPrintWorksheet }
                       <div>
                         <h4 className="font-cinzel font-bold text-lg text-[#6B1010] uppercase tracking-wider">{bank.title}</h4>
                         <div className="flex gap-2 mt-1">
-                          <span className="text-[10px] bg-[#B8860B]/20 text-[#6B1010] px-2 py-0.5 rounded font-bold uppercase">{bank.grade}</span>
-                          <span className="text-[10px] bg-[#B8860B]/20 text-[#6B1010] px-2 py-0.5 rounded font-bold uppercase">{bank.topic}</span>
+                          <span className="text-[11px] bg-[#B8860B]/20 text-[#6B1010] px-2 py-0.5 rounded font-bold uppercase">{bank.grade}</span>
+                          <span className="text-[11px] bg-[#B8860B]/20 text-[#6B1010] px-2 py-0.5 rounded font-bold uppercase">{bank.topic}</span>
                         </div>
                       </div>
                       <div className="text-right">
                         <span className="block font-bold text-sm text-[#1C0E04]">{bank.questions.length} kérdés</span>
-                        <span className="text-[10px] text-[#A0A0A0]">{new Date(bank.dateAdded).toLocaleDateString()}</span>
+                        <span className="text-[11px] text-[#A0A0A0]">{new Date(bank.dateAdded).toLocaleDateString()}</span>
                       </div>
                     </div>
 
@@ -427,8 +427,8 @@ export default function QuestionBankScreen({ onStartBankQuiz, onPrintWorksheet }
                     </div>
 
                     <div className="flex flex-wrap gap-2">
-                      <button onClick={()=> { setSelectedBankIds([bank.id]); setActiveTab("quiz"); }} className="px-3 py-1.5 bg-[#6B1010] text-[#F7EAC8] rounded-[2px] text-xs font-cinzel font-bold uppercase tracking-wider flex items-center gap-1"><Play className="w-3 h-3" /> Kvíz Indítása</button>
-                      <button onClick={()=> onPrintWorksheet(bank)} className="px-3 py-1.5 bg-[#1C0E04] text-[#F7EAC8] rounded-[2px] text-xs font-cinzel font-bold uppercase tracking-wider flex items-center gap-1"><Printer className="w-3 h-3" /> Feladatlap</button>
+                      <button onClick={()=> { setSelectedBankIds([bank.id]); setActiveTab("quiz"); }} className="px-3 py-1.5 bg-[#6B1010] text-[#FFF5E0] rounded-[2px] text-xs font-cinzel font-bold uppercase tracking-wider flex items-center gap-1"><Play className="w-3 h-3" /> Kvíz Indítása</button>
+                      <button onClick={()=> onPrintWorksheet(bank)} className="px-3 py-1.5 bg-[#1C0E04] text-[#FFF5E0] rounded-[2px] text-xs font-cinzel font-bold uppercase tracking-wider flex items-center gap-1"><Printer className="w-3 h-3" /> Feladatlap</button>
                       <button onClick={()=> deleteBank(bank.id)} className="px-3 py-1.5 border border-[#B22222] text-[#B22222] rounded-[2px] text-xs font-cinzel font-bold uppercase tracking-wider flex items-center gap-1 ml-auto"><Trash2 className="w-3 h-3" /> Törlés</button>
                     </div>
 
@@ -436,7 +436,7 @@ export default function QuestionBankScreen({ onStartBankQuiz, onPrintWorksheet }
                       <div className="mt-4 pt-4 border-t border-[#B8860B]/30 space-y-2 max-h-60 overflow-y-auto">
                         {bank.questions.map((q, idx) => (
                            <div key={idx} className="p-2 border border-[#B8860B]/20 rounded bg-white/40 flex items-start gap-2">
-                             <span className={`text-[10px] px-1.5 py-0.5 rounded font-bold uppercase mt-0.5 ${q.type==='multiple_choice'?'bg-green-100 text-green-800' : q.type==='true_false'?'bg-blue-100 text-blue-800' : 'bg-orange-100 text-orange-800'}`}>
+                             <span className={`text-[11px] px-1.5 py-0.5 rounded font-bold uppercase mt-0.5 ${q.type==='multiple_choice'?'bg-green-100 text-green-800' : q.type==='true_false'?'bg-blue-100 text-blue-800' : 'bg-orange-100 text-orange-800'}`}>
                                {q.type==='multiple_choice' ? 'MC' : q.type==='true_false' ? 'I/H' : 'Esszé'}
                              </span>
                              <p className="text-sm font-lora">{q.question}</p>
@@ -481,7 +481,7 @@ export default function QuestionBankScreen({ onStartBankQuiz, onPrintWorksheet }
                   <div className="flex items-center gap-4">
                      <span className="whitespace-nowrap font-bold">Kérdések száma:</span>
                      <input type="range" min="5" max="50" step="5" value={quizQuestionCount} onChange={e=>setQuizQuestionCount(parseInt(e.target.value))} className="flex-1 accent-[#6B1010]" />
-                     <span className="font-bold bg-[#1C0E04] text-[#F7EAC8] px-2 py-0.5 rounded">{quizQuestionCount} db</span>
+                     <span className="font-bold bg-[#1C0E04] text-[#FFF5E0] px-2 py-0.5 rounded">{quizQuestionCount} db</span>
                   </div>
                 </div>
 
@@ -489,7 +489,7 @@ export default function QuestionBankScreen({ onStartBankQuiz, onPrintWorksheet }
                   <button 
                      onClick={startQuizFromBanks}
                      disabled={selectedBankIds.length === 0}
-                     className="px-8 py-3 bg-[#6B1010] hover:bg-[#801515] text-[#F7EAC8] font-cinzel tracking-widest font-bold uppercase rounded-[2px] disabled:opacity-50 transition-colors shadow-lg cursor-pointer flex items-center gap-2"
+                     className="px-8 py-3 bg-[#6B1010] hover:bg-[#801515] text-[#FFF5E0] font-cinzel tracking-widest font-bold uppercase rounded-[2px] disabled:opacity-50 transition-colors shadow-lg cursor-pointer flex items-center gap-2"
                   >
                     <Play className="w-5 h-5"/> Kvíz Indítása
                   </button>

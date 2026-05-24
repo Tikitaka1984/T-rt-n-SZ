@@ -41,7 +41,7 @@ export default function Header({ currentScreen, setScreen, isQuizActive }: Heade
                 <BrandIcon />
                 <span>Történ<span className="text-[#D4A017] text-[110%] font-black">ÉSZ</span></span>
               </h1>
-              <p className="text-[10px] uppercase tracking-widest text-[#F0C040]/70 font-cinzel font-semibold leading-none mt-1">
+              <p className="text-[11px] uppercase tracking-widest text-[#F0C040]/70 font-cinzel font-semibold leading-none mt-1">
                 Tanulj okosan. Gondolkodj történészként.
               </p>
             </button>
@@ -116,7 +116,7 @@ export default function Header({ currentScreen, setScreen, isQuizActive }: Heade
             </button>
 
             {/* Badge indicator */}
-            <div className="hidden lg:flex items-center text-[10px] font-cinzel font-bold uppercase tracking-widest text-[#FDF3DC]/70 border border-[#D4A017]/40 px-3 py-1.5 bg-[#1A0A00]/40 rounded-sm">
+            <div className="hidden lg:flex items-center text-[11px] font-cinzel font-bold uppercase tracking-widest text-[#FDF3DC]/70 border border-[#D4A017]/40 px-3 py-1.5 bg-[#1A0A00]/40 rounded-sm">
               <Shield className="w-3.5 h-3.5 mr-1 text-[#D4A017]" />
               <span>9–12. Évfolyam</span>
             </div>
@@ -142,7 +142,7 @@ export default function Header({ currentScreen, setScreen, isQuizActive }: Heade
             className={`flex flex-col items-center justify-center w-full h-full gap-1 transition-colors ${currentScreen === "home" ? "text-[#5C0A0A]" : "opacity-70 hover:opacity-100"} ${isQuizActive ? "opacity-30" : ""}`}
           >
             <Home size={22} className={currentScreen === "home" ? "text-[#D4A017]" : ""} />
-            <span className="text-[10px] font-bold font-cinzel uppercase tracking-wider">Főoldal</span>
+            <span className="text-[11px] font-bold font-cinzel uppercase tracking-wider">Főoldal</span>
           </button>
           
           <button 
@@ -151,7 +151,7 @@ export default function Header({ currentScreen, setScreen, isQuizActive }: Heade
             className={`flex flex-col items-center justify-center w-full h-full gap-1 transition-colors ${currentScreen === "weak_points" ? "text-[#5C0A0A]" : "opacity-70 hover:opacity-100"} ${isQuizActive ? "opacity-30" : ""}`}
           >
             <Brain size={22} className={currentScreen === "weak_points" ? "text-[#D4A017]" : ""} />
-            <span className="text-[10px] font-bold font-cinzel uppercase tracking-wider">Gyakorlás</span>
+            <span className="text-[11px] font-bold font-cinzel uppercase tracking-wider">Gyakorlás</span>
           </button>
 
           <button 
@@ -160,7 +160,7 @@ export default function Header({ currentScreen, setScreen, isQuizActive }: Heade
             className={`flex flex-col items-center justify-center w-full h-full gap-1 transition-colors ${currentScreen === "lessons" ? "text-[#5C0A0A]" : "opacity-70 hover:opacity-100"} ${isQuizActive ? "opacity-30" : ""}`}
           >
             <BookText size={22} className={currentScreen === "lessons" ? "text-[#D4A017]" : ""} />
-            <span className="text-[10px] font-bold font-cinzel uppercase tracking-wider">Leckék</span>
+            <span className="text-[11px] font-bold font-cinzel uppercase tracking-wider">Leckék</span>
           </button>
           
           <button 
@@ -169,7 +169,7 @@ export default function Header({ currentScreen, setScreen, isQuizActive }: Heade
             className={`flex flex-col items-center justify-center w-full h-full gap-1 transition-colors opacity-70 hover:opacity-100 ${isQuizActive ? "opacity-30" : ""}`}
           >
             <Swords size={22} />
-            <span className="text-[10px] font-bold font-cinzel uppercase tracking-wider">Játékok</span>
+            <span className="text-[11px] font-bold font-cinzel uppercase tracking-wider">Játékok</span>
           </button>
 
           <button 
@@ -178,7 +178,7 @@ export default function Header({ currentScreen, setScreen, isQuizActive }: Heade
             className={`flex flex-col items-center justify-center w-full h-full gap-1 transition-colors ${currentScreen === "stats" ? "text-[#5C0A0A]" : "opacity-70 hover:opacity-100"} ${isQuizActive ? "opacity-30" : ""}`}
           >
             <BarChart3 size={22} className={currentScreen === "stats" ? "text-[#D4A017]" : ""} />
-            <span className="text-[10px] font-bold font-cinzel uppercase tracking-wider">Krónika</span>
+            <span className="text-[11px] font-bold font-cinzel uppercase tracking-wider">Krónika</span>
           </button>
         </div>
       </nav>

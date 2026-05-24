@@ -216,7 +216,7 @@ export default function SettingsScreen({ onStartQuiz, onCancel }: SettingsScreen
         {/* Title */}
         <div className="flex gap-3 items-center mb-6 pb-4 border-b-2 border-[#B8860B]/40" id="settings-header">
           <div>
-            <span className="text-[10px] uppercase tracking-[0.25em] text-[#6B1010] block font-cinzel font-bold mb-1">Konfiguráció</span>
+            <span className="text-[11px] uppercase tracking-[0.25em] text-[#6B1010] block font-cinzel font-bold mb-1">Konfiguráció</span>
             <h2 className="text-xl sm:text-2xl font-cinzel font-bold text-[#6B1010]">Gyakorló beállításai</h2>
           </div>
         </div>
@@ -226,14 +226,14 @@ export default function SettingsScreen({ onStartQuiz, onCancel }: SettingsScreen
           <div className="flex bg-[#FFF5D0]/60 p-1 rounded-[3px] border-2 border-[#B8860B]/30 mb-6 font-cinzel font-bold">
             <button
               type="button"
-              className={`flex-1 py-2 text-xs uppercase tracking-wider transition-colors rounded-[2px] ${mode === "topic" ? "bg-[#6B1010] text-[#F7EAC8] shadow-md border border-[#B8860B]" : "text-[#1C0E04] hover:bg-[#FFF5D0]"}`}
+              className={`flex-1 py-2 text-xs uppercase tracking-wider transition-colors rounded-[2px] ${mode === "topic" ? "bg-[#6B1010] text-[#FFF5E0] shadow-md border border-[#B8860B]" : "text-[#1C0E04] hover:bg-[#FFF5D0]"}`}
               onClick={() => setMode("topic")}
             >
               Témakörből
             </button>
             <button
               type="button"
-              className={`flex-1 py-2 text-xs uppercase tracking-wider transition-colors rounded-[2px] ${mode === "document" ? "bg-[#6B1010] text-[#F7EAC8] shadow-md border border-[#B8860B]" : "text-[#1C0E04] hover:bg-[#FFF5D0]"}`}
+              className={`flex-1 py-2 text-xs uppercase tracking-wider transition-colors rounded-[2px] ${mode === "document" ? "bg-[#6B1010] text-[#FFF5E0] shadow-md border border-[#B8860B]" : "text-[#1C0E04] hover:bg-[#FFF5D0]"}`}
               onClick={() => setMode("document")}
             >
               Saját dokumentumból
@@ -242,7 +242,7 @@ export default function SettingsScreen({ onStartQuiz, onCancel }: SettingsScreen
 
           {/* Player Name */}
           <div className="space-y-1.5">
-            <label className="text-xs font-cinzel font-bold uppercase tracking-wider text-[#1C0E04] block" htmlFor="input-name">
+            <label className="text-[12px] font-cinzel font-[800] uppercase tracking-wider text-[#3D1A00] block" htmlFor="input-name">
               Neved (toplista bejegyzéshez)
             </label>
             <input
@@ -251,7 +251,7 @@ export default function SettingsScreen({ onStartQuiz, onCancel }: SettingsScreen
               placeholder="pl. Kovács Péter"
               value={playerName}
               onChange={(e) => setPlayerName(e.target.value)}
-              className="w-full px-3.5 py-3 rounded-[3px] border-2 border-[#B8860B] bg-[#FFF5D0] text-[#1C0E04] text-xs sm:text-sm focus:border-[#6B1010] focus:outline-none font-lora font-bold"
+              className="w-full px-3.5 py-3 rounded-[3px] border-2 border-[#B8860B] bg-[#FFF5D0] text-[#1A0800] text-[14px] focus:border-[#6B1010] focus:outline-none font-lora font-bold"
             />
           </div>
 
@@ -263,7 +263,7 @@ export default function SettingsScreen({ onStartQuiz, onCancel }: SettingsScreen
                 <button
                   type="button"
                   onClick={() => setShowReqModal(true)}
-                  className="px-4 py-3 bg-[#6B1010] hover:bg-[#801515] text-[#F7EAC8] rounded-[3px] border border-[#B8860B] text-xs font-cinzel font-bold uppercase tracking-wider transition-colors flex items-center justify-center whitespace-nowrap cursor-pointer shadow-sm btn-shine-effect"
+                  className="px-4 py-3 bg-[#6B1010] hover:bg-[#801515] text-[#FFF5E0] rounded-[3px] border border-[#B8860B] text-xs font-cinzel font-bold uppercase tracking-wider transition-colors flex items-center justify-center whitespace-nowrap cursor-pointer shadow-sm btn-shine-effect"
                 >
                   📋 Min. követelmények
                 </button>
@@ -271,7 +271,7 @@ export default function SettingsScreen({ onStartQuiz, onCancel }: SettingsScreen
             </div>
           ) : (
             <div className="space-y-2 pb-2">
-              <label className="text-xs font-cinzel font-bold uppercase tracking-wider text-[#1C0E04] block">
+              <label className="text-[12px] font-cinzel font-[800] uppercase tracking-wider text-[#3D1A00] block">
                 Új Kódex Feltöltése
               </label>
               
@@ -296,7 +296,7 @@ export default function SettingsScreen({ onStartQuiz, onCancel }: SettingsScreen
                   <>
                     <Upload className="w-8 h-8 text-[#6B1010] mb-2" />
                     <p className="font-lora text-sm text-[#1C0E04] font-bold">Húzd ide a fájlt vagy kattints a feltöltéshez</p>
-                    <p className="text-[10px] font-cinzel text-[#6B1010]/70 uppercase tracking-widest mt-2">Csak PDF & DOCX (Max 10MB)</p>
+                    <p className="text-[11px] font-cinzel text-[#6B1010]/70 uppercase tracking-widest mt-2">Csak PDF & DOCX (Max 10MB)</p>
                   </>
                 )}
 
@@ -311,7 +311,7 @@ export default function SettingsScreen({ onStartQuiz, onCancel }: SettingsScreen
                   <>
                     <X className="w-8 h-8 text-[#8B1A1A] mb-2" />
                     <p className="font-lora text-sm text-[#8B1A1A] font-bold">{uploadError}</p>
-                    <p className="font-cinzel text-[10px] mt-2 underline text-[#8B1A1A] uppercase">Próbálkozz újból</p>
+                    <p className="font-cinzel text-[11px] mt-2 underline text-[#8B1A1A] uppercase">Próbálkozz újból</p>
                   </>
                 )}
 
@@ -320,7 +320,7 @@ export default function SettingsScreen({ onStartQuiz, onCancel }: SettingsScreen
                     <CheckCircle2 className="w-8 h-8 text-[#2D6A4F] mb-1" />
                     <p className="font-cinzel text-xs font-bold text-[#2D6A4F] uppercase tracking-wider mt-1 mb-3">{uploadedFileName}</p>
                     <div className="text-left w-full max-w-sm mt-1 border-t-2 border-[#B8860B]/30 pt-3">
-                      <div className="flex items-center gap-1.5 text-[10px] font-cinzel text-[#6B1010] font-bold uppercase tracking-widest mb-1.5">
+                      <div className="flex items-center gap-1.5 text-[11px] font-cinzel text-[#6B1010] font-bold uppercase tracking-widest mb-1.5">
                         <FileText className="w-3.5 h-3.5" />
                         <span>{documentText.length} karakter kinyerve</span>
                       </div>
@@ -338,14 +338,14 @@ export default function SettingsScreen({ onStartQuiz, onCancel }: SettingsScreen
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {/* 3. Difficulty */}
             <div className="space-y-1.5">
-              <label className="text-xs font-cinzel font-bold uppercase tracking-wider text-[#1C0E04] block" htmlFor="select-difficulty">
+              <label className="text-[12px] font-cinzel font-[800] uppercase tracking-wider text-[#3D1A00] block" htmlFor="select-difficulty">
                 Nehézségi szint
               </label>
               <select
                 id="select-difficulty"
                 value={difficulty}
                 onChange={(e) => setDifficulty(e.target.value as Difficulty)}
-                className="w-full px-3.5 py-3 rounded-[3px] border-2 border-[#B8860B] bg-[#FFF5D0] text-[#1C0E04] text-xs sm:text-sm focus:border-[#6B1010] focus:outline-none cursor-pointer font-lora font-bold"
+                className="w-full px-3.5 py-3 rounded-[3px] border-2 border-[#B8860B] bg-[#FFF5D0] text-[#1A0800] text-[14px] focus:border-[#6B1010] focus:outline-none cursor-pointer font-lora font-bold"
               >
                 <option value="Könnyű">Könnyű (Alapfogalmak)</option>
                 <option value="Közepes">Közepes (Átlagos érettségi)</option>
@@ -355,14 +355,14 @@ export default function SettingsScreen({ onStartQuiz, onCancel }: SettingsScreen
 
             {/* 4. Question Count */}
             <div className="space-y-1.5">
-              <label className="text-xs font-cinzel font-bold uppercase tracking-wider text-[#1C0E04] block" htmlFor="select-count">
+              <label className="text-[12px] font-cinzel font-[800] uppercase tracking-wider text-[#3D1A00] block" htmlFor="select-count">
                 Kérdések száma
               </label>
               <select
                 id="select-count"
                 value={count}
                 onChange={(e) => setCount(parseInt(e.target.value, 10))}
-                className="w-full px-3.5 py-3 rounded-[3px] border-2 border-[#B8860B] bg-[#FFF5D0] text-[#1C0E04] text-xs sm:text-sm focus:border-[#6B1010] focus:outline-none cursor-pointer font-lora font-bold"
+                className="w-full px-3.5 py-3 rounded-[3px] border-2 border-[#B8860B] bg-[#FFF5D0] text-[#1A0800] text-[14px] focus:border-[#6B1010] focus:outline-none cursor-pointer font-lora font-bold"
               >
                 <option value={5}>5 kérdés</option>
                 <option value={10}>10 kérdés</option>
@@ -374,7 +374,7 @@ export default function SettingsScreen({ onStartQuiz, onCancel }: SettingsScreen
 
           {/* 5. Question type */}
           <div className="space-y-1.5">
-            <label className="text-xs font-cinzel font-bold uppercase tracking-wider text-[#1C0E04] block">
+            <label className="text-[12px] font-cinzel font-[800] uppercase tracking-wider text-[#3D1A00] block">
               Kérdések típusa
             </label>
             <div className="grid grid-cols-2 gap-2" id="question-type-picker">
@@ -387,7 +387,7 @@ export default function SettingsScreen({ onStartQuiz, onCancel }: SettingsScreen
                     onClick={() => setQuestionType(type)}
                     className={`py-3 px-3 rounded-[3px] text-xs font-cinzel font-bold uppercase tracking-wider border-2 text-center transition-colors cursor-pointer ${
                       isSelected
-                        ? "bg-[#6B1010] border-[#B8860B] text-[#F7EAC8] shadow-md"
+                        ? "bg-[#6B1010] border-[#B8860B] text-[#FFF5E0] shadow-md"
                         : "bg-[#FFF5D0]/60 border-[#B8860B]/35 text-[#1C0E04] hover:border-[#6B1010] hover:bg-[#FFF5D0]"
                     }`}
                   >
@@ -401,7 +401,7 @@ export default function SettingsScreen({ onStartQuiz, onCancel }: SettingsScreen
           {/* Tanári gyorsfeladatlap fül */}
           <div className="border hover:border-dashed border-[#B8860B]/50 rounded-[3px] p-4 bg-[#FFF5D0]/30 space-y-3">
             <div>
-              <h4 className="text-[10px] font-cinzel font-bold text-[#6D1B1B] uppercase tracking-wider block mb-1">Tanári gyors nyomtatás</h4>
+              <h4 className="text-[11px] font-cinzel font-bold text-[#6D1B1B] uppercase tracking-wider block mb-1">Tanári gyors nyomtatás</h4>
               <p className="text-xs text-[#1C0E04]/75 font-lora">Generálj le és nyomtass ki azonnal egy egyedi feladatlapot a fenti beállításokkal, anélkül, hogy végigjátszanád a kvízt.</p>
             </div>
             
@@ -451,7 +451,7 @@ export default function SettingsScreen({ onStartQuiz, onCancel }: SettingsScreen
               <button
                 type="submit"
                 disabled={mode === "document" && uploadStatus !== "success"}
-                className="flex-2 py-3.5 bg-[#6B1010] hover:bg-[#801515] disabled:opacity-50 disabled:bg-[#9A6F0A]/20 text-[#F7EAC8] rounded-[3px] border-1.5 border-[#B8860B] text-xs font-cinzel font-bold uppercase tracking-[0.18em] transition-colors flex items-center justify-center gap-1.5 cursor-pointer shadow-md disabled:cursor-not-allowed btn-shine-effect"
+                className="flex-2 py-3.5 bg-[#6B1010] hover:bg-[#801515] disabled:opacity-50 disabled:bg-[#9A6F0A]/20 text-[#FFF5E0] rounded-[3px] border-1.5 border-[#B8860B] text-xs font-cinzel font-bold uppercase tracking-[0.18em] transition-colors flex items-center justify-center gap-1.5 cursor-pointer shadow-md disabled:cursor-not-allowed btn-shine-effect"
                 id="submit-settings-btn"
               >
                 <Play className="w-3.5 h-3.5 fill-current" />
@@ -463,7 +463,7 @@ export default function SettingsScreen({ onStartQuiz, onCancel }: SettingsScreen
             <button
                type="button"
                onClick={() => setShowQRModal(true)}
-               className="w-full py-3 bg-[#1C0E04]/60 hover:bg-[#1C0E04] text-[#F7EAC8] rounded-[3px] border border-[#B8860B]/50 text-xs font-cinzel font-bold uppercase tracking-widest transition-colors flex items-center justify-center gap-2 cursor-pointer btn-shine-effect"
+               className="w-full py-3 bg-[#1C0E04]/60 hover:bg-[#1C0E04] text-[#FFF5E0] rounded-[3px] border border-[#B8860B]/50 text-xs font-cinzel font-bold uppercase tracking-widest transition-colors flex items-center justify-center gap-2 cursor-pointer btn-shine-effect"
             >
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" x2="12" y1="2" y2="15"/></svg>
               <span>Megosztás</span>
@@ -499,13 +499,13 @@ export default function SettingsScreen({ onStartQuiz, onCancel }: SettingsScreen
                     a.click();
                   }
                 }}
-                className="w-full bg-[#6B1010] hover:bg-[#801515] text-[#F7EAC8] py-3 text-xs font-cinzel font-bold uppercase transition-colors rounded-[3px] border border-[#B8860B]"
+                className="w-full bg-[#6B1010] hover:bg-[#801515] text-[#FFF5E0] py-3 text-xs font-cinzel font-bold uppercase transition-colors rounded-[3px] border border-[#B8860B]"
               >
                 QR kód letöltése
               </button>
               <button
                 onClick={() => setShowQRModal(false)}
-                className="w-full bg-transparent text-[#6B1010] border-2 border-[#6B1010] hover:bg-[#6B1010] hover:text-[#F7EAC8] py-3 text-xs font-cinzel font-bold uppercase transition-colors rounded-[3px]"
+                className="w-full bg-transparent text-[#6B1010] border-2 border-[#6B1010] hover:bg-[#6B1010] hover:text-[#FFF5E0] py-3 text-xs font-cinzel font-bold uppercase transition-colors rounded-[3px]"
               >
                 Bezárás
               </button>
@@ -546,7 +546,7 @@ export default function SettingsScreen({ onStartQuiz, onCancel }: SettingsScreen
                     <h4 className="font-cinzel text-sm font-bold text-[#1C0E04] uppercase tracking-wider mb-2 border-b border-[#B8860B]/30 pb-1">Személyek</h4>
                     <div className="flex flex-wrap gap-2">
                        {MINIMUM_REQUIREMENTS[topic as keyof typeof MINIMUM_REQUIREMENTS].szemelyek.map(sz => (
-                         <span key={sz} className="px-2.5 py-1 bg-[#8B1A1A] text-[#F7EAC8] border border-[#6B1010] rounded-[2px] text-xs font-lora font-bold shadow-sm whitespace-nowrap">{sz}</span>
+                         <span key={sz} className="px-2.5 py-1 bg-[#8B1A1A] text-[#FFF5E0] border border-[#6B1010] rounded-[2px] text-xs font-lora font-bold shadow-sm whitespace-nowrap">{sz}</span>
                        ))}
                     </div>
                   </div>
@@ -555,7 +555,7 @@ export default function SettingsScreen({ onStartQuiz, onCancel }: SettingsScreen
                     <h4 className="font-cinzel text-sm font-bold text-[#1C0E04] uppercase tracking-wider mb-2 border-b border-[#B8860B]/30 pb-1">Topográfia</h4>
                     <div className="flex flex-wrap gap-2">
                        {MINIMUM_REQUIREMENTS[topic as keyof typeof MINIMUM_REQUIREMENTS].topografia.map(t => (
-                         <span key={t} className="px-2.5 py-1 bg-[#3A2210] text-[#F7EAC8] border border-[#2A1005] rounded-[2px] text-xs font-lora font-bold shadow-sm whitespace-nowrap">{t}</span>
+                         <span key={t} className="px-2.5 py-1 bg-[#3A2210] text-[#FFF5E0] border border-[#2A1005] rounded-[2px] text-xs font-lora font-bold shadow-sm whitespace-nowrap">{t}</span>
                        ))}
                     </div>
                   </div>
@@ -564,7 +564,7 @@ export default function SettingsScreen({ onStartQuiz, onCancel }: SettingsScreen
                     <h4 className="font-cinzel text-sm font-bold text-[#1C0E04] uppercase tracking-wider mb-2 border-b border-[#B8860B]/30 pb-1">Évszámok</h4>
                     <div className="flex flex-wrap gap-2">
                        {MINIMUM_REQUIREMENTS[topic as keyof typeof MINIMUM_REQUIREMENTS].evszamok.map(e => (
-                         <span key={e} className="px-2.5 py-1 bg-[#2D6A4F] text-[#F7EAC8] border border-[#1B4332] rounded-[2px] text-xs font-lora font-bold shadow-sm">{e}</span>
+                         <span key={e} className="px-2.5 py-1 bg-[#2D6A4F] text-[#FFF5E0] border border-[#1B4332] rounded-[2px] text-xs font-lora font-bold shadow-sm">{e}</span>
                        ))}
                     </div>
                   </div>
@@ -577,7 +577,7 @@ export default function SettingsScreen({ onStartQuiz, onCancel }: SettingsScreen
               )}
             </div>
             
-            <div className="mt-6 pt-4 border-t border-[#B8860B]/30 flex justify-between items-center text-[10px] sm:text-xs">
+            <div className="mt-6 pt-4 border-t border-[#B8860B]/30 flex justify-between items-center text-[11px] sm:text-xs">
               <span className="font-lora italic text-[#1C0E04]/70">Forrás: Érettségi követelmények 2017-</span>
             </div>
           </div>

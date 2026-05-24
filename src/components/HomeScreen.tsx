@@ -83,7 +83,7 @@ export default function HomeScreen({
       )}
       
       {xpState.currentStreak > 0 && (
-        <div className="mb-8 bg-[#6B1010]/80 text-[#F7EAC8] font-bold text-center py-2 px-4 rounded shadow-md border border-[#B8860B] font-cinzel text-sm sm:text-base">
+        <div className="mb-8 bg-[#6B1010]/80 text-[#FFF5E0] font-bold text-center py-2 px-4 rounded shadow-md border border-[#B8860B] font-cinzel text-sm sm:text-base">
           🔥 {xpState.currentStreak} napos sorozat – ne törd meg ma!
         </div>
       )}
@@ -98,7 +98,7 @@ export default function HomeScreen({
               transition={{ duration: 0.5 }}
               className="flex flex-col bg-[#4A0808]/50 border border-[#B8860B]/50 rounded-none shadow-md overflow-hidden"
             >
-              <div className="inline-flex items-center gap-2 px-4 py-2 text-[#F7EAC8] text-[10px] font-cinzel font-bold tracking-widest uppercase">
+              <div className="inline-flex items-center gap-2 px-4 py-2 text-[#FFF5E0] text-[11px] font-cinzel font-bold tracking-widest uppercase">
                 <Award className="w-4 h-4 text-[#B8860B]" />
                 <span>{xpState.level.name} ({xpState.xp} XP - {xpState.level.maxXp !== Infinity ? xpState.level.maxXp : 'Max'} XP)</span>
               </div>
@@ -128,8 +128,8 @@ export default function HomeScreen({
                 <span className="text-lg">{isEarned ? badge.icon : "🔒"}</span>
                 {/* Tooltip */}
                 <div className="absolute bottom-full mb-2 hidden group-hover:flex flex-col items-center w-max max-w-[200px] z-10 bg-[#1A0A03] border border-[#B8860B] p-2 text-center shadow-lg">
-                  <span className="text-[#F7EAC8] font-cinzel font-bold text-[10px] uppercase tracking-widest mb-1">{isEarned ? badge.name : "???"}</span>
-                  <p className="text-[#FFF5D0]/70 text-[9px] font-lora leading-tight">{isEarned ? badge.description : "Teljesíts egy feltételt a feloldáshoz!"}</p>
+                  <span className="text-[#FFF5E0] font-cinzel font-bold text-[11px] uppercase tracking-widest mb-1">{isEarned ? badge.name : "???"}</span>
+                  <p className="text-[#FFF5D0]/70 text-[11px] font-lora leading-tight">{isEarned ? badge.description : "Teljesíts egy feltételt a feloldáshoz!"}</p>
                 </div>
               </motion.div>
             );
@@ -154,8 +154,8 @@ export default function HomeScreen({
             className="p-4 cursor-pointer flex justify-between items-center bg-[#1C0E04]/30 hover:bg-[#1C0E04]/50 transition-colors"
           >
             <div>
-              <h2 className="text-xl sm:text-2xl font-cinzel font-bold text-[#F7EAC8]">📖 Tanulás</h2>
-              <p className="text-[#E8CB88]/80 text-sm font-lora italic">Fedezd fel a történelmet lépésről lépésre</p>
+              <h2 className="text-xl sm:text-2xl font-cinzel font-bold text-[#FFF5E0]">📖 Tanulás</h2>
+              <p className="text-[#D4B896] text-[14px] font-lora italic">Fedezd fel a történelmet lépésről lépésre</p>
             </div>
             <div className="text-[#B8860B]">
               {expandedLearn ? <ChevronUp /> : <ChevronDown />}
@@ -172,7 +172,7 @@ export default function HomeScreen({
                 <div className="p-4 pt-2 flex flex-col gap-3">
                   <button 
                     onClick={onStartLessons}
-                    className="w-full bg-[#801515] hover:bg-[#9A1919] text-[#F7EAC8] font-cinzel font-bold uppercase tracking-wider py-5 border border-[#B8860B] rounded-[3px] shadow flex flex-col items-center justify-center gap-2 transition-colors btn-shine-effect"
+                    className="w-full bg-[#801515] hover:bg-[#9A1919] text-[#FFF5E0] font-cinzel font-bold uppercase tracking-wider py-5 border border-[#B8860B] rounded-[3px] shadow flex flex-col items-center justify-center gap-2 transition-colors btn-shine-effect"
                   >
                     <BookOpen className="w-6 h-6" />
                     <span className="text-lg">Leckék</span>
@@ -180,13 +180,13 @@ export default function HomeScreen({
                   <div className="flex gap-3">
                     <button 
                       onClick={onStartFlashcards}
-                      className="flex-1 bg-black/40 hover:bg-black/60 text-[#F7EAC8] font-cinzel font-bold uppercase py-3 border border-[#B8860B]/50 rounded-[3px] flex items-center justify-center gap-2 transition-colors text-sm"
+                      className="flex-1 bg-black/40 hover:bg-black/60 text-[#FFF5E0] font-cinzel font-bold uppercase py-3 border border-[#B8860B]/50 rounded-[3px] flex items-center justify-center gap-2 transition-colors text-sm"
                     >
                       <Sparkles className="w-4 h-4" /> Villámkártyák
                     </button>
                     <button 
                       onClick={onStartGlossary}
-                      className="flex-1 bg-black/40 hover:bg-black/60 text-[#F7EAC8] font-cinzel font-bold uppercase py-3 border border-[#B8860B]/50 rounded-[3px] flex items-center justify-center gap-2 transition-colors text-sm"
+                      className="flex-1 bg-black/40 hover:bg-black/60 text-[#FFF5E0] font-cinzel font-bold uppercase py-3 border border-[#B8860B]/50 rounded-[3px] flex items-center justify-center gap-2 transition-colors text-sm"
                     >
                       <BookOpen className="w-4 h-4" /> Fogalomtár
                     </button>
@@ -204,8 +204,8 @@ export default function HomeScreen({
             className="p-4 cursor-pointer flex justify-between items-center bg-[#1C0E04]/30 hover:bg-[#1C0E04]/50 transition-colors"
           >
             <div>
-              <h2 className="text-xl sm:text-2xl font-cinzel font-bold text-[#F7EAC8]">🎯 Gyakorlás</h2>
-              <p className="text-[#FFF5D0]/80 text-sm font-lora italic">Teszteld tudásodat és készülj az érettségire</p>
+              <h2 className="text-xl sm:text-2xl font-cinzel font-bold text-[#FFF5E0]">🎯 Gyakorlás</h2>
+              <p className="text-[#D4B896] text-[14px] font-lora italic">Teszteld tudásodat és készülj az érettségire</p>
             </div>
             <div className="text-[#1C0E04]">
               {expandedPractice ? <ChevronUp /> : <ChevronDown />}
@@ -222,7 +222,7 @@ export default function HomeScreen({
                 <div className="p-4 pt-2 flex flex-col gap-3">
                   <button 
                     onClick={onStartQuiz}
-                    className="w-full bg-[#1C0E04] hover:bg-black text-[#F7EAC8] font-cinzel font-bold uppercase tracking-wider py-5 border border-[#B8860B] rounded-[3px] shadow flex flex-col items-center justify-center gap-2 transition-colors btn-shine-effect"
+                    className="w-full bg-[#1C0E04] hover:bg-black text-[#FFF5E0] font-cinzel font-bold uppercase tracking-wider py-5 border border-[#B8860B] rounded-[3px] shadow flex flex-col items-center justify-center gap-2 transition-colors btn-shine-effect"
                   >
                     <Play className="w-6 h-6" />
                     <span className="text-lg">Kvíz indítása</span>
@@ -230,14 +230,14 @@ export default function HomeScreen({
                   <div className="flex gap-3">
                     <button 
                       onClick={onViewWeakPoints}
-                      className="flex-1 bg-black/40 hover:bg-black/60 text-[#F7EAC8] font-cinzel font-bold uppercase py-3 border border-[#B8860B]/50 rounded-[3px] flex items-center justify-center gap-2 transition-colors text-sm"
+                      className="flex-1 bg-black/40 hover:bg-black/60 text-[#FFF5E0] font-cinzel font-bold uppercase py-3 border border-[#B8860B]/50 rounded-[3px] flex items-center justify-center gap-2 transition-colors text-sm"
                     >
                       <Target className="w-4 h-4" /> Gyenge pontok
                     </button>
                     {/* Mock functionality for documentation for now as it uses Quiz */}
                     <button 
                       onClick={onStartQuiz}
-                      className="flex-1 bg-black/40 hover:bg-black/60 text-[#F7EAC8] font-cinzel font-bold uppercase py-3 border border-[#B8860B]/50 rounded-[3px] flex items-center justify-center gap-2 transition-colors text-sm"
+                      className="flex-1 bg-black/40 hover:bg-black/60 text-[#FFF5E0] font-cinzel font-bold uppercase py-3 border border-[#B8860B]/50 rounded-[3px] flex items-center justify-center gap-2 transition-colors text-sm"
                     >
                       <FileText className="w-4 h-4" /> Dokumentumból
                     </button>
@@ -255,8 +255,8 @@ export default function HomeScreen({
             className="p-4 cursor-pointer flex justify-between items-center bg-black/30 hover:bg-black/50 transition-colors"
           >
             <div>
-              <h2 className="text-xl sm:text-2xl font-cinzel font-bold text-[#F7EAC8]">⚔️ Játékok</h2>
-              <p className="text-[#E8CB88]/80 text-sm font-lora italic">Játékos formában gyakorolj</p>
+              <h2 className="text-xl sm:text-2xl font-cinzel font-bold text-[#FFF5E0]">⚔️ Játékok</h2>
+              <p className="text-[#D4B896] text-[14px] font-lora italic">Játékos formában gyakorolj</p>
             </div>
             <div className="text-[#B8860B]">
               {expandedGames ? <ChevronUp /> : <ChevronDown />}
@@ -273,21 +273,21 @@ export default function HomeScreen({
                 <div className="p-4 pt-2 flex flex-col sm:flex-row gap-3">
                   <button 
                     onClick={onStartChronology}
-                    className="flex-1 bg-[#1C0E04] hover:bg-black text-[#F7EAC8] font-cinzel font-bold uppercase tracking-wider py-4 border border-[#B8860B]/50 rounded-[3px] shadow flex flex-col items-center justify-center gap-2 transition-colors"
+                    className="flex-1 bg-[#1C0E04] hover:bg-black text-[#FFF5E0] font-cinzel font-bold uppercase tracking-wider py-4 border border-[#B8860B]/50 rounded-[3px] shadow flex flex-col items-center justify-center gap-2 transition-colors"
                   >
                     <Clock className="w-5 h-5" />
                     <span className="text-sm">Kronológia</span>
                   </button>
                   <button 
                     onClick={onStartRoleplay}
-                    className="flex-1 bg-[#1C0E04] hover:bg-black text-[#F7EAC8] font-cinzel font-bold uppercase tracking-wider py-4 border border-[#B8860B]/50 rounded-[3px] shadow flex flex-col items-center justify-center gap-2 transition-colors"
+                    className="flex-1 bg-[#1C0E04] hover:bg-black text-[#FFF5E0] font-cinzel font-bold uppercase tracking-wider py-4 border border-[#B8860B]/50 rounded-[3px] shadow flex flex-col items-center justify-center gap-2 transition-colors"
                   >
                     <span className="text-2xl block mb-1">🎭</span>
                     <span className="text-sm">Szerepjáték</span>
                   </button>
                   <button 
                     onClick={onStartPairQuiz}
-                    className="flex-1 bg-[#1C0E04] hover:bg-black text-[#F7EAC8] font-cinzel font-bold uppercase tracking-wider py-4 border border-[#B8860B]/50 rounded-[3px] shadow flex flex-col items-center justify-center gap-2 transition-colors"
+                    className="flex-1 bg-[#1C0E04] hover:bg-black text-[#FFF5E0] font-cinzel font-bold uppercase tracking-wider py-4 border border-[#B8860B]/50 rounded-[3px] shadow flex flex-col items-center justify-center gap-2 transition-colors"
                   >
                     <BrainCircuit className="w-5 h-5" />
                     <span className="text-sm text-center">Páros<br/>kikérdezés</span>

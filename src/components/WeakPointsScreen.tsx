@@ -59,7 +59,7 @@ export default function WeakPointsScreen({ onGoHome, onStartReviewQuiz }: WeakPo
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5 }}
-          className="text-3xl sm:text-4xl font-cinzel font-bold tracking-tight text-[#F7EAC8] mb-2 uppercase"
+          className="text-3xl sm:text-4xl font-cinzel font-bold tracking-tight text-[#FFF5E0] mb-2 uppercase"
         >
           Gyenge Pontok
         </motion.h1>
@@ -84,7 +84,7 @@ export default function WeakPointsScreen({ onGoHome, onStartReviewQuiz }: WeakPo
           <p className="text-[#1C0E04]/50 font-lora mt-2">Minden kvíz kérdésre hibátlanul válaszoltál mostanában!</p>
           <button
             onClick={onGoHome}
-            className="mt-6 px-6 py-3 bg-[#6B1010] hover:bg-[#801515] text-[#F7EAC8] font-cinzel font-bold uppercase tracking-widest rounded-none border border-[#B8860B] transition-colors text-xs"
+            className="mt-6 px-6 py-3 bg-[#6B1010] hover:bg-[#801515] text-[#FFF5E0] font-cinzel font-bold uppercase tracking-widest rounded-none border border-[#B8860B] transition-colors text-xs"
           >
             Vissza a kezdőlapra
           </button>
@@ -95,18 +95,18 @@ export default function WeakPointsScreen({ onGoHome, onStartReviewQuiz }: WeakPo
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
               <div className="bg-[#1A0A03] border border-[#B8860B]/50 p-4 shadow-lg text-center flex flex-col items-center justify-center">
                 <AlertTriangle className="w-6 h-6 text-[#8B1A1A] mb-2" />
-                <span className="text-[10px] text-[#F7EAC8]/60 font-cinzel uppercase tracking-widest">Összes hiba</span>
-                <span className="text-2xl text-[#F7EAC8] font-cinzel font-bold">{weakPoints.length}</span>
+                <span className="text-[11px] text-[#FFF5E0]/60 font-cinzel uppercase tracking-widest">Összes hiba</span>
+                <span className="text-2xl text-[#FFF5E0] font-cinzel font-bold">{weakPoints.length}</span>
               </div>
               <div className="bg-[#1A0A03] border border-[#B8860B]/50 p-4 shadow-lg text-center flex flex-col items-center justify-center">
                 <Target className="w-6 h-6 text-[#B8860B] mb-2" />
-                <span className="text-[10px] text-[#F7EAC8]/60 font-cinzel uppercase tracking-widest">Legproblémásabb téma</span>
-                <span className="text-sm text-[#F7EAC8] font-lora font-bold line-clamp-2">{stats.worstTopic}</span>
+                <span className="text-[11px] text-[#FFF5E0]/60 font-cinzel uppercase tracking-widest">Legproblémásabb téma</span>
+                <span className="text-sm text-[#FFF5E0] font-lora font-bold line-clamp-2">{stats.worstTopic}</span>
               </div>
               <div className="bg-[#1A0A03] border border-[#B8860B]/50 p-4 shadow-lg text-center flex flex-col items-center justify-center">
                 <Clock className="w-6 h-6 text-[#B8860B] mb-2" />
-                <span className="text-[10px] text-[#F7EAC8]/60 font-cinzel uppercase tracking-widest">Makacs kérdés</span>
-                <span className="text-sm text-[#F7EAC8] font-lora font-bold line-clamp-2">{stats.mostStubborn.question}</span>
+                <span className="text-[11px] text-[#FFF5E0]/60 font-cinzel uppercase tracking-widest">Makacs kérdés</span>
+                <span className="text-sm text-[#FFF5E0] font-lora font-bold line-clamp-2">{stats.mostStubborn.question}</span>
               </div>
             </div>
           )}
@@ -114,7 +114,7 @@ export default function WeakPointsScreen({ onGoHome, onStartReviewQuiz }: WeakPo
           <div className="flex flex-col sm:flex-row gap-4 mb-6">
             <button
               onClick={handleStartQuiz}
-              className="flex-1 py-4 bg-[#6B1010] hover:bg-[#801515] text-[#F7EAC8] font-cinzel border-1.5 border-[#B8860B] font-bold uppercase tracking-[0.15em] rounded-[3px] text-xs flex items-center justify-center gap-2 shadow-[0_0_15px_rgba(107,16,16,0.3)] transition-all"
+              className="flex-1 py-4 bg-[#6B1010] hover:bg-[#801515] text-[#FFF5E0] font-cinzel border-1.5 border-[#B8860B] font-bold uppercase tracking-[0.15em] rounded-[3px] text-xs flex items-center justify-center gap-2 shadow-[0_0_15px_rgba(107,16,16,0.3)] transition-all"
             >
               <RotateCcw className="w-4 h-4" />
               <span>Ismétlő kvíz indítása</span>
@@ -141,8 +141,8 @@ export default function WeakPointsScreen({ onGoHome, onStartReviewQuiz }: WeakPo
                   <div className="w-full flex justify-between gap-4 items-start">
                     <div className="flex-1">
                       <div className="flex flex-wrap gap-2 mb-2">
-                        <span className="text-[9px] font-cinzel font-bold uppercase tracking-widest bg-[#2A1005] text-[#F7EAC8] px-2 py-0.5 border border-[#B8860B]/50 rounded-[2px]">{wp.grade}</span>
-                        <span className="text-[9px] font-cinzel font-bold uppercase tracking-widest bg-[#1A0A03] text-[#F7EAC8]/70 px-2 py-0.5 border border-[#B8860B]/30 rounded-[2px]">{wp.topic.substring(0, 30)}{wp.topic.length > 30 ? "..." : ""}</span>
+                        <span className="text-[11px] font-cinzel font-bold uppercase tracking-widest bg-[#2A1005] text-[#FFF5E0] px-2 py-0.5 border border-[#B8860B]/50 rounded-[2px]">{wp.grade}</span>
+                        <span className="text-[11px] font-cinzel font-bold uppercase tracking-widest bg-[#1A0A03] text-[#FFF5E0]/70 px-2 py-0.5 border border-[#B8860B]/30 rounded-[2px]">{wp.topic.substring(0, 30)}{wp.topic.length > 30 ? "..." : ""}</span>
                       </div>
                       <p className="font-lora font-bold text-[#1C0E04] text-sm sm:text-base leading-snug mb-3">
                         {wp.question}
@@ -168,7 +168,7 @@ export default function WeakPointsScreen({ onGoHome, onStartReviewQuiz }: WeakPo
                       
                       <button 
                         onClick={() => handleDelete(wp.id)}
-                        className="text-[10px] uppercase font-cinzel font-bold text-[#1C0E04]/40 hover:text-[#8B1A1A] flex items-center gap-1 transition-colors"
+                        className="text-[11px] uppercase font-cinzel font-bold text-[#1C0E04]/40 hover:text-[#8B1A1A] flex items-center gap-1 transition-colors"
                       >
                         <Trash2 className="w-3 h-3" /> Törlés
                       </button>

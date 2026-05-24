@@ -129,7 +129,7 @@ export default function QuizScreen({ questions, onQuizFinished, onAbort, grade, 
   let shouldPulse = false;
 
   if (timeLeft < 30) {
-    timerColorClass = "text-[#F7EAC8] bg-[#6B1010] border-[#B8860B] timer-pulse-glow";
+    timerColorClass = "text-[#FFF5E0] bg-[#6B1010] border-[#B8860B] timer-pulse-glow";
     shouldPulse = true;
   } else if (timeLeft < 60) {
     timerColorClass = "text-[#1C0E04] bg-[#E8CB88] border-[#B8860B]/80";
@@ -140,7 +140,7 @@ export default function QuizScreen({ questions, onQuizFinished, onAbort, grade, 
       {/* Quiz Top Action Rail */}
       <div className="flex justify-between items-center mb-4">
         <div>
-          <span className="text-[10px] font-bold text-[#F0C040]/85 font-cinzel tracking-widest block uppercase leading-none mb-1">
+          <span className="text-[11px] font-bold text-[#F0C040]/85 font-cinzel tracking-widest block uppercase leading-none mb-1">
             {grade} • {topic}
           </span>
           <span className="text-xl sm:text-2xl font-bold uppercase tracking-widest text-[#FDF3DC] font-cinzel">
@@ -150,7 +150,7 @@ export default function QuizScreen({ questions, onQuizFinished, onAbort, grade, 
 
         <button
           onClick={onAbort}
-          className="text-[10px] font-bold font-cinzel uppercase tracking-widest text-red-300 hover:text-red-200 hover:bg-[#6B1010]/30 px-3 py-1.5 border border-red-500/40 transition-all cursor-pointer rounded-lg"
+          className="text-[11px] font-bold font-cinzel uppercase tracking-widest text-red-300 hover:text-red-200 hover:bg-[#6B1010]/30 px-3 py-1.5 border border-red-500/40 transition-all cursor-pointer rounded-lg"
         >
           Kilépés
         </button>
@@ -174,17 +174,17 @@ export default function QuizScreen({ questions, onQuizFinished, onAbort, grade, 
       </div>
 
       {/* Quiz Question Box */}
-      <div className="medieval-card p-6 sm:p-8 relative mt-6" id="quiz-question-card">
+      <div className="bg-[#1A0A00] p-6 sm:p-8 relative mt-6 border border-[#D4A017] rounded-xl shadow-lg" id="quiz-question-card">
         
         {/* Question Type Badge */}
         <div className="mb-6 pb-4 border-b border-[#D4A017]/20">
-          <span className="text-[10px] uppercase tracking-wider font-bold font-cinzel text-[#FDF3DC] bg-[#5C0A0A] border border-[#D4A017]/50 px-3 py-1.5 inline-flex items-center gap-1.5 rounded-sm">
+          <span className="text-[11px] uppercase tracking-wider font-bold font-cinzel text-[#FDF3DC] bg-[#5C0A0A] border border-[#D4A017]/50 px-3 py-1.5 inline-flex items-center gap-1.5 rounded-sm">
             {currentQuestion.type === "multiple_choice" ? "FELELETVÁLASZTÓ" : currentQuestion.type === "true_false" ? "IGAZ VAGY HAMIS" : "ESSZÉ"}
           </span>
         </div>
 
         {/* Question sentence - mobile responsive text size */}
-        <h3 className="text-[17px] sm:text-x font-serif font-bold text-[#1A0800] mb-8 leading-[1.6] font-lora" id="quiz-question-text">
+        <h3 className="text-[18px] sm:text-xl font-serif font-bold text-[#FDF3DC] mb-8 leading-[1.7] font-lora" id="quiz-question-text">
           {currentQuestion.question}
         </h3>
 
@@ -200,21 +200,21 @@ export default function QuizScreen({ questions, onQuizFinished, onAbort, grade, 
                   const isThisSelected = selectedAnswer === letter;
                   const isThisCorrect = answersMatch(letter, currentQuestion.correctAnswer);
                   
-                  let optStyle = "border-[#D4A017]/40 hover:border-[#D4A017] hover:bg-[#F0D898]/30 text-[#1A0800] bg-[#FDF3DC]/60";
+                  let optStyle = "border-[#D4A017]/40 hover:border-[#D4A017] hover:bg-[#F0E8D0]/10 text-[#F0E8D0] bg-[#1A0A00]/50";
                   let badgeStyle = "bg-[#5C0A0A] text-[#FDF3DC] font-cinzel font-bold";
                   let iconElement = null;
 
                   if (isAnswered) {
                     if (isThisCorrect) {
-                      optStyle = "border-[#1E6B3C] bg-[#1E6B3C]/10 text-[#1A0800] shadow-sm";
+                      optStyle = "border-[#1E6B3C] bg-[#1E6B3C]/30 text-white shadow-sm";
                       badgeStyle = "bg-[#1E6B3C] text-white font-cinzel font-bold border-[#1E6B3C]";
                       iconElement = <Check className="w-5 h-5 text-[#1E6B3C] shrink-0 ml-auto" />;
                     } else if (isThisSelected) {
-                      optStyle = "border-[#8B1515] bg-[#8B1515]/10 text-[#1A0800] shadow-sm";
+                      optStyle = "border-[#8B1515] bg-[#8B1515]/30 text-white shadow-sm";
                       badgeStyle = "bg-[#8B1515] text-white font-cinzel font-bold border-[#8B1515]";
-                      iconElement = <X className="w-5 h-5 text-[#8B1515] shrink-0 ml-auto" />;
+                      iconElement = <X className="w-5 h-5 text-[#FF6B6B] shrink-0 ml-auto" />;
                     } else {
-                      optStyle = "border-[#D4A017]/20 opacity-40 text-[#1A0800]/60 bg-[#FDF3DC]/20";
+                      optStyle = "border-[#D4A017]/20 opacity-40 text-[#F0E8D0]/60 bg-transparent";
                     }
                   }
 
@@ -245,18 +245,18 @@ export default function QuizScreen({ questions, onQuizFinished, onAbort, grade, 
                   const isThisSelected = selectedAnswer === optionValue;
                   const isThisCorrect = String(optionValue).toLowerCase() === String(currentQuestion.correctAnswer).toLowerCase();
 
-                  let optStyle = "border-[#B8860B]/30 hover:border-[#6B1010]/50 hover:bg-[#FFFCE1] text-[#1C0E04] bg-[#FFFCE1]/50 rounded-[3px]";
+                  let optStyle = "border-[#D4A017]/40 hover:border-[#D4A017] hover:bg-[#F0E8D0]/10 text-[#F0E8D0] bg-[#1A0A00]/50 rounded-[3px]";
                   let iconElement = null;
 
                   if (isAnswered) {
                     if (isThisCorrect) {
-                      optStyle = "border-[#2D6A4F] bg-[#2D6A4F]/10 text-[#1C0E04]";
-                      iconElement = <Check className="w-5 h-5 text-[#2D6A4F] block mt-1" />;
+                      optStyle = "border-[#1E6B3C] bg-[#1E6B3C]/30 text-white";
+                      iconElement = <Check className="w-5 h-5 text-[#1E6B3C] block mt-1" />;
                     } else if (isThisSelected) {
-                      optStyle = "border-[#8B1A1A] bg-[#8B1A1A]/8 text-[#1C0E04]";
-                      iconElement = <X className="w-5 h-5 text-[#8B1A1A] block mt-1" />;
+                      optStyle = "border-[#8B1515] bg-[#8B1515]/30 text-white";
+                      iconElement = <X className="w-5 h-5 text-[#FF6B6B] block mt-1" />;
                     } else {
-                      optStyle = "border-[#B8860B]/10 opacity-40 text-[#1C0E04]/60 bg-[#FFFCE1]/20";
+                      optStyle = "border-[#D4A017]/20 opacity-40 text-[#F0E8D0]/60 bg-transparent";
                     }
                   }
 
@@ -281,7 +281,7 @@ export default function QuizScreen({ questions, onQuizFinished, onAbort, grade, 
             {currentQuestion.type === "essay" && (
               <div className="space-y-4">
                 <div>
-                  <label className="text-xs font-bold font-cinzel uppercase tracking-wider text-[#1C0E04]/75 block mb-2" htmlFor="essay-input">
+                  <label className="text-xs font-bold font-cinzel uppercase tracking-wider text-[#F0E8D0]/75 block mb-2" htmlFor="essay-input">
                     Fogalmazd meg a krónikás válaszod (minimum 1 kerek mondat):
                   </label>
                   <textarea
@@ -291,27 +291,27 @@ export default function QuizScreen({ questions, onQuizFinished, onAbort, grade, 
                     disabled={isAnswered}
                     rows={5}
                     placeholder="Fejtsd ki a történelmi ismereteidet, utalva a legfőbb szereplőkre, dátumokra, ok-okozati összefüggésekre..."
-                    className="w-full p-4 rounded-[3px] border-2 border-[#B8860B] bg-[#FFF5D0] text-[#1C0E04] text-sm focus:border-[#6B1010] focus:outline-none transition-colors disabled:opacity-70 font-lora"
+                    className="w-full p-4 rounded-[3px] border-2 border-[#D4A017]/50 bg-[#1A0A00]/80 text-[#F0E8D0] text-[15px] focus:border-[#D4A017] focus:outline-none transition-colors disabled:opacity-70 font-lora placeholder:text-[#F0E8D0]/30"
                   />
                 </div>
 
                 <div className="flex justify-between items-center select-none">
-                  <span className="text-[11px] font-bold text-[#6B1010] font-cinzel">
-                    KARAKTERSZÁM: <strong className="font-bold text-[#1C0E04]">{essayText.trim().length}</strong>
+                  <span className="text-[11px] font-bold text-[#D4A017] font-cinzel">
+                    KARAKTERSZÁM: <strong className="font-bold text-[#F0E8D0]">{essayText.trim().length}</strong>
                   </span>
                   
                   {!isAnswered ? (
                     <button
                       onClick={handleSaveEssay}
                       disabled={essayText.trim().length < 5}
-                      className="px-5 py-2.5 bg-[#6B1010] hover:bg-[#801515] disabled:bg-[#9A6F0A]/20 disabled:opacity-50 text-[#F7EAC8] text-xs font-cinzel font-bold uppercase tracking-wider rounded-[3px] border-1.5 border-[#B8860B] flex items-center justify-center gap-1.5 transition-colors cursor-pointer shadow-none"
+                      className="px-5 py-2.5 bg-[#6B1010] hover:bg-[#801515] disabled:bg-black/20 disabled:border-[#D4A017]/20 disabled:text-[#F0E8D0]/30 text-[#FFF5E0] text-[13px] font-cinzel font-bold uppercase tracking-wider rounded-[3px] border border-[#D4A017] flex items-center justify-center gap-1.5 transition-colors cursor-pointer shadow-none"
                     >
                       <FileText className="w-4 h-4" />
                       <span>Krónika rögzítése</span>
                     </button>
                   ) : (
-                    <span className="text-[11px] font-bold uppercase tracking-widest text-[#2D6A4F] bg-[#2D6A4F]/10 border border-[#2D6A4F] px-3 py-1.5 rounded-none flex items-center gap-1 font-cinzel">
-                      <Check className="w-3.5 h-3.5 text-[#2D6A4F]" />
+                    <span className="text-[11px] font-bold uppercase tracking-widest text-[#1E6B3C] bg-[#1E6B3C]/10 border border-[#1E6B3C] px-3 py-1.5 rounded-none flex items-center gap-1 font-cinzel">
+                      <Check className="w-3.5 h-3.5 text-[#1E6B3C]" />
                       <span>Krónika elmentve</span>
                     </span>
                   )}
@@ -326,10 +326,10 @@ export default function QuizScreen({ questions, onQuizFinished, onAbort, grade, 
           <div className="flex items-center justify-between">
             <button
               onClick={() => setShowHint(!showHint)}
-              className="text-[10px] font-bold uppercase tracking-widest text-[#FFF5D0] hover:text-white flex items-center gap-1.5 px-3 py-1.5 border-1.5 border-[#B8860B] bg-[#9A6F0A] hover:bg-[#B3830E] rounded-[3px] cursor-pointer transition-colors font-cinzel"
+              className="text-[11px] font-bold uppercase tracking-widest text-[#FFF5D0] hover:text-white flex items-center gap-1.5 px-3 py-1.5 border-1.5 border-[#B8860B] bg-[#9A6F0A] hover:bg-[#B3830E] rounded-[3px] cursor-pointer transition-colors font-cinzel"
               id="hint-toggle-btn"
             >
-              <Lightbulb className="w-3.5 h-3.5 text-[#F7EAC8]" />
+              <Lightbulb className="w-3.5 h-3.5 text-[#FFF5E0]" />
               <span>{showHint ? "Súgó elrejtése" : "Segítség kérése (Krónikás Súgó)"}</span>
             </button>
           </div>
@@ -340,14 +340,14 @@ export default function QuizScreen({ questions, onQuizFinished, onAbort, grade, 
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: "auto" }}
                 exit={{ opacity: 0, height: 0 }}
-                className="bg-[#FFF5D0]/80 border border-[#B8860B] text-[#1C0E04] text-xs sm:text-sm p-4 rounded-none leading-relaxed italic font-lora"
+                className="bg-[#1A0A00] border border-[#D4A017]/50 text-[#F0E8D0] text-xs sm:text-sm p-4 rounded-[3px] leading-[1.8] italic font-lora"
                 id="hint-expanded-box"
               >
                 <div className="flex gap-2.5">
-                  <HelpCircle className="w-4 h-4 text-[#6B1010] shrink-0 mt-0.5" />
+                  <HelpCircle className="w-4 h-4 text-[#D4A017] shrink-0 mt-0.5" />
                   <div>
-                    <span className="font-cinzel font-bold block mb-1 text-[#6B1010]">Kodifikált útjelzés:</span>
-                    <p className="text-[#1C0E04] font-lora">{currentQuestion.hint}</p>
+                    <span className="font-cinzel font-bold block mb-1 text-[#D4A017]">Kodifikált útjelzés:</span>
+                    <p className="text-[#F0E8D0] font-lora">{currentQuestion.hint}</p>
                   </div>
                 </div>
               </motion.div>
@@ -360,7 +360,7 @@ export default function QuizScreen({ questions, onQuizFinished, onAbort, grade, 
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="mt-6 p-5 sm:p-6 bg-[#FFF5D0]/40 rounded-[3px] border border-[#B8860B]/40"
+            className="mt-6 p-5 sm:p-6 bg-[#D4A017]/10 rounded-[3px] border border-[#D4A017]/40"
             id="immediate-explanation-box"
           >
             {/* Show Correct or Wrong alert */}
@@ -372,13 +372,13 @@ export default function QuizScreen({ questions, onQuizFinished, onAbort, grade, 
                     <span>Az idő homokszeme leperegve!</span>
                   </div>
                 ) : (answersMatch(selectedAnswer, currentQuestion.correctAnswer) || String(selectedAnswer).toLowerCase() === String(currentQuestion.correctAnswer).toLowerCase()) ? (
-                  <div className="text-[#2D6A4F] text-[11px] font-bold font-cinzel uppercase tracking-widest bg-[#2D6A4F]/10 border border-[#2D6A4F] px-3 py-1.5 flex items-center gap-1.5">
+                  <div className="text-[#2D6A4F] text-[11px] font-bold font-cinzel uppercase tracking-widest bg-[#2D6A4F]/20 border border-[#2D6A4F] px-3 py-1.5 flex items-center gap-1.5">
                     <Check className="w-4 h-4 text-[#2D6A4F]" />
                     <span>Hiteles válasz!</span>
                   </div>
                 ) : (
-                  <div className="text-[#8B1A1A] text-[11px] font-bold font-cinzel uppercase tracking-widest bg-[#8B1A1A]/10 border border-[#8B1A1A] px-3 py-1.5 flex items-center gap-1.5">
-                    <X className="w-4 h-4 text-[#8B1A1A]" />
+                  <div className="text-[#FF6B6B] text-[11px] font-bold font-cinzel uppercase tracking-widest bg-[#FF6B6B]/10 border border-[#FF6B6B] px-3 py-1.5 flex items-center gap-1.5">
+                    <X className="w-4 h-4 text-[#FF6B6B]" />
                     <span>Téves! (A helyes krónika: {currentQuestion.correctAnswer})</span>
                   </div>
                 )}
@@ -386,20 +386,20 @@ export default function QuizScreen({ questions, onQuizFinished, onAbort, grade, 
             )}
 
             {currentQuestion.type === "essay" && (
-              <div className="flex items-center gap-1.5 text-[#6B1010] font-bold font-cinzel uppercase tracking-wider text-[10px] bg-white/40 border border-[#B8860B]/35 px-2.5 py-1.5 mb-3 mr-auto w-fit">
-                <FileText className="w-3.5 h-3.5 text-[#B8860B]" />
+              <div className="flex items-center gap-1.5 text-[#D4A017] font-bold font-cinzel uppercase tracking-wider text-[11px] bg-[#1A0A00]/40 border border-[#D4A017]/50 px-2.5 py-1.5 mb-3 mr-auto w-fit">
+                <FileText className="w-3.5 h-3.5 text-[#D4A017]" />
                 <span>Tanító krónikás tanácsa az esszédhez</span>
               </div>
             )}
 
-            <h4 className="text-[10px] font-bold text-[#6B1010] tracking-widest uppercase mb-1.5 font-cinzel">Részletes krónikás magyarázat:</h4>
-            <p className="text-xs sm:text-sm text-[#1C0E04] leading-relaxed font-lora italic mb-5">
+            <h4 className="text-[11px] font-bold text-[#D4A017] tracking-widest uppercase mb-1.5 font-cinzel">Részletes krónikás magyarázat:</h4>
+            <p className="text-[15px] sm:text-[16px] text-[#F0E8D0] leading-[1.8] font-lora italic mb-5">
               {currentQuestion.explanation}
             </p>
 
             <button
               onClick={handleNextQuestion}
-              className="w-full sm:w-auto ml-auto mt-4 px-6 py-4 bg-[#6B1010] hover:bg-[#801515] text-[#F7EAC8] border-1.5 border-[#B8860B] font-bold uppercase font-cinzel tracking-[0.15em] rounded-[3px] text-[11px] flex items-center justify-center gap-2 transition-colors cursor-pointer group shadow-none"
+              className="w-full sm:w-auto ml-auto mt-4 px-6 py-4 bg-[#6B1010] hover:bg-[#801515] text-[#FFF5E0] border-1.5 border-[#B8860B] font-bold uppercase font-cinzel tracking-[0.15em] rounded-[3px] text-[11px] flex items-center justify-center gap-2 transition-colors cursor-pointer group shadow-none"
               id="next-question-btn"
             >
               <span>{currentIdx + 1 === totalQuestions ? "Krónika befejezése" : "Következő feladat"}</span>

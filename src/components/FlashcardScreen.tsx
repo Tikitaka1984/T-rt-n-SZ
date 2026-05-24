@@ -163,7 +163,7 @@ export default function FlashcardScreen({ onGoHome }: FlashcardScreenProps) {
           <div className="mb-4">
             <button 
               onClick={onGoHome}
-              className="text-[#F7EAC8] hover:text-[#B8860B] transition-colors font-cinzel text-xs uppercase tracking-wider flex items-center gap-1 cursor-pointer"
+              className="text-[#FFF5E0] hover:text-[#B8860B] transition-colors font-cinzel text-xs uppercase tracking-wider flex items-center gap-1 cursor-pointer"
             >
               ← Vissza a főoldalra
             </button>
@@ -188,7 +188,7 @@ export default function FlashcardScreen({ onGoHome }: FlashcardScreenProps) {
                     type="button"
                     onClick={() => setCount(n)}
                     className={`flex-1 py-2 text-sm font-cinzel font-bold rounded-[2px] transition-colors cursor-pointer ${
-                      count === n ? "bg-[#6B1010] text-[#F7EAC8] border-2 border-[#B8860B]" : "bg-[#FFF5D0] text-[#1C0E04] border border-[#B8860B]/50 hover:bg-[#F0E6BD]"
+                      count === n ? "bg-[#6B1010] text-[#FFF5E0] border-2 border-[#B8860B]" : "bg-[#FFF5D0] text-[#1C0E04] border border-[#B8860B]/50 hover:bg-[#F0E6BD]"
                     }`}
                   >
                     {n}
@@ -199,7 +199,7 @@ export default function FlashcardScreen({ onGoHome }: FlashcardScreenProps) {
             
             <button
               onClick={() => generateFlashcards()}
-              className="w-full py-3 mt-4 bg-[#6B1010] hover:bg-[#801515] text-[#F7EAC8] rounded-[3px] border-1.5 border-[#B8860B] text-sm font-cinzel font-bold uppercase tracking-widest flex justify-center items-center gap-2 transition-colors cursor-pointer"
+              className="w-full py-3 mt-4 bg-[#6B1010] hover:bg-[#801515] text-[#FFF5E0] rounded-[3px] border-1.5 border-[#B8860B] text-sm font-cinzel font-bold uppercase tracking-widest flex justify-center items-center gap-2 transition-colors cursor-pointer"
             >
               <Play className="w-4 h-4 fill-current" /> Kártyák generálása
             </button>
@@ -212,7 +212,7 @@ export default function FlashcardScreen({ onGoHome }: FlashcardScreenProps) {
         <div className="text-center py-20 flex flex-col items-center justify-center">
           <Loader2 className="w-12 h-12 text-[#B8860B] animate-spin mb-6" />
           <div className="bg-[#FFF5D0] border-2 border-[#B8860B] p-5 rounded-[4px] relative max-w-sm shadow-[0_4px_20px_rgba(0,0,0,0.3)]">
-            <p className="text-sm font-cinzel font-bold text-[#6B1010] text-center tracking-wider leading-relaxed">
+            <p className="text-sm font-cinzel font-bold text-[#6B1010] text-center tracking-wider leading-[1.8]">
               Árpád lovag: „Kártyák készítése...”
             </p>
             <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-[#FFF5D0] border-r-2 border-b-2 border-[#B8860B] rotate-45"></div>
@@ -228,12 +228,12 @@ export default function FlashcardScreen({ onGoHome }: FlashcardScreenProps) {
           <div className="w-full grid grid-cols-3 items-center mb-6">
             <button 
               onClick={() => setPhase("settings")} 
-              className="text-[#F7EAC8] hover:text-[#B8860B] transition-colors font-cinzel text-xs uppercase tracking-wider flex items-center gap-1 cursor-pointer justify-self-start"
+              className="text-[#FFF5E0] hover:text-[#B8860B] transition-colors font-cinzel text-xs uppercase tracking-wider flex items-center gap-1 cursor-pointer justify-self-start"
             >
               ← Vissza
             </button>
             
-            <div className="font-cinzel font-bold text-[#F7EAC8] text-base uppercase tracking-widest text-center justify-self-center whitespace-nowrap">
+            <div className="font-cinzel font-bold text-[#FFF5E0] text-base uppercase tracking-widest text-center justify-self-center whitespace-nowrap">
               {currentIndex + 1} / {cards.length}
             </div>
             
@@ -277,7 +277,7 @@ export default function FlashcardScreen({ onGoHome }: FlashcardScreenProps) {
                 
                 {/* Center explanation text */}
                 <div className="flex-1 flex items-center justify-center py-4 overflow-y-auto max-h-[190px] px-2">
-                  <p className="text-sm sm:text-base font-lora italic text-[#1C0E04] leading-relaxed">
+                  <p className="text-sm sm:text-base font-lora italic text-[#1C0E04] leading-[1.8]">
                     {cards[currentIndex].back}
                   </p>
                 </div>
@@ -299,7 +299,7 @@ export default function FlashcardScreen({ onGoHome }: FlashcardScreenProps) {
                     e.stopPropagation();
                     markUnknown();
                   }}
-                  className="px-6 py-2.5 bg-[#8B1A1A] hover:bg-[#6B1010] text-[#F7EAC8] font-cinzel font-bold text-xs uppercase tracking-widest rounded-[3px] border border-red-500/40 shadow-lg flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+                  className="px-6 py-2.5 bg-[#8B1A1A] hover:bg-[#6B1010] text-[#FFF5E0] font-cinzel font-bold text-xs uppercase tracking-widest rounded-[3px] border border-red-500/40 shadow-lg flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
                 >
                   ✗ Nem tudtam
                 </button>
@@ -308,7 +308,7 @@ export default function FlashcardScreen({ onGoHome }: FlashcardScreenProps) {
                     e.stopPropagation();
                     markKnown();
                   }}
-                  className="px-6 py-2.5 bg-[#2D6A4F] hover:bg-[#1B4332] text-[#F7EAC8] font-cinzel font-bold text-xs uppercase tracking-widest rounded-[3px] border border-green-500/40 shadow-lg flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+                  className="px-6 py-2.5 bg-[#2D6A4F] hover:bg-[#1B4332] text-[#FFF5E0] font-cinzel font-bold text-xs uppercase tracking-widest rounded-[3px] border border-green-500/40 shadow-lg flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
                 >
                   ✓ Tudtam
                 </button>
@@ -323,7 +323,7 @@ export default function FlashcardScreen({ onGoHome }: FlashcardScreenProps) {
                   e.stopPropagation();
                   handlePrev();
                 }}
-                className="px-4 py-2 bg-black/40 hover:bg-black/60 text-[#F7EAC8] rounded-[3px] border border-[#B8860B]/50 text-xs font-cinzel font-bold uppercase tracking-wider disabled:opacity-30 disabled:cursor-not-allowed transition-colors cursor-pointer"
+                className="px-4 py-2 bg-black/40 hover:bg-black/60 text-[#FFF5E0] rounded-[3px] border border-[#B8860B]/50 text-xs font-cinzel font-bold uppercase tracking-wider disabled:opacity-30 disabled:cursor-not-allowed transition-colors cursor-pointer"
               >
                 ← Előző
               </button>
@@ -334,7 +334,7 @@ export default function FlashcardScreen({ onGoHome }: FlashcardScreenProps) {
                   e.stopPropagation();
                   handleNext();
                 }}
-                className="px-4 py-2 bg-black/40 hover:bg-black/60 text-[#F7EAC8] rounded-[3px] border border-[#B8860B]/50 text-xs font-cinzel font-bold uppercase tracking-wider disabled:opacity-30 disabled:cursor-not-allowed transition-colors cursor-pointer"
+                className="px-4 py-2 bg-black/40 hover:bg-black/60 text-[#FFF5E0] rounded-[3px] border border-[#B8860B]/50 text-xs font-cinzel font-bold uppercase tracking-wider disabled:opacity-30 disabled:cursor-not-allowed transition-colors cursor-pointer"
               >
                 Következő →
               </button>
@@ -366,7 +366,7 @@ export default function FlashcardScreen({ onGoHome }: FlashcardScreenProps) {
             {unknownCards.length > 0 && (
               <button
                 onClick={() => generateFlashcards(unknownCards)}
-                className="w-full py-3 bg-[#6B1010] hover:bg-[#801515] text-[#F7EAC8] rounded-[3px] border border-[#B8860B] font-cinzel font-bold uppercase tracking-widest flex justify-center items-center gap-2 transition-colors cursor-pointer"
+                className="w-full py-3 bg-[#6B1010] hover:bg-[#801515] text-[#FFF5E0] rounded-[3px] border border-[#B8860B] font-cinzel font-bold uppercase tracking-widest flex justify-center items-center gap-2 transition-colors cursor-pointer"
               >
                 <RotateCcw className="w-4.5 h-4.5" /> Ismeretlenek ismétlése ({unknownCards.length})
               </button>
