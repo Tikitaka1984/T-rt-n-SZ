@@ -5,8 +5,7 @@ import { GoogleGenAI, Type } from "@google/genai";
 import { createServer as createViteServer } from "vite";
 import { getFallbackQuestions } from "./src/data/questions";
 import multer from "multer";
-import * as pdfParseLib from "pdf-parse";
-const pdfParse = (pdfParseLib as any).default || pdfParseLib;
+import pdf from "pdf-parse";
 import mammoth from "mammoth";
 
 // Load environment variables
@@ -17,7 +16,7 @@ import { getKnowledgeForTopic } from "./src/data/knowledgeBase";
 const app = express();
 const PORT = 3000;
 
-app.use(express.json());
+app.use(express.json({ limit: "50mb" }));
 
 // Setup multer for file uploads (max 10MB)
 const upload = multer({
@@ -86,6 +85,25 @@ app.post("/api/quiz/generate", async (req, res) => {
     type === "Rövid esszé" ? "Kizárólag rövid esszé (essay) kérdéseket generálj!" :
     "Kombináld a feleletválasztós (multiple_choice), igaz-hamis (true_false) és rövid esszé (essay) kérdéseket vegyesen!";
 
+  const strictRule = `
+KRITIKUS SZABÁLY: KIZÁRÓLAG a következő témakörről generálj kérdéseket: ${topic}
+NE generálj kérdéseket más korszakokból vagy témákból!
+
+Ellenőrzési lista minden kérdésnél:
+- Ez a kérdés valóban a(z) ${topic} témakörről szól?
+- Ha NEM → dobd ki és generálj újat!
+- Az évszámok egyeznek a témakörrel? (${topic})
+- A személyek ehhez a korszakhoz tartoznak?
+
+Például:
+- 'A második világháború' témánál: 
+  CSAK 1939-1945 közötti eseményekről kérdezz!
+  NEM az első világháborúról!
+- 'Reformkor' témánál:
+  CSAK 1825-1848 közötti eseményekről!
+  NEM a szabadságharcról!
+`;
+
   const geminiPrompt = `
 Generálj pontosan ${requestedCount} db kiváló minőségű, történelmileg hiteles magyar történelem gyakorló kérdést középiskolásoknak.
 Részletes beállítások:
@@ -95,6 +113,7 @@ Részletes beállítások:
 - Kérdések típusa: ${type} (${typeInstruction})
 ${minReqText}
 ${knowledgePrompt}
+${strictRule}
 Kérdéstípusok specifikációi (a generált 'type' mező értéke):
 1. "multiple_choice": 4 válaszlehetőség. Az 'options' tömb tartalmazza az opciókat (pontosan 4 db), a 'correctAnswer' mező értéke pedig a helyes betűjel kell legyen: 'A', 'B', 'C' vagy 'D'.
 2. "true_false": Igaz-Hamis állítás. Az 'options' üres tömb vagy null, a 'correctAnswer' pedig 'Igaz' vagy 'Hamis'.
@@ -108,54 +127,80 @@ Fontos: Minden szöveg nyelvtanilag hibátlan magyar nyelven készüljön!
 `;
 
   try {
-    const response = await ai.models.generateContent({
-      model: "gemini-1.5-flash",
-      contents: geminiPrompt,
-      config: {
-        systemInstruction: `Te egy tapasztalt, szigorú, de tanulóbarát magyar történelem szakos középiskolai tanár vagy. Feladatod prémium, történelmileg pontos NAT 2020-as kerettanterv szerinti gyakorlókérdések összeállítása és értékelése.`,
-        responseMimeType: "application/json",
-        responseSchema: {
-          type: Type.ARRAY,
-          items: {
-            type: Type.OBJECT,
-            properties: {
-              type: { 
-                type: Type.STRING, 
-                description: "A kérdés típusa: 'multiple_choice', 'true_false' vagy 'essay'." 
+    const topicKeywords = topic.toLowerCase().replace(/[^a-záéíóöőúüű\s]/g, '').split(/\s+/).filter(w => w.length > 3 && !['korszakai', 'jellemzői', 'magyar', 'magyarország', 'története'].includes(w));
+    let finalQuestions: any[] = [];
+    let attempts = 0;
+
+    while (finalQuestions.length < requestedCount && attempts < 3) {
+      attempts++;
+      const needed = requestedCount - finalQuestions.length;
+      const currentPrompt = geminiPrompt.replace(`Generálj pontosan ${requestedCount} db`, `Generálj pontosan ${needed} db`);
+
+      const response = await ai.models.generateContent({
+        model: "gemini-3.5-flash",
+        contents: currentPrompt,
+        config: {
+          systemInstruction: `Te egy tapasztalt, szigorú, de tanulóbarát magyar történelem szakos középiskolai tanár vagy. Feladatod prémium, történelmileg pontos NAT 2020-as kerettanterv szerinti gyakorlókérdések összeállítása és értékelése.`,
+          responseMimeType: "application/json",
+          responseSchema: {
+            type: Type.ARRAY,
+            items: {
+              type: Type.OBJECT,
+              properties: {
+                type: { 
+                  type: Type.STRING, 
+                  description: "A kérdés típusa: 'multiple_choice', 'true_false' vagy 'essay'." 
+                },
+                question: { 
+                  type: Type.STRING, 
+                  description: "Maga a kérdés vagy állítás szövege magyarul." 
+                },
+                options: {
+                  type: Type.ARRAY,
+                  items: { type: Type.STRING },
+                  description: "Pontosan 4 válaszopció feleletválasztós kérdésnél. Igaz-Hamis és Esszé esetén hagyd üresen."
+                },
+                correctAnswer: { 
+                  type: Type.STRING, 
+                  description: "Helyes válasz. Feleletválasztósnál 'A', 'B', 'C' vagy 'D'. Igaz-Hamisnál 'Igaz' vagy 'Hamis'. Esszénél üres string." 
+                },
+                hint: { 
+                  type: Type.STRING, 
+                  description: "Rövid, segítőkész téma-specifikus segítség magyarul (pl. évszám vagy személy megemlítése)." 
+                },
+                explanation: { 
+                  type: Type.STRING, 
+                  description: "Részletes, oktató jellegű történelmi magyarázat magyarul, miért ez a helyes válasz, vagy esszénél mik a főbb elvárt pontok." 
+                }
               },
-              question: { 
-                type: Type.STRING, 
-                description: "Maga a kérdés vagy állítás szövege magyarul." 
-              },
-              options: {
-                type: Type.ARRAY,
-                items: { type: Type.STRING },
-                description: "Pontosan 4 válaszopció feleletválasztós kérdésnél. Igaz-Hamis és Esszé esetén hagyd üresen."
-              },
-              correctAnswer: { 
-                type: Type.STRING, 
-                description: "Helyes válasz. Feleletválasztósnál 'A', 'B', 'C' vagy 'D'. Igaz-Hamisnál 'Igaz' vagy 'Hamis'. Esszénél üres string." 
-              },
-              hint: { 
-                type: Type.STRING, 
-                description: "Rövid, segítőkész téma-specifikus segítség magyarul (pl. évszám vagy személy megemlítése)." 
-              },
-              explanation: { 
-                type: Type.STRING, 
-                description: "Részletes, oktató jellegű történelmi magyarázat magyarul, miért ez a helyes válasz, vagy esszénél mik a főbb elvárt pontok." 
-              }
-            },
-            required: ["type", "question", "hint", "explanation"]
+              required: ["type", "question", "hint", "explanation"]
+            }
           }
         }
-      }
-    });
+      });
 
-    const parsedText = response.text || "[]";
-    const questions = JSON.parse(parsedText);
+      let parsedText = response.text || "[]";
+      if (parsedText.trim().startsWith("```json")) {
+        parsedText = parsedText.replace(/```json|```/g, "").trim();
+      } else if (parsedText.trim().startsWith("```")) {
+        parsedText = parsedText.replace(/```/g, "").trim();
+      }
+      
+      try {
+        const parsed = JSON.parse(parsedText);
+        const validBatch = parsed.filter((q: any) => {
+          if (topicKeywords.length === 0) return true;
+          const lowerQ = JSON.stringify(q).toLowerCase();
+          return topicKeywords.some(k => lowerQ.includes(k));
+        });
+        finalQuestions = [...finalQuestions, ...validBatch];
+      } catch (e) {
+        console.error("JSON parse error on generation attempt", e);
+      }
+    }
 
     // Minor structural postcheck: ensure all questions have ids
-    const resolvedQuestions = questions.map((q: any, idx: number) => ({
+    const resolvedQuestions = finalQuestions.slice(0, requestedCount).map((q: any, idx: number) => ({
       ...q,
       id: `ai_${Date.now()}_${idx}`
     }));
@@ -180,8 +225,29 @@ app.post("/api/extract", upload.single("document"), async (req, res) => {
     let text = "";
 
     if (ext === ".pdf") {
-      const data = await pdfParse(req.file.buffer);
-      text = data.text;
+      try {
+        const data = await pdf(req.file.buffer);
+        const extractedText = data.text || "";
+        
+        if (!extractedText.trim() || extractedText.length < 50) {
+          res.status(400).json({ 
+            error: "A dokumentum nem tartalmaz olvasható szöveget. Próbálj egy másik PDF-fel!" 
+          });
+          return;
+        }
+        
+        res.json({ 
+          text: extractedText, 
+          charCount: extractedText.length 
+        });
+        return;
+      } catch (pdfError: any) {
+        console.error("PDF parse error:", pdfError);
+        res.status(400).json({ 
+          error: "A PDF feldolgozása sikertelen. Lehet hogy a PDF védett vagy képekből áll." 
+        });
+        return;
+      }
     } else if (ext === ".docx") {
       const result = await mammoth.extractRawText({ buffer: req.file.buffer });
       text = result.value;
@@ -201,8 +267,10 @@ app.post("/api/extract", upload.single("document"), async (req, res) => {
       charCount: cleanText.length
     });
   } catch (error) {
-    console.error("Extraction error:", error);
-    res.status(500).json({ error: "A fájl feldolgozása nem sikerült" });
+    console.error("PDF parse error:", error);
+    res.status(400).json({ 
+      error: "A fájl feldolgozása nem sikerült" 
+    });
   }
 });
 
@@ -271,7 +339,7 @@ Minden szövegrész kiváló, barátságos, tanári hangvételű és helyes magy
 
   try {
     const response = await ai.models.generateContent({
-      model: "gemini-1.5-flash",
+      model: "gemini-3.5-flash",
       contents: evaluationPrompt,
       config: {
         systemInstruction: "Te egy tapasztalt történelem érettségi javító tanár vagy, aki kiváló pedagógia érzékkel motiválja a diákokat a jobb eredmények elérésére.",
@@ -290,7 +358,12 @@ Minden szövegrész kiváló, barátságos, tanári hangvételű és helyes magy
       }
     });
 
-    const parsedText = response.text || "{}";
+    let parsedText = response.text || "{}";
+    if (parsedText.trim().startsWith("```json")) {
+      parsedText = parsedText.replace(/```json|```/g, "").trim();
+    } else if (parsedText.trim().startsWith("```")) {
+      parsedText = parsedText.replace(/```/g, "").trim();
+    }
     const evaluation = JSON.parse(parsedText);
     res.json(evaluation);
   } catch (error) {
@@ -306,7 +379,7 @@ app.post("/api/generate-pairs", async (req, res) => {
     return;
   }
   if (!ai) {
-    res.status(503).json({ error: "AI API nincs konfigurálva", text: "{}" });
+    res.status(400).json({ error: "AI API nincs konfigurálva", text: "{}" });
     return;
   }
   
@@ -317,11 +390,30 @@ app.post("/api/generate-pairs", async (req, res) => {
   }
 
   try {
+    const strictRule = `
+KRITIKUS SZABÁLY: KIZÁRÓLAG a következő témakörről generálj tartalmat: ${topic}
+NE generálj kérdéseket más korszakokból vagy témákból!
+
+Ellenőrzési lista:
+- Ez a kártya valóban a(z) ${topic} témakörről szól?
+- Ha NEM → dobd ki és generálj újat!
+- Az évszámok egyeznek a témakörrel? (${topic})
+- A személyek ehhez a korszakhoz tartoznak?
+
+Például:
+- 'A második világháború' témánál: 
+  CSAK 1939-1945 közötti eseményekről kérdezz!
+  NEM az első világháborúról!
+- 'Reformkor' témánál:
+  CSAK 1825-1848 közötti eseményekről!
+  NEM a szabadságharcról!
+`;
     const prompt = `Magyar középiskolai történelemtanár vagy (NAT 2020).
 Generálj ${count || 5} páros kikérdező kártyát.
 Témakör: ${topic}. Évfolyam: ${grade}. 
 Nehézség: ${difficulty}.
 ${knowledgePrompt}
+${strictRule}
 CSAK valid JSON:
 {"cards":[
   {
@@ -332,21 +424,42 @@ CSAK valid JSON:
     "hint": "Tematikus tipp ha elakad"
   }
 ]}`;
-    const response = await ai.models.generateContent({
-      model: "gemini-1.5-flash",
-      contents: prompt,
-      config: {
-        responseMimeType: "application/json",
-      }
-    });
 
-    res.json({ text: response.text });
+    const topicKeywords = topic.toLowerCase().replace(/[^a-záéíóöőúüű\s]/g, '').split(/\s+/).filter(w => w.length > 3 && !['korszakai', 'jellemzői', 'magyar', 'magyarország', 'története'].includes(w));
+    let responseText = "{}";
+    let valid = false;
+    let attempts = 0;
+
+    while (!valid && attempts < 3) {
+      attempts++;
+      const response = await ai.models.generateContent({
+        model: "gemini-3.5-flash",
+        contents: prompt,
+        config: {
+          responseMimeType: "application/json",
+        }
+      });
+      responseText = response.text || "{}";
+      
+      if (topicKeywords.length > 0) {
+        const lowerResp = responseText.toLowerCase();
+        if (topicKeywords.some(k => lowerResp.includes(k))) {
+           valid = true;
+        } else {
+           console.warn("Retrying /api/generate-pairs due to topic validation failure.");
+        }
+      } else {
+        valid = true;
+      }
+    }
+
+    res.json({ text: responseText });
   } catch (error: any) {
     console.error("General prompt error:", error);
     if (error?.status === 429 || error?.toString().includes("429") || error?.message?.includes("Quota exceeded") || error?.message?.includes("429")) {
       res.status(429).json({ error: "Szerver terhelés (Rate limit)", text: "" });
     } else {
-      res.status(500).json({ error: "Generálás sikertelen", text: "" });
+      res.status(400).json({ error: "Generálás sikertelen", text: "" });
     }
   }
 });
@@ -360,7 +473,7 @@ app.post("/api/generate", async (req, res) => {
   }
 
   if (!ai) {
-    res.status(503).json({ error: "AI API nincs konfigurálva", text: "{}" });
+    res.status(400).json({ error: "AI API nincs konfigurálva", text: "{}" });
     return;
   }
 
@@ -370,24 +483,70 @@ app.post("/api/generate", async (req, res) => {
     if (knowledge) {
       finalPrompt += `\n\nAz alábbi érettségi vázlat alapján generálj kérdéseket.\nCsak ebből az anyagból dolgozz, ne találj ki adatokat!\nVÁZLAT:\n${knowledge}\n\n`;
     }
+    const strictRule = `
+KRITIKUS SZABÁLY: KIZÁRÓLAG a következő témakörről generálj tartalmat: ${topic}
+NE generálj kérdéseket más korszakokból vagy témákból!
+
+Ellenőrzési lista minden tartalomnál:
+- Ez valóban a(z) ${topic} témakörről szól?
+- Ha NEM → dobd ki és generálj újat!
+- Az évszámok egyeznek a témakörrel? (${topic})
+- A személyek ehhez a korszakhoz tartoznak?
+
+Például:
+- 'A második világháború' témánál: 
+  CSAK 1939-1945 közötti eseményekről kérdezz/írj!
+  NEM az első világháborúról!
+- 'Reformkor' témánál:
+  CSAK 1825-1848 közötti eseményekről!
+  NEM a szabadságharcról!
+`;
+    finalPrompt += `\n\n${strictRule}\n\n`;
   }
 
   try {
-    const response = await ai.models.generateContent({
-      model: "gemini-1.5-flash",
-      contents: finalPrompt,
-      config: {
-        responseMimeType: "application/json",
-      }
-    });
+    let responseText = "";
+    if (topic) {
+        const topicKeywords = topic.toLowerCase().replace(/[^a-záéíóöőúüű\s]/g, '').split(/\s+/).filter(w => w.length > 3 && !['korszakai', 'jellemzői', 'magyar', 'magyarország', 'története'].includes(w));
+        let attempts = 0;
+        let valid = false;
+        while (!valid && attempts < 3) {
+            attempts++;
+            const response = await ai.models.generateContent({
+              model: "gemini-3.5-flash",
+              contents: finalPrompt,
+              config: { responseMimeType: "application/json" }
+            });
+            responseText = response.text || "{}";
+            if (topicKeywords.length > 0) {
+               const lowerResp = responseText.toLowerCase();
+               if (topicKeywords.some(k => lowerResp.includes(k))) {
+                  valid = true;
+               } else {
+                  console.warn("Retrying /api/generate due to topic validation failure.");
+               }
+            } else {
+               valid = true;
+            }
+        }
+    } else {
+        const response = await ai.models.generateContent({
+          model: "gemini-3.5-flash",
+          contents: finalPrompt,
+          config: {
+            responseMimeType: "application/json",
+          }
+        });
+        responseText = response.text || "{}";
+    }
 
-    res.json({ text: response.text });
+    res.json({ text: responseText });
   } catch (error: any) {
     console.error("General prompt error:", error);
     if (error?.status === 429 || error?.toString().includes("429") || error?.message?.includes("Quota exceeded") || error?.message?.includes("429")) {
       res.status(429).json({ error: "Szerver terhelés (Rate limit)", text: "" });
     } else {
-      res.status(500).json({ error: "Generálás sikertelen", text: "" });
+      res.status(400).json({ error: "Generálás sikertelen", text: "" });
     }
   }
 });
@@ -550,17 +709,48 @@ app.post("/api/generate-lesson", async (req, res) => {
   }
   
   const knowledge = getKnowledgeForTopic(topic);
-  let knowledgePrompt = "";
+  const minReqs = (MINIMUM_REQUIREMENTS as any)[topic];
+
+  let knowledgeSection = "";
   if (knowledge) {
-    knowledgePrompt = `\nAz alábbi érettségi vázlat alapján generálj kérdéseket.\nCsak ebből az anyagból dolgozz, ne találj ki adatokat!\nVÁZLAT:\n${knowledge}\n\n`;
+    knowledgeSection = `
+KÖTELEZŐ TUDÁSBÁZIS - CSAK EBBŐL DOLGOZZ:
+${knowledge.substring(0, 3000)}
+`;
+  }
+
+  let minReqSection = "";
+  if (minReqs) {
+    minReqSection = `
+MINIMUM KÖVETELMÉNYEK - ezekből kell kérdezni:
+Fogalmak: ${minReqs.fogalmak?.join(", ")}
+Személyek: ${minReqs.szemelyek?.join(", ")}
+Topográfia: ${minReqs.topografia?.join(", ")}
+Évszámok: ${minReqs.evszamok?.join(", ")}
+`;
   }
 
   try {
+    const strictRule = `
+SZIGORÚ SZABÁLYOK:
+1. KIZÁRÓLAG erről a témáról: ${topic}
+2. ${knowledgeSection}
+3. ${minReqSection}
+4. Az intro kártyák tartalmazzanak konkrét évszámokat,
+   neveket és helyszíneket!
+5. A kérdések legyenek specifikusak - 
+   NE általánosak! Pl:
+   ROSSZ: "Mi jellemzi a forradalmat?"
+   JÓ: "Mikor fogadták el az Áprilisi törvényeket?"
+6. Minden matching pair a témakör 
+   kulcsfogalmaiból legyen!
+`;
+
     const prompt = `Magyar középiskolai történelemtanár vagy (NAT 2020).
 Generálj interaktív leckét.
 Témakör: ${topic}. Évfolyam: ${grade}.
 Lecke típusa: ${lessonType}.
-${knowledgePrompt}
+${strictRule}
 CSAK valid JSON:
 {'lessonTitle': 'Cím',
  'cards': [
@@ -587,21 +777,57 @@ CSAK valid JSON:
       {'term':'Fogalom4','definition':'Def4.'}
     ]}
  ]}`;
-    const response = await ai.models.generateContent({
-      model: "gemini-1.5-flash",
-      contents: prompt,
-      config: {
-        responseMimeType: "application/json",
-      }
-    });
 
-    res.json(JSON.parse(response.text || "{}"));
+    const topicKeywords = topic.toLowerCase().replace(/[^a-záéíóöőúüű\s]/g, '').split(/\s+/).filter(w => w.length > 3 && !['korszakai', 'jellemzői', 'magyar', 'magyarország', 'története'].includes(w));
+    let validResponseData: any = null;
+    let attempts = 0;
+
+    while (!validResponseData && attempts < 3) {
+      attempts++;
+      const response = await ai.models.generateContent({
+        model: "gemini-3.5-flash",
+        contents: prompt,
+        config: {
+          responseMimeType: "application/json",
+        }
+      });
+
+      let rawResponse = response.text || "{}";
+      if (rawResponse.trim().startsWith("```json")) {
+        rawResponse = rawResponse.replace(/```json|```/g, "").trim();
+      } else if (rawResponse.trim().startsWith("```")) {
+        rawResponse = rawResponse.replace(/```/g, "").trim();
+      }
+      
+      try {
+        const parsed = JSON.parse(rawResponse);
+        if (topicKeywords.length > 0) {
+          const lowerResp = JSON.stringify(parsed).toLowerCase();
+          if (topicKeywords.some(k => lowerResp.includes(k))) {
+            validResponseData = parsed;
+          } else {
+             console.warn("Retrying /api/generate-lesson due to topic validation failure.");
+          }
+        } else {
+          validResponseData = parsed;
+        }
+      } catch (e) {
+        console.error("JSON parse error:", e);
+      }
+    }
+
+    if (!validResponseData) {
+      res.status(400).json({ error: "Generálás sikertelen: nem megfelelő téma" });
+      return;
+    }
+
+    res.json(validResponseData);
   } catch (error: any) {
     console.error("General prompt error:", error);
     if (error?.status === 429 || error?.toString().includes("429") || error?.message?.includes("Quota exceeded") || error?.message?.includes("429")) {
       res.status(429).json({ error: "Szerver terhelés (Rate limit)", text: "" });
     } else {
-      res.status(500).json({ error: "Generálás sikertelen", text: "" });
+      res.status(400).json({ error: "Generálás sikertelen", text: "" });
     }
   }
 });

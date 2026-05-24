@@ -3,6 +3,7 @@ import { Clock, HelpCircle, Lightbulb, ArrowRight, AlertTriangle, Check, X, Shie
 import { motion, AnimatePresence } from "motion/react";
 import { QuizQuestion, QuestionType } from "../types";
 import { triggerMascotAct } from "./KnightMascot";
+import { answersMatch } from "../utils/answerMatch";
 
 interface QuizScreenProps {
   questions: QuizQuestion[];
@@ -87,7 +88,8 @@ export default function QuizScreen({ questions, onQuizFinished, onAbort, grade, 
     answersRef.current[currentQuestion.id] = optionKey;
     elapsedTimesRef.current[currentQuestion.id] = 90 - timeLeft;
 
-    if (optionKey === currentQuestion.correctAnswer) {
+    if (answersMatch(optionKey, currentQuestion.correctAnswer) || 
+        String(optionKey).toLowerCase() === String(currentQuestion.correctAnswer).toLowerCase()) {
        triggerMascotAct('correct');
     } else {
        triggerMascotAct('wrong');
@@ -196,7 +198,7 @@ export default function QuizScreen({ questions, onQuizFinished, onAbort, grade, 
                   const letter = ["A", "B", "C", "D"][idx];
                   
                   const isThisSelected = selectedAnswer === letter;
-                  const isThisCorrect = currentQuestion.correctAnswer === letter;
+                  const isThisCorrect = answersMatch(letter, currentQuestion.correctAnswer);
                   
                   let optStyle = "border-[#D4A017]/40 hover:border-[#D4A017] hover:bg-[#F0D898]/30 text-[#1A0800] bg-[#FDF3DC]/60";
                   let badgeStyle = "bg-[#5C0A0A] text-[#FDF3DC] font-cinzel font-bold";
@@ -241,7 +243,7 @@ export default function QuizScreen({ questions, onQuizFinished, onAbort, grade, 
               <div className="grid grid-cols-2 gap-4">
                 {["Igaz", "Hamis"].map((optionValue) => {
                   const isThisSelected = selectedAnswer === optionValue;
-                  const isThisCorrect = currentQuestion.correctAnswer === optionValue;
+                  const isThisCorrect = String(optionValue).toLowerCase() === String(currentQuestion.correctAnswer).toLowerCase();
 
                   let optStyle = "border-[#B8860B]/30 hover:border-[#6B1010]/50 hover:bg-[#FFFCE1] text-[#1C0E04] bg-[#FFFCE1]/50 rounded-[3px]";
                   let iconElement = null;
@@ -369,7 +371,7 @@ export default function QuizScreen({ questions, onQuizFinished, onAbort, grade, 
                     <ShieldAlert className="w-4 h-4 text-[#8B1A1A]" />
                     <span>Az idő homokszeme leperegve!</span>
                   </div>
-                ) : selectedAnswer === currentQuestion.correctAnswer ? (
+                ) : (answersMatch(selectedAnswer, currentQuestion.correctAnswer) || String(selectedAnswer).toLowerCase() === String(currentQuestion.correctAnswer).toLowerCase()) ? (
                   <div className="text-[#2D6A4F] text-[11px] font-bold font-cinzel uppercase tracking-widest bg-[#2D6A4F]/10 border border-[#2D6A4F] px-3 py-1.5 flex items-center gap-1.5">
                     <Check className="w-4 h-4 text-[#2D6A4F]" />
                     <span>Hiteles válasz!</span>

@@ -3,6 +3,7 @@ import { TopicSelector } from "./TopicSelector";
 import { BookOpen, AlertCircle, X, ChevronRight, Loader2, Sparkles, Star, RotateCcw, ArrowRight, Home, Play } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import Markdown from "react-markdown";
+import { answersMatch } from "../utils/answerMatch";
 
 interface LessonScreenProps {
   onGoHome: () => void;
@@ -22,6 +23,7 @@ export default function LessonScreen({ onGoHome }: LessonScreenProps) {
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const [totalQuestions, setTotalQuestions] = useState(0);
   const [lessonFinished, setLessonFinished] = useState(false);
+  const [isAdvancing, setIsAdvancing] = useState(false);
 
   const lessons = [
     { title: "🌱 Alapfogalmak és bevezetés", reward: 50 },
@@ -67,23 +69,28 @@ export default function LessonScreen({ onGoHome }: LessonScreenProps) {
   };
 
   const handleNextCard = () => {
-    if (activeLesson && currentCardIndex < activeLesson.cards.length - 1) {
-      setCurrentCardIndex(prev => prev + 1);
-    } else {
-      setLessonFinished(true);
-      
-      // Save stats to local storage
-      const existing = localStorage.getItem(`hq_lessons_${selectedTopic}`) || "{}";
-      const parsed = JSON.parse(existing);
-      
-      const accuracy = totalQuestions > 0 ? (correctAnswers / totalQuestions) * 100 : 100;
-      let stars = 1;
-      if (accuracy >= 90) stars = 3;
-      else if (accuracy >= 70) stars = 2;
+    if (isAdvancing) return;
+    setIsAdvancing(true);
+    setTimeout(() => {
+      if (activeLesson && currentCardIndex < activeLesson.cards.length - 1) {
+        setCurrentCardIndex(prev => prev + 1);
+      } else {
+        setLessonFinished(true);
+        
+        // Save stats to local storage
+        const existing = localStorage.getItem(`hq_lessons_${selectedTopic}`) || "{}";
+        const parsed = JSON.parse(existing);
+        
+        const accuracy = totalQuestions > 0 ? (correctAnswers / totalQuestions) * 100 : 100;
+        let stars = 1;
+        if (accuracy >= 90) stars = 3;
+        else if (accuracy >= 70) stars = 2;
 
-      parsed[activeLesson.lessonTitle] = { stars, xp: correctAnswers * 5, date: new Date().toISOString() };
-      localStorage.setItem(`hq_lessons_${selectedTopic}`, JSON.stringify(parsed));
-    }
+        parsed[activeLesson.lessonTitle] = { stars, xp: correctAnswers * 5, date: new Date().toISOString() };
+        localStorage.setItem(`hq_lessons_${selectedTopic}`, JSON.stringify(parsed));
+      }
+      setIsAdvancing(false);
+    }, 50);
   };
 
   if (activeLesson && !lessonFinished) {
@@ -110,7 +117,7 @@ export default function LessonScreen({ onGoHome }: LessonScreenProps) {
         </div>
 
         <div className="flex-1 p-4 flex flex-col items-center justify-center">
-          <AnimatePresence mode="wait">
+          <AnimatePresence mode="sync">
             <motion.div
               key={currentCardIndex}
               initial={{ opacity: 0, x: window.innerWidth > 0 ? 100 : 20 }}
@@ -158,7 +165,7 @@ export default function LessonScreen({ onGoHome }: LessonScreenProps) {
         <motion.div initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="medieval-card p-8 w-full max-w-md content-relative text-[#1A0800]">
           <motion.div 
             initial={{ scale: 0 }} 
-            animate={{ scale: [0, 1.2, 1] }} 
+            animate={{ scale: 1 }} 
             transition={{ type: "spring", bounce: 0.6, duration: 0.8 }}
             className="text-6xl mb-4"
           >
@@ -355,7 +362,7 @@ function CardRenderer({ card, onNext, onCorrect }: { card: any, onNext: () => vo
         <div className="space-y-3 flex-1">
           {card.options?.map((opt: string, i: number) => {
             const letter = String.fromCharCode(65+i);
-            const isMatch = (card.correct || card.correctAnswer) === letter;
+            const isMatch = answersMatch(letter, (card.correct || card.correctAnswer)) || String((card.correct || card.correctAnswer)).toLowerCase() === String(letter).toLowerCase();
             const isSelected = selectedOpt === letter;
             
             let btnClass = "w-full p-4 flex items-center gap-4 text-[15px] font-lora border rounded-lg transition-all text-left min-h-[64px] ";
@@ -427,13 +434,13 @@ function CardRenderer({ card, onNext, onCorrect }: { card: any, onNext: () => vo
         {!answered ? (
           <div className="flex gap-4 mt-auto pb-4">
             <button 
-              onClick={() => handleSelect("Igaz", card.correct === true || card.correct === "Igaz")}
+              onClick={() => handleSelect("Igaz", String(card.correct).toLowerCase() === "true" || String(card.correct).toLowerCase() === "igaz")}
               className="flex-1 bg-green-800 hover:bg-green-700 text-white font-bold font-cinzel py-5 rounded text-lg border border-green-600 transition-colors"
             >
               IGAZ ✓
             </button>
             <button 
-              onClick={() => handleSelect("Hamis", card.correct === false || card.correct === "Hamis")}
+              onClick={() => handleSelect("Hamis", String(card.correct).toLowerCase() === "false" || String(card.correct).toLowerCase() === "hamis")}
               className="flex-1 bg-red-800 hover:bg-red-700 text-white font-bold font-cinzel py-5 rounded text-lg border border-red-600 transition-colors"
             >
               HAMIS ✗
@@ -522,7 +529,9 @@ function MatchingCard({ card, onNext, onCorrect }: { card: any, onNext: () => vo
 
   // Call onCorrect when complete, but only once!
   // Wait, the button handles onCorrect. We can just keep it on the button to ensure they get points when advancing.
-  const handleNext = () => {
+  const handleNext = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
     onCorrect();
     onNext();
   };
@@ -584,7 +593,7 @@ function MatchingCard({ card, onNext, onCorrect }: { card: any, onNext: () => vo
             <span className="text-2xl">🛡️</span>
             <span className="text-green-300 font-bold font-lora italic">"Minden párt megtaláltál, vitéz!"</span>
           </div>
-          <button onClick={handleNext} className="bg-green-700 hover:bg-green-600 text-white p-4 w-full rounded font-bold font-cinzel text-sm uppercase transition-colors flex items-center justify-center gap-2 shadow-[0_0_15px_rgba(34,197,94,0.4)]">
+          <button onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleNext(e); }} className="bg-green-700 hover:bg-green-600 text-white p-4 w-full rounded font-bold font-cinzel text-sm uppercase transition-colors flex items-center justify-center gap-2 shadow-[0_0_15px_rgba(34,197,94,0.4)]">
             Kiváló! Tovább <ArrowRight className="w-4 h-4" />
           </button>
         </motion.div>

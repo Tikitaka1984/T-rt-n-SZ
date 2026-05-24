@@ -1,3 +1,4 @@
+import { answersMatch } from "./answerMatch";
 export const XP_MULTIPLIERS = {
   MULTIPLE_CHOICE_CORRECT: 10,
   TRUE_FALSE_CORRECT: 5,
@@ -34,13 +35,13 @@ export function calculateQuizXp(questions: any[], answers: Record<string, string
     const ans = answers[q.id] || "";
     
     if (q.type === "multiple_choice") {
-      if (ans === q.correctAnswer) {
+      if (answersMatch(ans, q.correctAnswer) || String(ans).toLowerCase() === String(q.correctAnswer).toLowerCase()) {
         qXp = XP_MULTIPLIERS.MULTIPLE_CHOICE_CORRECT;
       } else {
         allCorrect = false;
       }
     } else if (q.type === "true_false") {
-      if (ans === q.correctAnswer) {
+      if (String(ans).toLowerCase() === String(q.correctAnswer).toLowerCase()) {
         qXp = XP_MULTIPLIERS.TRUE_FALSE_CORRECT;
       } else {
         allCorrect = false;

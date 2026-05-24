@@ -5,6 +5,27 @@
   --font-lora: "Lora", serif;
 }
 
+@keyframes flicker {
+  0%, 100% { opacity: 1; filter: brightness(1); }
+  25% { opacity: 0.95; filter: brightness(0.95); }
+  50% { opacity: 1; filter: brightness(1.05); }
+  75% { opacity: 0.97; filter: brightness(0.97); }
+}
+
+.candle-flicker {
+  animation: flicker 4s infinite ease-in-out;
+}
+
+.drop-cap::first-letter {
+  font-family: 'Cinzel', serif;
+  font-size: 3em;
+  float: left;
+  line-height: 0.8;
+  margin-right: 8px;
+  color: #D4A017;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
 body {
   background-color: #1A0A00;
   color: #1C0E04;

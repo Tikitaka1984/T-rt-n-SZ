@@ -4,6 +4,7 @@ import HomeScreen from "./components/HomeScreen";
 import SettingsScreen from "./components/SettingsScreen";
 import QuizScreen from "./components/QuizScreen";
 import ResultsScreen from "./components/ResultsScreen";
+import { answersMatch } from "./utils/answerMatch";
 import StatsScreen from "./components/StatsScreen";
 import LeaderboardScreen from "./components/LeaderboardScreen";
 import FlashcardScreen from "./components/FlashcardScreen";
@@ -55,6 +56,12 @@ const HISTORICAL_FACTS = [
 export default function App() {
   const [screen, setScreen] = useState<"home" | "settings" | "quiz" | "results" | "stats" | "leaderboard" | "flashcards" | "glossary" | "weak_points" | "timeline" | "pair_quiz" | "chronology" | "roleplay" | "question_bank" | "lessons">("home");
   const [isQuizActive, setIsQuizActive] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (screen !== "stats") {
+       triggerMascotAct("fact", "", { outfit: "knight" });
+    }
+  }, [screen]);
 
   // Settings
   const [selectedGrade, setSelectedGrade] = useState<Grade>("9. évfolyam");
@@ -240,7 +247,7 @@ Format: {"questions":[{"id":"q1","type":"multiple_choice","question":"Kérdés?"
 
     if (objectiveQuestions.length > 0) {
       objectiveQuestions.forEach((q) => {
-        if (finalAnswers[q.id] === q.correctAnswer) {
+        if (answersMatch(finalAnswers[q.id], q.correctAnswer) || String(finalAnswers[q.id]).toLowerCase() === String(q.correctAnswer).toLowerCase()) {
           correctCount++;
         } else if (finalAnswers[q.id]) { // only if they actually answered it and it was wrong
           wrongItems.push({

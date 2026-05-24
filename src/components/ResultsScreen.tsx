@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Award, RotateCcw, ArrowRight, CheckCircle2, XCircle, Brain, Sparkles, Loader2, HelpCircle, FileText, ChevronDown, ChevronUp, Share2, Printer } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { QuizQuestion, EssayEvaluation, Grade, Difficulty } from "../types";
+import { answersMatch } from "../utils/answerMatch";
 import { getHungarianGradeLabel } from "../utils/stats";
 import { QRCodeCanvas } from "qrcode.react";
 
@@ -295,7 +296,7 @@ export default function ResultsScreen({
 
         {questions.map((q, idx) => {
           const studentAns = answers[q.id] || "";
-          const isCorrect = q.type !== "essay" && studentAns === q.correctAnswer;
+          const isCorrect = q.type !== "essay" && (answersMatch(studentAns, q.correctAnswer) || String(studentAns).toLowerCase() === String(q.correctAnswer).toLowerCase());
           const isSkippedOrTimeout = q.type !== "essay" && studentAns === "";
           const isEssay = q.type === "essay";
 

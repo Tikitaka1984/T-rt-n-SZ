@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "motion/react";
 
-export const triggerMascotAct = (type: 'open' | 'correct' | 'wrong' | 'levelUp' | 'quizCompleted' | 'fact', overrideText?: string) => {
-  window.dispatchEvent(new CustomEvent('mascot-action', { detail: { type, overrideText } }));
+export const triggerMascotAct = (type: 'open' | 'correct' | 'wrong' | 'levelUp' | 'quizCompleted' | 'fact' | 'kronika', overrideText?: string, options?: { outfit?: 'scribe' | 'knight' }) => {
+  window.dispatchEvent(new CustomEvent('mascot-action', { detail: { type, overrideText, options } }));
 };
 
 const OPEN_GREETINGS = [
@@ -50,34 +50,67 @@ function getRandom(arr: string[]): string {
   return arr[Math.floor(Math.random() * arr.length)];
 }
 
-const KnightSVG = ({ mood, isWiggling }: { mood: string; isWiggling: boolean }) => {
+const KnightSVG = ({ mood, isWiggling, outfit = 'knight' }: { mood: string; isWiggling: boolean; outfit?: 'knight' | 'scribe' }) => {
   return (
     <motion.svg 
       width="100%" height="100%" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg"
       animate={isWiggling ? { rotate: [0, -15, 15, -10, 10, 0] } : {}}
       transition={{ duration: 0.5 }}
     >
-      {/* Cape */}
-      <path d="M30 50 Q10 80 20 110 L90 110 Q80 80 80 50 Z" fill="#6B1010" />
-      {/* Body Armor */}
-      <rect x="35" y="60" width="40" height="40" rx="10" fill="#B8860B" />
-      <rect x="40" y="65" width="30" height="30" rx="5" fill="#8B6508" />
-      {/* Legs */}
-      <rect x="42" y="100" width="10" height="15" fill="#4A0808" />
-      <rect x="58" y="100" width="10" height="15" fill="#4A0808" />
-      {/* Arms */}
-      <rect x="25" y="65" width="15" height="25" rx="5" fill="#B8860B" />
-      <rect x="70" y="65" width="15" height="25" rx="5" fill="#B8860B" 
-        style={(mood === 'excited' || mood === 'levelUp') ? {transform: 'rotate(-45deg) translateY(-10px)', transformOrigin: '70px 65px'} : {}}
-      />
-      {/* Sword */}
-      <rect x="15" y="70" width="5" height="40" fill="#E8CB88" />
-      <rect x="10" y="80" width="15" height="5" fill="#1C0E04" />
+      {/* Cape OR Robe background */}
+      <path d="M30 50 Q10 80 20 110 L90 110 Q80 80 80 50 Z" fill={outfit === 'scribe' ? "#3D2B1F" : "#6B1010"} />
+      
+      {outfit === 'knight' ? (
+        <>
+          {/* Body Armor */}
+          <rect x="35" y="60" width="40" height="40" rx="10" fill="#B8860B" />
+          <rect x="40" y="65" width="30" height="30" rx="5" fill="#8B6508" />
+          {/* Legs */}
+          <rect x="42" y="100" width="10" height="15" fill="#4A0808" />
+          <rect x="58" y="100" width="10" height="15" fill="#4A0808" />
+          {/* Arms */}
+          <rect x="25" y="65" width="15" height="25" rx="5" fill="#B8860B" />
+          <rect x="70" y="65" width="15" height="25" rx="5" fill="#B8860B" 
+            style={(mood === 'excited' || mood === 'levelUp') ? {transform: 'rotate(-45deg) translateY(-10px)', transformOrigin: '70px 65px'} : {}}
+          />
+          {/* Sword */}
+          <rect x="15" y="70" width="5" height="40" fill="#E8CB88" />
+          <rect x="10" y="80" width="15" height="5" fill="#1C0E04" />
+        </>
+      ) : (
+        <>
+          {/* Scribe Robe */}
+          <rect x="35" y="60" width="40" height="40" rx="10" fill="#4A3B2F" />
+          <rect x="40" y="65" width="30" height="30" rx="5" fill="#2D231A" />
+          {/* Legs */}
+          <rect x="42" y="100" width="10" height="15" fill="#2C1D11" />
+          <rect x="58" y="100" width="10" height="15" fill="#2C1D11" />
+          {/* Arms */}
+          <rect x="25" y="65" width="15" height="25" rx="5" fill="#3D2B1F" />
+          <rect x="70" y="65" width="15" height="25" rx="5" fill="#3D2B1F" 
+            style={(mood === 'excited' || mood === 'levelUp') ? {transform: 'rotate(-45deg) translateY(-10px)', transformOrigin: '70px 65px'} : {}}
+          />
+          {/* Pen / Quill */}
+          <path d="M15 100 Q20 85 25 70 Q20 75 10 75 Z" fill="#FDF3DC" />
+          <rect x="23" y="90" width="2" height="10" fill="#1C0E04" />
+        </>
+      )}
+
       {/* Head */}
       <circle cx="55" cy="40" r="25" fill="#FFDAB9" />
-      {/* Helmet */}
-      <path d="M30 40 Q55 10 80 40 L80 50 L30 50 Z" fill="#D3D3D3" />
-      <rect x="52" y="15" width="6" height="10" fill="#A9A9A9" />
+      
+      {outfit === 'knight' ? (
+        <>
+          {/* Helmet */}
+          <path d="M30 40 Q55 10 80 40 L80 50 L30 50 Z" fill="#D3D3D3" />
+          <rect x="52" y="15" width="6" height="10" fill="#A9A9A9" />
+        </>
+      ) : (
+        <>
+          {/* Monk Cowl / Hood */}
+          <path d="M30 45 Q55 10 80 45 L80 50 Q55 30 30 50 Z" fill="#3D2B1F" />
+        </>
+      )}
       {/* Face / Expressions */}
       {mood === 'sad' && (
         <path d="M48 48 Q55 43 62 48" stroke="#1C0E04" strokeWidth="2" fill="none" />
@@ -110,6 +143,7 @@ export default function KnightMascot({ forcedMood = 'idle' }: { forcedMood?: 'id
   const [isVisible, setIsVisible] = useState(false);
   const [bubbleText, setBubbleText] = useState("");
   const [mood, setMood] = useState<'idle' | 'happy' | 'sad' | 'excited' | 'thinking' | 'levelUp'>(forcedMood);
+  const [outfit, setOutfit] = useState<'knight' | 'scribe'>('knight');
   const [isWiggling, setIsWiggling] = useState(false);
   
   const hideTimerRef = useRef<NodeJS.Timeout | null>(null);
@@ -157,7 +191,15 @@ export default function KnightMascot({ forcedMood = 'idle' }: { forcedMood?: 'id
       if (t === 'wrong') showDialog(getRandom(WRONG_ANSWERS), 'sad');
       if (t === 'levelUp') showDialog(getRandom(LEVEL_UPS), 'levelUp');
       if (t === 'quizCompleted') showDialog(getRandom(QUIZ_COMPLETED), 'excited');
-      if (t === 'fact') showDialog(getRandom(FUN_FACTS), 'excited');
+      if (t === 'fact') showDialog(ce.detail.overrideText || getRandom(FUN_FACTS), 'excited');
+      
+      if (ce.detail.options?.outfit) {
+        setOutfit(ce.detail.options.outfit);
+      } else {
+        // Option to reset or keep it, keeping it might be weird when leaving screen
+        // Better let the screen trigger outfit='knight' when leaving?
+        // Let's just set it to knight by default if not specified, UNLESS it's just a general fact
+      }
     };
 
     window.addEventListener('mascot-action', handleMascotAction);
@@ -224,7 +266,7 @@ export default function KnightMascot({ forcedMood = 'idle' }: { forcedMood?: 'id
             className="cursor-pointer pointer-events-auto md:w-[120px] md:h-[120px] w-[80px] h-[80px]"
             onClick={handleMascotClick}
           >
-            <KnightSVG mood={mood} isWiggling={isWiggling} />
+            <KnightSVG mood={mood} isWiggling={isWiggling} outfit={outfit} />
           </motion.div>
         )}
       </AnimatePresence>
