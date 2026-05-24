@@ -5,7 +5,8 @@ import { GoogleGenAI, Type } from "@google/genai";
 import { createServer as createViteServer } from "vite";
 import { getFallbackQuestions } from "./src/data/questions";
 import multer from "multer";
-import { PDFParse } from "pdf-parse";
+import * as pdfParseLib from "pdf-parse";
+const pdfParse = (pdfParseLib as any).default || pdfParseLib;
 import mammoth from "mammoth";
 
 // Load environment variables
@@ -108,7 +109,7 @@ Fontos: Minden szöveg nyelvtanilag hibátlan magyar nyelven készüljön!
 
   try {
     const response = await ai.models.generateContent({
-      model: "gemini-3.5-flash",
+      model: "gemini-1.5-flash",
       contents: geminiPrompt,
       config: {
         systemInstruction: `Te egy tapasztalt, szigorú, de tanulóbarát magyar történelem szakos középiskolai tanár vagy. Feladatod prémium, történelmileg pontos NAT 2020-as kerettanterv szerinti gyakorlókérdések összeállítása és értékelése.`,
@@ -179,8 +180,7 @@ app.post("/api/extract", upload.single("document"), async (req, res) => {
     let text = "";
 
     if (ext === ".pdf") {
-      const parser = new PDFParse({ data: req.file.buffer });
-      const data = await parser.getText();
+      const data = await pdfParse(req.file.buffer);
       text = data.text;
     } else if (ext === ".docx") {
       const result = await mammoth.extractRawText({ buffer: req.file.buffer });
@@ -271,7 +271,7 @@ Minden szövegrész kiváló, barátságos, tanári hangvételű és helyes magy
 
   try {
     const response = await ai.models.generateContent({
-      model: "gemini-3.5-flash",
+      model: "gemini-1.5-flash",
       contents: evaluationPrompt,
       config: {
         systemInstruction: "Te egy tapasztalt történelem érettségi javító tanár vagy, aki kiváló pedagógia érzékkel motiválja a diákokat a jobb eredmények elérésére.",
@@ -333,7 +333,7 @@ CSAK valid JSON:
   }
 ]}`;
     const response = await ai.models.generateContent({
-      model: "gemini-3.5-flash",
+      model: "gemini-1.5-flash",
       contents: prompt,
       config: {
         responseMimeType: "application/json",
@@ -374,7 +374,7 @@ app.post("/api/generate", async (req, res) => {
 
   try {
     const response = await ai.models.generateContent({
-      model: "gemini-3.5-flash",
+      model: "gemini-1.5-flash",
       contents: finalPrompt,
       config: {
         responseMimeType: "application/json",
@@ -538,7 +538,14 @@ app.post("/api/generate-lesson", async (req, res) => {
     return;
   }
   if (!ai) {
-    res.status(503).json({ error: "AI API nincs konfigurálva" });
+    res.json({
+      lessonTitle: `Bemutató lecke: ${topic}`,
+      cards: [
+        { type: "intro", icon: "⚔️", title: "Bevezetés", content: "Mivel nincs AI API kulcs beállítva, ez csak egy rövid, statikus bemutató lecke a rendszer működésének tesztelésére." },
+        { type: "flashcard", question: "Mihez szükséges API kulcs?", answer: "Az interaktív és testreszabott oktatási anyagok valós idejű generálásához." },
+        { type: "fun_fact", icon: "💡", content: "Ez az alkalmazás képes a NAT 2020 törzsanyagra épülő egyedi feladatsorok készítésére." }
+      ]
+    });
     return;
   }
   
@@ -581,7 +588,7 @@ CSAK valid JSON:
     ]}
  ]}`;
     const response = await ai.models.generateContent({
-      model: "gemini-3.5-flash",
+      model: "gemini-1.5-flash",
       contents: prompt,
       config: {
         responseMimeType: "application/json",
@@ -618,7 +625,7 @@ async function bootstrap() {
   }
 
   app.listen(PORT, "0.0.0.0", () => {
-    console.log(`História Quiz server successfully listening on port ${PORT}`);
+    console.log(`TörténÉSZ server successfully listening on port ${PORT}`);
   });
 }
 
