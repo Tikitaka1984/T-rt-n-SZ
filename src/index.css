@@ -1,0 +1,192 @@
+@import "tailwindcss";
+
+@theme {
+  --font-cinzel: "Cinzel", serif;
+  --font-lora: "Lora", serif;
+}
+
+body {
+  background-color: #1A0A00;
+  color: #1C0E04;
+  font-family: "Lora", serif;
+}
+
+.font-cinzel {
+  font-family: "Cinzel", serif;
+}
+
+.font-lora {
+  font-family: "Lora", serif;
+}
+
+.medieval-card {
+  background: linear-gradient(145deg, #FDF3DC, #F0D898);
+  border: 2px solid #D4A017;
+  border-radius: 8px; /* Was 3px, but requirements say button rounded corner=8px, applied to cards too for consistency or maybe just 8px */
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), 0 10px 25px -5px rgba(0, 0, 0, 0.7), 0 8px 10px -6px rgba(0, 0, 0, 0.7);
+  color: #1A0800;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Subtle texture overlay for medieval-card */
+.medieval-card::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0.03;
+  z-index: 0;
+}
+
+/* Corner ornaments using pseudo-elements */
+.medieval-card::after {
+  content: "";
+  position: absolute;
+  top: 4px; left: 4px; right: 4px; bottom: 4px;
+  border: 1px solid rgba(212, 160, 23, 0.2);
+  pointer-events: none;
+  border-radius: 5px;
+  z-index: 0;
+}
+
+.medieval-card:hover {
+  transform: translateY(-3px);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), 0 8px 25px rgba(212, 160, 23, 0.3);
+}
+
+.medieval-card-header {
+  background: linear-gradient(135deg, #5C0A0A, #3D0505);
+  color: #F7EAC8;
+  border-bottom: 3px solid #D4A017;
+}
+
+.content-relative {
+  position: relative;
+  z-index: 1; /* Keep content above noise overlay */
+}
+
+.particle-container {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+.particle {
+  position: absolute;
+  background-color: #B8860B;
+  border-radius: 50%;
+  opacity: 0;
+  animation: floatUp 15s infinite linear;
+}
+@keyframes floatUp {
+  0% { transform: translateY(100vh); opacity: 0; }
+  10% { opacity: 0.6; }
+  90% { opacity: 0.6; }
+  100% { transform: translateY(-100px); opacity: 0; }
+}
+
+.btn-shine-effect {
+  position: relative;
+  overflow: hidden;
+}
+.btn-shine-effect::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 50%; height: 100%;
+  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.15), transparent);
+  transform: skewX(-20deg);
+  transition: none;
+}
+.btn-shine-effect:hover::after {
+  animation: staticShine 0.6s forwards;
+}
+@keyframes staticShine {
+  100% { left: 150%; }
+}
+
+.option-btn {
+  border-radius: 8px !important;
+  transition: transform 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+  min-height: 64px;
+  font-size: 15px; /* Was 13px */
+}
+.option-btn:not(:disabled):hover {
+  transform: scale(0.97); /* Active state feel */
+}
+.option-btn:disabled {
+  opacity: 0.4;
+}
+
+button {
+  min-height: 52px;
+  /* Min width 52px might break small icon buttons, better not to strictly enforce on all buttons, or just do it carefully */
+}
+
+/* Base typography overrides for readability */
+@media (max-width: 640px) {
+  body {
+    padding-bottom: 80px; /* Room for thumb/tab bar */
+  }
+}
+
+
+.nav-link {
+  position: relative;
+}
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -4px; right: 0; left: 0;
+  height: 2px;
+  background-color: #B8860B;
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  transition: transform 0.3s ease-out;
+}
+.nav-link:hover::after, .nav-link-active::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+.timer-pulse-glow {
+  box-shadow: 0 0 15px currentColor;
+  animation: pulse-glow 1.5s infinite;
+}
+@keyframes pulse-glow {
+  0% { box-shadow: 0 0 10px currentColor; }
+  50% { box-shadow: 0 0 25px currentColor; border-color: currentColor; }
+  100% { box-shadow: 0 0 10px currentColor; }
+}
+
+.xp-fill {
+  width: 0%;
+  animation: xpFillAnim 1s ease-out forwards;
+}
+@keyframes xpFillAnim {
+  to { width: var(--target-width); }
+}
+
+.progress-bar-inner {
+  position: relative;
+  overflow: hidden;
+}
+.progress-bar-inner::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  animation: shimmer 2s infinite linear;
+}
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+

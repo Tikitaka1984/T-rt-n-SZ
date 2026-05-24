@@ -1,0 +1,6 @@
+{
+  "name": "TörténÉSZ",
+  "description": "AI-alapú történelem gyakorló középiskolásoknak (9-12. évfolyam), a NAT 2020-as kerettanterv alapján.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
