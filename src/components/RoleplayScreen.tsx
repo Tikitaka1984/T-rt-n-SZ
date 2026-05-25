@@ -335,7 +335,7 @@ CSAK valid JSON válaszolj, formázás és sallang nélkül, ebben a formátumba
 
     try {
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 12000);
+      const timeoutId = setTimeout(() => controller.abort(new Error("Timeout")), 12000);
 
       const response = await fetch("/api/generate", {
         method: "POST",
@@ -354,10 +354,15 @@ CSAK valid JSON válaszolj, formázás és sallang nélkül, ebben a formátumba
       let rawText = resData?.text || "";
 
       // Clean Markdown markers if present
-      if (rawText.includes("```json")) {
-        rawText = rawText.split("```json")[1].split("```")[0];
-      } else if (rawText.includes("```")) {
-        rawText = rawText.split("```")[1].split("```")[0];
+      const jsonMatch = rawText.match(/\[[\s\S]*\]|\{[\s\S]*\}/);
+      if (jsonMatch) {
+         rawText = jsonMatch[0];
+      } else {
+        if (rawText.includes("```json")) {
+          rawText = rawText.split("```json")[1]?.split("```")[0] || rawText;
+        } else if (rawText.includes("```")) {
+          rawText = rawText.split("```")[1]?.split("```")[0] || rawText;
+        }
       }
 
       const parsed: RoleplayScenario = JSON.parse(rawText.trim());

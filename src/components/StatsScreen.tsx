@@ -150,7 +150,7 @@ export default function StatsScreen({ onGoHome }: KronikaScreenProps) {
     
     while (attempts < 2) {
       const abortController = new AbortController();
-      const timeoutId = setTimeout(() => abortController.abort(), 30000);
+      const timeoutId = setTimeout(() => abortController.abort(new Error("Timeout")), 30000);
 
       try {
         const resp = await fetch("/api/generate", {
@@ -199,10 +199,15 @@ CSAK valid JSON hiba nélkül:
           throw new Error("Üres válasz érkezett");
         }
         
-        if (raw.trim().startsWith("```json")) {
-          raw = raw.replace(/```json|```/g, "").trim();
-        } else if (raw.trim().startsWith("```")) {
-          raw = raw.replace(/```/g, "").trim();
+        const match = raw.match(/\{[\s\S]*\}/);
+        if (match) {
+          raw = match[0];
+        } else {
+          if (raw.trim().startsWith("```json")) {
+            raw = raw.replace(/```json|```/g, "").trim();
+          } else if (raw.trim().startsWith("```")) {
+            raw = raw.replace(/```/g, "").trim();
+          }
         }
         
         const parsed = JSON.parse(raw);

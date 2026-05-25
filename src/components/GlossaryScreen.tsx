@@ -232,10 +232,15 @@ CSAK valid JSON:
 
       const resData = await response.json();
       let cleanText = resData?.text || "";
-      if (cleanText.trim().startsWith("```json")) {
-        cleanText = cleanText.replace(/```json|```/g, "").trim();
-      } else if (cleanText.trim().startsWith("```")) {
-        cleanText = cleanText.replace(/```/g, "").trim();
+      const jsonMatch = cleanText.match(/\[[\s\S]*\]|\{[\s\S]*\}/);
+      if (jsonMatch) {
+         cleanText = jsonMatch[0];
+      } else {
+        if (cleanText.trim().startsWith("```json")) {
+          cleanText = cleanText.replace(/```json|```/g, "").trim();
+        } else if (cleanText.trim().startsWith("```")) {
+          cleanText = cleanText.replace(/```/g, "").trim();
+        }
       }
 
       const parsed: ConceptArticle = JSON.parse(cleanText);
@@ -307,10 +312,15 @@ CSAK valid JSON-t adj vissza pontosan ebben a formátumban, markdown kódjelek n
 
       const resData = await response.json();
       let cleanText = resData.text || "";
-      if (cleanText.trim().startsWith("```json")) {
-        cleanText = cleanText.replace(/```json|```/g, "").trim();
-      } else if (cleanText.trim().startsWith("```")) {
-        cleanText = cleanText.replace(/```/g, "").trim();
+      const jsonMatch = cleanText.match(/\[[\s\S]*\]|\{[\s\S]*\}/);
+      if (jsonMatch) {
+         cleanText = jsonMatch[0];
+      } else {
+        if (cleanText.trim().startsWith("```json")) {
+          cleanText = cleanText.replace(/```json|```/g, "").trim();
+        } else if (cleanText.trim().startsWith("```")) {
+          cleanText = cleanText.replace(/```/g, "").trim();
+        }
       }
 
       const parsed: CompareResult = JSON.parse(cleanText);

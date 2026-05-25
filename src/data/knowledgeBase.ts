@@ -149,14 +149,21 @@ NATO-csatlakozás (1999), EU-csatlakozás (2004).`
 };
 
 export function getKnowledgeForTopic(topic: string): string {
-  if (KNOWLEDGE_BASE[topic]) return KNOWLEDGE_BASE[topic];
-  const t = topic.toLowerCase();
-  for (const [key, val] of Object.entries(KNOWLEDGE_BASE)) {
-    const k = key.toLowerCase();
-    const kWords = k.split(/[\s\-–]+/).filter(w => w.length > 4);
-    if (kWords.some(w => t.includes(w))) return val;
+  let content = "";
+  if (KNOWLEDGE_BASE[topic]) {
+    content = KNOWLEDGE_BASE[topic];
+  } else {
+    const t = topic.toLowerCase();
+    for (const [key, val] of Object.entries(KNOWLEDGE_BASE)) {
+      const k = key.toLowerCase();
+      const kWords = k.split(/[\s\-–]+/).filter(w => w.length > 4);
+      if (kWords.some(w => t.includes(w))) {
+        content = val;
+        break;
+      }
+    }
   }
-  return "";
+  return content.slice(0, 2000);
 }
 
 export const KNOWLEDGE_TOPICS = Object.keys(KNOWLEDGE_BASE);

@@ -11,7 +11,15 @@ import mammoth from "mammoth";
 // Load environment variables
 dotenv.config();
 
-import { getKnowledgeForTopic } from "./src/data/knowledgeBase";
+
+const getKnowledge = async (topic: string) => {
+  try {
+    const { getKnowledgeForTopic } = await import('./src/data/knowledgeBase');
+    return getKnowledgeForTopic(topic);
+  } catch {
+    return "";
+  }
+};
 
 const app = express();
 const PORT = 3000;
@@ -66,7 +74,7 @@ app.post("/api/quiz/generate", async (req, res) => {
     return;
   }
 
-  const knowledge = getKnowledgeForTopic(topic);
+  const knowledge = await getKnowledge(topic);
   let knowledgePrompt = "";
   if (knowledge) {
     knowledgePrompt = `\nAz alábbi érettségi vázlat alapján generálj kérdéseket.\nCsak ebből az anyagból dolgozz, ne találj ki adatokat!\nVÁZLAT:\n${knowledge}\n\n`;
@@ -137,7 +145,7 @@ Fontos: Minden szöveg nyelvtanilag hibátlan magyar nyelven készüljön!
       const currentPrompt = geminiPrompt.replace(`Generálj pontosan ${requestedCount} db`, `Generálj pontosan ${needed} db`);
 
       const response = await ai.models.generateContent({
-        model: "gemini-1.5-flash",
+        model: "gemini-flash-latest",
         contents: currentPrompt,
         config: {
           systemInstruction: `Te egy tapasztalt, szigorú, de tanulóbarát magyar történelem szakos középiskolai tanár vagy. Feladatod prémium, történelmileg pontos NAT 2020-as kerettanterv szerinti gyakorlókérdések összeállítása és értékelése.`,
@@ -180,10 +188,15 @@ Fontos: Minden szöveg nyelvtanilag hibátlan magyar nyelven készüljön!
       });
 
       let parsedText = response.text || "[]";
-      if (parsedText.trim().startsWith("```json")) {
-        parsedText = parsedText.replace(/```json|```/g, "").trim();
-      } else if (parsedText.trim().startsWith("```")) {
-        parsedText = parsedText.replace(/```/g, "").trim();
+      const jsonMatch = parsedText.match(/\[[\s\S]*\]|\{[\s\S]*\}/);
+      if (jsonMatch) {
+         parsedText = jsonMatch[0];
+      } else {
+        if (parsedText.trim().startsWith("```json")) {
+          parsedText = parsedText.replace(/```json|```/g, "").trim();
+        } else if (parsedText.trim().startsWith("```")) {
+          parsedText = parsedText.replace(/```/g, "").trim();
+        }
       }
       
       try {
@@ -339,7 +352,7 @@ Minden szövegrész kiváló, barátságos, tanári hangvételű és helyes magy
 
   try {
     const response = await ai.models.generateContent({
-      model: "gemini-1.5-flash",
+      model: "gemini-flash-latest",
       contents: evaluationPrompt,
       config: {
         systemInstruction: "Te egy tapasztalt történelem érettségi javító tanár vagy, aki kiváló pedagógia érzékkel motiválja a diákokat a jobb eredmények elérésére.",
@@ -359,10 +372,15 @@ Minden szövegrész kiváló, barátságos, tanári hangvételű és helyes magy
     });
 
     let parsedText = response.text || "{}";
-    if (parsedText.trim().startsWith("```json")) {
-      parsedText = parsedText.replace(/```json|```/g, "").trim();
-    } else if (parsedText.trim().startsWith("```")) {
-      parsedText = parsedText.replace(/```/g, "").trim();
+    const jsonMatch = parsedText.match(/\[[\s\S]*\]|\{[\s\S]*\}/);
+    if (jsonMatch) {
+       parsedText = jsonMatch[0];
+    } else {
+      if (parsedText.trim().startsWith("```json")) {
+        parsedText = parsedText.replace(/```json|```/g, "").trim();
+      } else if (parsedText.trim().startsWith("```")) {
+        parsedText = parsedText.replace(/```/g, "").trim();
+      }
     }
     const evaluation = JSON.parse(parsedText);
     res.json(evaluation);
@@ -383,7 +401,7 @@ app.post("/api/generate-pairs", async (req, res) => {
     return;
   }
   
-  const knowledge = getKnowledgeForTopic(topic);
+  const knowledge = await getKnowledge(topic);
   let knowledgePrompt = "";
   if (knowledge) {
     knowledgePrompt = `\nAz alábbi érettségi vázlat alapján generálj kérdéseket.\nCsak ebből az anyagból dolgozz, ne találj ki adatokat!\nVÁZLAT:\n${knowledge}\n\n`;
@@ -433,7 +451,7 @@ CSAK valid JSON:
     while (!valid && attempts < 3) {
       attempts++;
       const response = await ai.models.generateContent({
-        model: "gemini-1.5-flash",
+        model: "gemini-flash-latest",
         contents: prompt,
         config: {
           responseMimeType: "application/json",
@@ -479,7 +497,7 @@ app.post("/api/generate", async (req, res) => {
 
   let finalPrompt = prompt;
   if (topic) {
-    const knowledge = getKnowledgeForTopic(topic);
+    const knowledge = await getKnowledge(topic);
     if (knowledge) {
       finalPrompt += `\n\nAz alábbi érettségi vázlat alapján generálj kérdéseket.\nCsak ebből az anyagból dolgozz, ne találj ki adatokat!\nVÁZLAT:\n${knowledge}\n\n`;
     }
@@ -513,7 +531,7 @@ Például:
         while (!valid && attempts < 3) {
             attempts++;
             const response = await ai.models.generateContent({
-              model: "gemini-1.5-flash",
+              model: "gemini-flash-latest",
               contents: finalPrompt,
               config: { responseMimeType: "application/json" }
             });
@@ -531,7 +549,7 @@ Például:
         }
     } else {
         const response = await ai.models.generateContent({
-          model: "gemini-1.5-flash",
+          model: "gemini-flash-latest",
           contents: finalPrompt,
           config: {
             responseMimeType: "application/json",
@@ -708,7 +726,7 @@ app.post("/api/generate-lesson", async (req, res) => {
     return;
   }
   
-  const knowledge = getKnowledgeForTopic(topic);
+  const knowledge = await getKnowledge(topic);
   const minReqs = (MINIMUM_REQUIREMENTS as any)[topic];
 
   let knowledgeSection = "";
@@ -785,7 +803,7 @@ CSAK valid JSON:
     while (!validResponseData && attempts < 3) {
       attempts++;
       const response = await ai.models.generateContent({
-        model: "gemini-1.5-flash",
+        model: "gemini-flash-latest",
         contents: prompt,
         config: {
           responseMimeType: "application/json",
@@ -793,10 +811,15 @@ CSAK valid JSON:
       });
 
       let rawResponse = response.text || "{}";
-      if (rawResponse.trim().startsWith("```json")) {
-        rawResponse = rawResponse.replace(/```json|```/g, "").trim();
-      } else if (rawResponse.trim().startsWith("```")) {
-        rawResponse = rawResponse.replace(/```/g, "").trim();
+      const jsonMatch = rawResponse.match(/\[[\s\S]*\]|\{[\s\S]*\}/);
+      if (jsonMatch) {
+         rawResponse = jsonMatch[0];
+      } else {
+        if (rawResponse.trim().startsWith("```json")) {
+          rawResponse = rawResponse.replace(/```json|```/g, "").trim();
+        } else if (rawResponse.trim().startsWith("```")) {
+          rawResponse = rawResponse.replace(/```/g, "").trim();
+        }
       }
       
       try {

@@ -79,7 +79,12 @@ export default function ResultsScreen({
       const rawText = await response.text();
       let evaluation: EssayEvaluation;
       try {
-        evaluation = rawText ? JSON.parse(rawText) : {};
+        let cleanText = rawText;
+        const jsonMatch = cleanText.match(/\[[\s\S]*\]|\{[\s\S]*\}/);
+        if (jsonMatch) {
+            cleanText = jsonMatch[0];
+        }
+        evaluation = cleanText ? JSON.parse(cleanText) : {};
       } catch (e) {
         throw new Error("Érvénytelen válasz a szervertől (nem JSON).");
       }

@@ -321,10 +321,15 @@ CSAK JSON: {'detail': 'Részletes szöveg...', 'significance': 'Miért fontos az
       if (response.ok) {
         const resData = await response.json();
         let cleanText = resData.text || "";
-        if (cleanText.trim().startsWith("```json")) {
-          cleanText = cleanText.replace(/```json|```/g, "").trim();
-        } else if (cleanText.trim().startsWith("```")) {
-          cleanText = cleanText.replace(/```/g, "").trim();
+        const jsonMatch = cleanText.match(/\[[\s\S]*\]|\{[\s\S]*\}/);
+        if (jsonMatch) {
+            cleanText = jsonMatch[0];
+        } else {
+            if (cleanText.trim().startsWith("```json")) {
+                cleanText = cleanText.replace(/```json|```/g, "").trim();
+            } else if (cleanText.trim().startsWith("```")) {
+                cleanText = cleanText.replace(/```/g, "").trim();
+            }
         }
         
         const parsed = JSON.parse(cleanText);
