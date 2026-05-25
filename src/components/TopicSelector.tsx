@@ -102,10 +102,10 @@ export function TopicSelector({ selectedTopic, onTopicChange, onGradeChange }: T
               <button
                 key={t}
                 onClick={() => onTopicChange(t)}
-                className={`text-left px-4 py-3 rounded-[3px] text-[15px] font-lora font-bold transition-all border-2 ${
+                className={`text-left px-[16px] py-[14px] rounded-[4px] text-[15px] font-lora font-semibold transition-all border-[1.5px] ${
                   isActive
-                    ? "bg-[#6B1010] text-[#FFE8A0] border-[#D4A017] shadow-md transform scale-[1.02]"
-                    : "bg-[#2A0F0F] text-[#F5EDD0] border-[#D4A017] hover:brightness-125"
+                    ? "bg-[#6B1010] text-[#FFFFFF] border-[#D4A017] shadow-md transform scale-[1.02]"
+                    : "bg-[#3D0F0F] text-[#FFE8A0] border-[#B8860B] hover:bg-[#4A1010] hover:text-[#FFE8A0]"
                 }`}
               >
                 {t}
@@ -117,8 +117,8 @@ export function TopicSelector({ selectedTopic, onTopicChange, onGradeChange }: T
 
       {/* Breadcrumbs */}
       <div className="mt-4 p-3 bg-[#1C0E04]/5 rounded-[3px] border border-[#B8860B]/20">
-        <p className="font-lora text-xs text-[#1C0E04]/80 font-bold">
-          {mainCategory.split(' ')[0]} {mainCategory.split(' ').slice(1).join(' ')} &rarr; {era} &rarr; <span className="text-[#6B1010]">{selectedTopic}</span>
+        <p className="font-lora text-[13px] text-[#D4A017] font-bold">
+          {mainCategory.split(' ')[0]} {mainCategory.split(' ').slice(1).join(' ')} &rarr; {era} &rarr; <span className="text-[#FFE8A0]">{selectedTopic}</span>
         </p>
       </div>
     </div>

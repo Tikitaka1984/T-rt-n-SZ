@@ -358,7 +358,7 @@ CSAK valid JSON választható el más szövegek nélkül:
         throw new Error("Invalid json root.");
       }
 
-      let textContent = data.text || data.response || data.content || JSON.stringify(data);
+      let textContent = data?.text || data?.response || data?.content || JSON.stringify(data);
       if (typeof textContent !== "string") {
         textContent = JSON.stringify(textContent);
       }

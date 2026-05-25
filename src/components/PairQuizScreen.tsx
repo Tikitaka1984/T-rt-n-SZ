@@ -72,7 +72,7 @@ export default function PairQuizScreen({ onGoHome }: PairQuizScreenProps) {
       const rawText = await resp.text();
       let data: any = {};
       try { data = rawText ? JSON.parse(rawText) : {}; } catch(e){}
-      let text = data.text || data.response || data.content || JSON.stringify(data);
+      let text = data?.text || data?.response || data?.content || JSON.stringify(data);
       if (typeof text !== "string") text = JSON.stringify(text);
       
       const match = text.match(/\{[\s\S]*\}/);

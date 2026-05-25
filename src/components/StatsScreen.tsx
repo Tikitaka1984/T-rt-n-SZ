@@ -51,14 +51,14 @@ export default function StatsScreen({ onGoHome }: KronikaScreenProps) {
 
   const handleGenerate = async () => {
     setPhase("loading");
-    triggerMascotAct("fact", "Figyeld jól a Krónikás szavait, vitéz!", { outfit: 'scribe' });
+    triggerMascotAct("fact", "Hallgasd figyelemmel e sorokat, kedves olvasó...", { outfit: 'scribe' });
     try {
       const resp = await fetch("/api/generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           topic: "", // We embed everything in the prompt so no raw outline is attached
-          prompt: `Te egy középkori krónikás vagy, aki egy mai diáknak mesél el történelmi eseményeket. Témakör: ${topic}. Évfolyam: ${grade}. Írj egy lebilincselő, első személyű krónikát amely 5 fejezetből áll. Minden fejezet: Atmoszferikus bevezetés, fõesemény leírása, drámai fordulópont, egy kérdés a diáknak 4 opcióval, és a helyes válasz magyarázata. Stílus: középkori, 'vitéz' megszólítás, faktikusan pontos!
+          prompt: `Te Frater Benedek, egy középkori szerzetes krónikás vagy, aki saját szemével látta a történelmi eseményeket és egy mai diáknak meséli el azokat. Témakör: ${topic}. Évfolyam: ${grade}. Írj egy lebilincselő, első személyű krónikát amely 5 fejezetből áll. Minden fejezet: Atmoszferikus bevezetés, fõesemény leírása, drámai fordulópont, egy kérdés a diáknak 4 opcióval, és a helyes válasz magyarázata. Stílus: középkori szerzetes, 'kedves olvasó' megszólítás (SOSE használd a 'vitéz' szót), faktikusan pontos! A chroniclerResponse.correct és wrong mezőkbe ezekhez hasonlókat írj: "Helyesen ítéled meg, kedves olvasó...", "Nem így történt valójában... Halld az igazságot..."
 CSAK valid JSON hiba nélkül:
 {
   "title": "A Krónika Címe",
@@ -86,7 +86,7 @@ CSAK valid JSON hiba nélkül:
         })
       });
       const resData = await resp.json();
-      let raw = resData.text;
+      let raw = resData?.text;
       if (raw.trim().startsWith("\`\`\`json")) {
         raw = raw.replace(/\`\`\`json|\`\`\`/g, "").trim();
       } else if (raw.trim().startsWith("\`\`\`")) {
@@ -127,7 +127,7 @@ CSAK valid JSON hiba nélkül:
     setSelectedAnswer(opt);
     setRevealChars(99999); // show full text
     
-    const isCorrect = answersMatch(opt, ch?.question.correct) || String(opt).toLowerCase() === String(ch?.question.correct).toLowerCase();
+    const isCorrect = answersMatch(opt, ch?.question?.correct) || String(opt).toLowerCase() === String(ch?.question?.correct).toLowerCase();
     if (isCorrect) {
       setCorrectCount(c => c + 1);
       setTotalXp(x => x + 15);
@@ -153,7 +153,7 @@ CSAK valid JSON hiba nélkül:
       setSelectedAnswer(null);
     } else {
       setPhase("end");
-      triggerMascotAct("fact", "Milyen gazdag história! Tanultál belőle?");
+      triggerMascotAct("fact", "Milyen gazdag história! Tanultál belőle, kedves olvasó?", { outfit: 'scribe' });
     }
   };
 
@@ -175,7 +175,7 @@ CSAK valid JSON hiba nélkül:
             </div>
             
             <h1 className="text-4xl md:text-5xl font-cinzel font-bold text-[#D4A017] mb-2 drop-shadow-[0_2px_10px_rgba(212,160,23,0.3)]">📜 Krónika</h1>
-            <p className="text-lg text-[#FDF3DC]/70 italic mb-12">Hallgasd a történelem hangját, vitéz...</p>
+            <p className="text-lg text-[#FDF3DC]/70 italic mb-12">Hallgasd a történelem hangját, kedves olvasó...</p>
             
             <div className="w-full max-w-2xl bg-[#1A0A00]/80 p-6 md:p-8 rounded-xl border border-[#D4A017]/30 shadow-[0_0_20px_rgba(212,160,23,0.1)] mb-10">
               <TopicSelector 
@@ -270,13 +270,13 @@ CSAK valid JSON hiba nélkül:
             {revealChars >= ch.atmosphere.length + ch.story.length + ch.dramaticMoment.length && (
               <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mt-12 bg-[#FDF3DC] text-[#1A0A00] p-6 md:p-8 rounded border-4 border-[#D4A017] shadow-[0_10px_30px_rgba(212,160,23,0.2)]">
                  <h3 className="text-xl md:text-2xl font-cinzel font-bold mb-6 border-b-2 border-[#1A0A00]/10 pb-4">
-                   🤔 Mit gondolsz vitéz... <br/><span className="text-[#8B1515] text-lg mt-2 block">{ch.question.text}</span>
+                   🤔 Mit gondolsz, kedves olvasó... <br/><span className="text-[#8B1515] text-lg mt-2 block">{ch?.question?.text}</span>
                  </h3>
                  
                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                   {ch.question.options.map((opt, i) => {
+                   {ch?.question?.options?.map((opt, i) => {
                      const isSelected = selectedAnswer === opt;
-                     const isCorrect = answersMatch(ch.question.correct, opt) || String(ch.question.correct).toLowerCase() === String(opt).toLowerCase();
+                     const isCorrect = answersMatch(ch?.question?.correct, opt) || String(ch?.question?.correct).toLowerCase() === String(opt).toLowerCase();
                      const alreadyAnswered = selectedAnswer !== null;
 
                      let bgClass = "bg-[#1A0A00]/5 hover:bg-[#1A0A00]/10 border-[#1A0A00]/20";
@@ -315,19 +315,19 @@ CSAK valid JSON hiba nélkül:
                         </div>
                         <div>
                            <p className="font-cinzel font-bold text-lg text-[#1A0A00]">
-                             {(answersMatch(selectedAnswer, ch.question.correct) || String(selectedAnswer).toLowerCase() === String(ch.question.correct).toLowerCase()) ? '⚔️ Jól tudod vitéz!' : '📜 Nem egészen vitéz...'}
+                             {(answersMatch(selectedAnswer, ch?.question?.correct) || String(selectedAnswer).toLowerCase() === String(ch?.question?.correct).toLowerCase()) ? '📜 Helyesen ítéled meg...' : '📜 Nem így történt...'}
                            </p>
                            <p className="mt-2 text-[15px] leading-[1.8]">
-                             {(answersMatch(selectedAnswer, ch.question.correct) || String(selectedAnswer).toLowerCase() === String(ch.question.correct).toLowerCase()) ? ch.question.chroniclerResponse.correct : ch.question.chroniclerResponse.wrong}
+                             {(answersMatch(selectedAnswer, ch?.question?.correct) || String(selectedAnswer).toLowerCase() === String(ch?.question?.correct).toLowerCase()) ? ch?.question?.chroniclerResponse?.correct : ch?.question?.chroniclerResponse?.wrong}
                            </p>
                            <p className="mt-4 italic text-[#8B1515] font-bold text-sm">
-                             Történelmi tény: {ch.historicalFact}
+                             📜 Frater Benedek feljegyezte: {ch?.historicalFact}
                            </p>
                            
                            {/* +XP feedback */}
                            <div className="mt-4 text-[#D4A017] font-cinzel font-bold flex items-center gap-2">
                              <Flame className="w-5 h-5 text-[#FF9500]" /> 
-                             {(answersMatch(selectedAnswer, ch.question.correct) || String(selectedAnswer).toLowerCase() === String(ch.question.correct).toLowerCase()) ? '+15 XP megszervezve' : '+5 XP bátorságért'}
+                             {(answersMatch(selectedAnswer, ch?.question?.correct) || String(selectedAnswer).toLowerCase() === String(ch?.question?.correct).toLowerCase()) ? '+15 tudáspont bejegyezve a krónikába' : '+5 tudáspont bejegyezve a krónikába'}
                            </div>
                         </div>
                      </div>
@@ -360,7 +360,7 @@ CSAK valid JSON hiba nélkül:
                 </svg>
 
                 <p className="text-xl italic text-[#FDF3DC]/90 mb-10 leading-[1.8] font-lora text-justify">
-                  "Így végződik e korszak históriája, vitéz. Remélem, hogy e sorok segítenek megérteni a múlt nagy titkait..."
+                  "Így végződik e korszak históriája, kedves olvasó. Remélem, hogy e sorok segítenek megérteni a múlt nagy titkait..."
                 </p>
 
                 <div className="grid grid-cols-2 gap-4 mb-10">

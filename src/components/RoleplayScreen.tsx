@@ -351,7 +351,7 @@ CSAK valid JSON válaszolj, formázás és sallang nélkül, ebben a formátumba
       }
 
       const resData = await response.json();
-      let rawText = resData.text || "";
+      let rawText = resData?.text || "";
 
       // Clean Markdown markers if present
       if (rawText.includes("```json")) {

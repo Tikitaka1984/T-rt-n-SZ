@@ -187,7 +187,7 @@ export default function SettingsScreen({ onStartQuiz, onCancel }: SettingsScreen
         throw new Error("Érvénytelen válasz a szervertől (nem JSON).");
       }
       
-      if (!data.text || data.text.trim().length === 0) {
+      if (!data?.text || data.text.trim().length === 0) {
         throw new Error("A dokumentum nem tartalmaz olvasható szöveget");
       }
 

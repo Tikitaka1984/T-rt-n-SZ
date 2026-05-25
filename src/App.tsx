@@ -197,7 +197,7 @@ Format: {"questions":[{"id":"q1","type":"multiple_choice","question":"Kérdés?"
         throw new Error("Érvénytelen válasz a szervertől (nem JSON).");
       }
       
-      let text = data.text || data.response || data.content || JSON.stringify(data);
+      let text = data?.text || data?.response || data?.content || JSON.stringify(data);
       if (typeof text !== "string") {
          text = JSON.stringify(text);
       }

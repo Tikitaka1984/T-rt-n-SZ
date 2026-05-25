@@ -154,7 +154,7 @@ CSAK JSON: {"explanation": "Szöveg...", "keyPlaces": ["Helyszín 1", "Helyszín
       
       if (response.ok) {
         const resData = await response.json();
-        let cleanText = resData.text || "";
+        let cleanText = resData?.text || "";
         if (cleanText.trim().startsWith("```json")) {
           cleanText = cleanText.replace(/```json|```/g, "").trim();
         } else if (cleanText.trim().startsWith("```")) {
@@ -244,7 +244,7 @@ CSAK JSON: {"explanation": "Szöveg...", "keyPlaces": ["Helyszín 1", "Helyszín
       } catch (e) {
         throw new Error("Érvénytelen válasz a szervertől (nem JSON).");
       }
-      let text = data.text || data.response || data.content || JSON.stringify(data);
+      let text = data?.text || data?.response || data?.content || JSON.stringify(data);
       if (typeof text !== "string") {
          text = JSON.stringify(text);
       }
