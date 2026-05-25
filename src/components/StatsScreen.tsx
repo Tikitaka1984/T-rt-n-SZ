@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { BookOpen, Scroll, Flame, Check, HelpCircle, ArrowRight, Home, ChevronRight, ChevronLeft } from "lucide-react";
+import { BookOpen, Scroll, Flame, Check, HelpCircle, ArrowRight, Home, ChevronRight, ChevronLeft, Volume2 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { TopicSelector } from "./TopicSelector";
 import { triggerMascotAct } from "./KnightMascot";
@@ -48,6 +48,80 @@ export default function StatsScreen({ onGoHome }: KronikaScreenProps) {
   
   const [correctCount, setCorrectCount] = useState(0);
   const [totalXp, setTotalXp] = useState(0);
+
+  const [isSpeaking, setIsSpeaking] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
+  const [autoRead, setAutoRead] = useState(() => localStorage.getItem("hq_autoread") === "true");
+
+  useEffect(() => {
+    localStorage.setItem("hq_autoread", autoRead.toString());
+  }, [autoRead]);
+
+  // Clean up speech on unmount
+  useEffect(() => {
+    return () => {
+      window.speechSynthesis.cancel();
+    };
+  }, []);
+
+  const speak = (text: string) => {
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'hu-HU';
+    utterance.rate = 0.85;
+    utterance.pitch = 0.9;
+    utterance.volume = 1;
+    
+    // Try to find Hungarian voice
+    const voices = window.speechSynthesis.getVoices();
+    const huVoice = voices.find(v => v.lang.includes('hu'));
+    if (huVoice) utterance.voice = huVoice;
+    
+    utterance.onstart = () => { setIsSpeaking(true); setIsPaused(false); };
+    utterance.onend = () => { setIsSpeaking(false); setIsPaused(false); };
+    utterance.onerror = () => { setIsSpeaking(false); setIsPaused(false); };
+    utterance.onpause = () => { setIsPaused(true); };
+    utterance.onresume = () => { setIsPaused(false); };
+    
+    window.speechSynthesis.speak(utterance);
+  };
+
+  const stopSpeech = () => {
+    window.speechSynthesis.cancel();
+    setIsSpeaking(false);
+    setIsPaused(false);
+  };
+
+  const pauseSpeech = () => {
+    if (window.speechSynthesis.speaking) {
+      window.speechSynthesis.pause();
+    }
+  };
+
+  const resumeSpeech = () => {
+    if (window.speechSynthesis.paused) {
+      window.speechSynthesis.resume();
+    }
+  };
+
+  const speakChapterText = () => {
+    const chapter = data?.chapters[currentChapterIdx];
+    if (!chapter) return;
+    const text = `${chapter.atmosphere} ${chapter.story} ${chapter.dramaticMoment} ${chapter.historicalFact}`;
+    triggerMascotAct("fact", "Hallgasd figyelemmel e sorokat...", { outfit: "scribe" });
+    speak(text);
+  };
+
+  useEffect(() => {
+    if (phase === "reading" && autoRead && data?.chapters[currentChapterIdx]) {
+      // Small timeout to allow state to settle
+      const t = setTimeout(() => {
+        speakChapterText();
+      }, 500);
+      return () => clearTimeout(t);
+    }
+  }, [phase, currentChapterIdx]);
+
 
   const handleGenerate = async () => {
     setPhase("loading");
@@ -124,6 +198,7 @@ CSAK valid JSON hiba nélkül:
 
   const handleAnswer = (opt: string) => {
     if (selectedAnswer !== null) return; // already answered
+    stopSpeech();
     setSelectedAnswer(opt);
     setRevealChars(99999); // show full text
     
@@ -142,11 +217,13 @@ CSAK valid JSON hiba nélkül:
   };
 
   const handleGoHome = () => {
+    stopSpeech();
     triggerMascotAct("fact", "", { outfit: 'knight' });
     onGoHome();
   };
 
   const nextChapter = () => {
+    stopSpeech();
     if (currentChapterIdx + 1 < (data?.chapters.length || 0)) {
       setCurrentChapterIdx(c => c + 1);
       setRevealChars(0);
@@ -205,7 +282,7 @@ CSAK valid JSON hiba nélkül:
         {phase === "reading" && ch && (
           <div className="pb-24">
             {/* Top Bar */}
-            <div className="flex justify-between items-center border-b border-[#D4A017]/30 pb-4 mb-8">
+            <div className="flex justify-between items-center border-b border-[#D4A017]/30 pb-4 mb-4">
               <div className="flex items-center gap-3">
                 <BookOpen className="text-[#D4A017] w-6 h-6" />
                 <span className="font-cinzel text-xl font-bold tracking-widest text-[#D4A017]">Krónika</span>
@@ -214,6 +291,48 @@ CSAK valid JSON hiba nélkül:
                 {ch.number}. Fejezet / 5.
               </div>
               <button onClick={handleGoHome} className="text-[#D4A017] hover:text-[#FF9500] transition-colors p-2">✕</button>
+            </div>
+
+            {/* Narration Controls */}
+            <div className="flex flex-col mb-8 bg-[#1A0A00]/50 border border-[#D4A017]/20 p-3 rounded">
+               <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+                  <div className="flex items-center gap-3">
+                    {!isSpeaking ? (
+                        <button onClick={speakChapterText} className="flex items-center gap-2 text-[13px] font-cinzel font-bold text-[#D4A017] hover:text-[#FFE8A0] bg-[#1C0E04] border border-[#D4A017]/40 px-3 py-1.5 rounded transition-colors shadow-sm">
+                           🔊 Felolvasás
+                        </button>
+                    ) : isPaused ? (
+                        <button onClick={resumeSpeech} className="flex items-center gap-2 text-[13px] font-cinzel font-bold text-[#D4A017] hover:text-[#FFE8A0] bg-[#1C0E04] border border-[#D4A017]/40 px-3 py-1.5 rounded transition-colors shadow-sm">
+                           🔊 Folytatás
+                        </button>
+                    ) : (
+                        <button onClick={pauseSpeech} className="flex items-center gap-2 text-[13px] font-cinzel font-bold text-[#D4A017] hover:text-[#FFE8A0] bg-[#1C0E04] border border-[#D4A017]/40 px-3 py-1.5 rounded transition-colors shadow-sm">
+                           ⏸️ Szünet
+                        </button>
+                    )}
+                    {isSpeaking && (
+                        <button onClick={stopSpeech} className="flex items-center gap-2 text-[13px] font-cinzel font-bold text-[#8B1515] hover:text-[#FF3333] bg-[#1C0E04] border border-[#8B1515]/40 px-3 py-1.5 rounded transition-colors shadow-sm">
+                           ⏹️ Stop
+                        </button>
+                    )}
+                    {isSpeaking && !isPaused && (
+                        <div className="flex items-center gap-1 text-[#D4A017]">
+                           <Volume2 className="w-5 h-5 animate-pulse" />
+                           <span className="font-bold text-[14px] animate-pulse">...</span>
+                        </div>
+                    )}
+                  </div>
+                  
+                  <div className="sm:ml-auto flex items-center gap-2 mt-2 sm:mt-0">
+                     <label className="flex items-center gap-2 cursor-pointer group text-[12px] font-cinzel text-[#D4A017]/80 hover:text-[#D4A017] transition-colors">
+                        <input type="checkbox" checked={autoRead} onChange={(e) => setAutoRead(e.target.checked)} className="accent-[#D4A017] w-4 h-4 cursor-pointer" />
+                        🔊 Automatikus felolvasás
+                     </label>
+                  </div>
+               </div>
+               <div className="text-[11px] text-[#FDF3DC]/40 font-lora mt-2 sm:ml-1">
+                  Magyar hangfelolvasás (böngésző beállításától függ)
+               </div>
             </div>
 
             {/* Content Area - clickable to skip typing */}
@@ -233,7 +352,7 @@ CSAK valid JSON hiba nélkül:
               </div>
 
               {/* Text Blocks */}
-              <div className="space-y-8 min-h-[40vh]">
+              <div className={`space-y-8 min-h-[40vh] transition-all duration-700 ${isSpeaking ? 'border-l-[3px] border-[#D4A017]/80 pl-5 ml-2' : ''}`}>
                 {/* Atmosphere */}
                 {revealChars > 0 && (
                   <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="text-center">
