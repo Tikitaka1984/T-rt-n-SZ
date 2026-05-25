@@ -37,11 +37,12 @@ type KronikaData = {
 };
 
 export default function StatsScreen({ onGoHome }: KronikaScreenProps) {
-  const [phase, setPhase] = useState<"setup" | "loading" | "reading" | "end">("setup");
+  const [phase, setPhase] = useState<"setup" | "loading" | "reading" | "end" | "error">("setup");
   const [topic, setTopic] = useState("Az őskor korszakai és jellemzői");
   const [grade, setGrade] = useState("⚱️ Őskor és ókori Kelet");
   const [data, setData] = useState<KronikaData | null>(null);
   
+  const [loadingText, setLoadingText] = useState("Témakör betöltése...");
   const [currentChapterIdx, setCurrentChapterIdx] = useState(0);
   const [revealChars, setRevealChars] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
@@ -52,6 +53,9 @@ export default function StatsScreen({ onGoHome }: KronikaScreenProps) {
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const [autoRead, setAutoRead] = useState(() => localStorage.getItem("hq_autoread") === "true");
+  
+  const [fetchError, setFetchError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     localStorage.setItem("hq_autoread", autoRead.toString());
@@ -122,17 +126,40 @@ export default function StatsScreen({ onGoHome }: KronikaScreenProps) {
     }
   }, [phase, currentChapterIdx]);
 
+  useEffect(() => {
+    if (phase === "loading") {
+      let time = 0;
+      setLoadingText("Témakör betöltése...");
+      const interval = setInterval(() => {
+        time += 1;
+        if (time === 5) setLoadingText("Krónika szerkesztése...");
+        if (time === 15) setLoadingText("Fejezetek összeállítása...");
+        if (time === 25) setLoadingText("Hamarosan kész...");
+      }, 1000);
+      return () => clearInterval(interval);
+    }
+  }, [phase]);
 
   const handleGenerate = async () => {
     setPhase("loading");
+    setFetchError(null);
+    setIsLoading(true);
     triggerMascotAct("fact", "Hallgasd figyelemmel e sorokat, kedves olvasó...", { outfit: 'scribe' });
-    try {
-      const resp = await fetch("/api/generate", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          topic: "", // We embed everything in the prompt so no raw outline is attached
-          prompt: `Te Frater Benedek, egy középkori szerzetes krónikás vagy, aki saját szemével látta a történelmi eseményeket és egy mai diáknak meséli el azokat. Témakör: ${topic}. Évfolyam: ${grade}. Írj egy lebilincselő, első személyű krónikát amely 5 fejezetből áll. Minden fejezet: Atmoszferikus bevezetés, fõesemény leírása, drámai fordulópont, egy kérdés a diáknak 4 opcióval, és a helyes válasz magyarázata. Stílus: középkori szerzetes, 'kedves olvasó' megszólítás (SOSE használd a 'vitéz' szót), faktikusan pontos! A chroniclerResponse.correct és wrong mezőkbe ezekhez hasonlókat írj: "Helyesen ítéled meg, kedves olvasó...", "Nem így történt valójában... Halld az igazságot..."
+    
+    let attempts = 0;
+    
+    while (attempts < 2) {
+      const abortController = new AbortController();
+      const timeoutId = setTimeout(() => abortController.abort(), 30000);
+
+      try {
+        const resp = await fetch("/api/generate", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          signal: abortController.signal,
+          body: JSON.stringify({
+            topic: "", // We embed everything in the prompt so no raw outline is attached
+            prompt: `Te Frater Benedek, egy középkori szerzetes krónikás vagy, aki saját szemével látta a történelmi eseményeket és egy mai diáknak meséli el azokat. Témakör: ${topic}. Évfolyam: ${grade}. Írj egy lebilincselő, első személyű krónikát amely 5 fejezetből áll. Minden fejezet: Atmoszferikus bevezetés, fõesemény leírása, drámai fordulópont, egy kérdés a diáknak 4 opcióval, és a helyes válasz magyarázata. Stílus: középkori szerzetes, 'kedves olvasó' megszólítás (SOSE használd a 'vitéz' szót), faktikusan pontos! A chroniclerResponse.correct és wrong mezőkbe ezekhez hasonlókat írj: "Helyesen ítéled meg, kedves olvasó...", "Nem így történt valójában... Halld az igazságot..."
 CSAK valid JSON hiba nélkül:
 {
   "title": "A Krónika Címe",
@@ -157,36 +184,90 @@ CSAK valid JSON hiba nélkül:
     }
   ]
 }`
-        })
-      });
-      const resData = await resp.json();
-      let raw = resData?.text;
-      if (raw.trim().startsWith("\`\`\`json")) {
-        raw = raw.replace(/\`\`\`json|\`\`\`/g, "").trim();
-      } else if (raw.trim().startsWith("\`\`\`")) {
-        raw = raw.replace(/\`\`\`/g, "").trim();
+          })
+        });
+        clearTimeout(timeoutId);
+        
+        if (!resp.ok) {
+          throw new Error("A szerver nem válaszol");
+        }
+        
+        const resData = await resp.json();
+        let raw = resData?.text;
+        
+        if (!raw) {
+          throw new Error("Üres válasz érkezett");
+        }
+        
+        if (raw.trim().startsWith("```json")) {
+          raw = raw.replace(/```json|```/g, "").trim();
+        } else if (raw.trim().startsWith("```")) {
+          raw = raw.replace(/```/g, "").trim();
+        }
+        
+        const parsed = JSON.parse(raw);
+        if (!parsed.chapters || parsed.chapters.length < 3) {
+           throw new Error("Üres válasz érkezett");
+        }
+        
+        setData(parsed);
+        setCurrentChapterIdx(0);
+        setRevealChars(0);
+        setSelectedAnswer(null);
+        setCorrectCount(0);
+        setTotalXp(0);
+        setPhase("reading");
+        setIsLoading(false);
+        return;
+      } catch (err: any) {
+        clearTimeout(timeoutId);
+        attempts++;
+        if (attempts >= 2) {
+          console.error(err);
+          let errorMsg = "A szerver nem válaszol";
+          if (err.name === 'AbortError') {
+             errorMsg = "A szerver nem válaszol";
+          } else if (err.message === "Failed to fetch" || err.message === "Nincs internetkapcsolat") {
+             errorMsg = "Nincs internetkapcsolat";
+          } else if (err.message === "Üres válasz érkezett") {
+             errorMsg = "Üres válasz érkezett";
+          }
+          setFetchError(errorMsg);
+          setPhase("error");
+          setIsLoading(false);
+          return;
+        }
+        // Wait 2 seconds before retrying
+        await new Promise(r => setTimeout(r, 2000));
       }
-      const parsed = JSON.parse(raw);
-      setData(parsed);
-      setCurrentChapterIdx(0);
-      setRevealChars(0);
-      setSelectedAnswer(null);
-      setCorrectCount(0);
-      setTotalXp(0);
-      setPhase("reading");
-    } catch (err) {
-      console.error(err);
-      alert("Hiba történt a Krónika megnyitásakor. Próbáld újra!");
-      setPhase("setup");
     }
   };
 
   useEffect(() => {
     if (phase === "reading" && selectedAnswer === null) {
-      const interval = setInterval(() => {
-        setRevealChars(prev => prev + 3);
-      }, 30);
-      return () => clearInterval(interval);
+      let animationFrameId: number;
+      const startTime = Date.now();
+      let lastUpdate = startTime;
+      
+      const updateTyping = () => {
+        const now = Date.now();
+        if (now - startTime > 8000) {
+          setRevealChars(99999);
+          return;
+        }
+        
+        if (now - lastUpdate > 30) {
+          setRevealChars(prev => prev + 3);
+          lastUpdate = now;
+        }
+        animationFrameId = requestAnimationFrame(updateTyping);
+      };
+      
+      animationFrameId = requestAnimationFrame(updateTyping);
+      
+      return () => {
+        cancelAnimationFrame(animationFrameId);
+      };
     }
   }, [phase, currentChapterIdx, selectedAnswer]);
 
@@ -262,20 +343,52 @@ CSAK valid JSON hiba nélkül:
               />
             </div>
             
+            {fetchError && (
+              <div className="mb-6 p-4 bg-[#8B1515]/20 border border-[#8B1515] text-[#FDF3DC] rounded text-center max-w-md w-full">
+                <p className="font-bold">{fetchError}</p>
+              </div>
+            )}
+            
             <button 
               onClick={handleGenerate}
-              className="px-8 py-4 bg-[#8B1515] hover:bg-[#6B1010] text-[#FDF3DC] font-cinzel font-bold text-xl rounded border-2 border-[#D4A017] shadow-[0_0_20px_rgba(139,21,21,0.5)] transition-all transform hover:scale-105 flex items-center gap-3"
+              className="px-8 py-4 bg-[#8B1515] hover:bg-[#6B1010] text-[#FDF3DC] font-cinzel font-bold text-xl rounded border-2 border-[#D4A017] shadow-[0_0_20px_rgba(139,21,21,0.5)] transition-all transform hover:scale-105 flex items-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed"
+              disabled={isLoading}
             >
-              🕯️ Nyisd fel a Krónikát
+              🕯️ {isLoading ? "Töltés..." : (fetchError ? "Újrapróbálás" : "Nyisd fel a Krónikát")}
             </button>
           </motion.div>
         )}
 
         {phase === "loading" && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex flex-col items-center justify-center min-h-[70vh]">
-             <Flame className="w-16 h-16 text-[#D4A017] candle-flicker mb-6" />
-             <h2 className="text-2xl font-cinzel text-[#D4A017] animate-pulse">A Krónikás bevezeti pennáját...</h2>
-             <p className="italic text-[#FDF3DC]/60 mt-4">Készül a történelmi elbeszéléséd.</p>
+             <Scroll className="w-16 h-16 text-[#D4A017] animate-bounce mb-6" />
+             <h2 className="text-2xl font-cinzel text-[#D4A017] animate-pulse">Frater Benedek pergeti a tekercset...</h2>
+             <p className="italic text-[#FDF3DC]/60 mt-4">{loadingText}</p>
+          </motion.div>
+        )}
+
+        {phase === "error" && (
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex flex-col items-center justify-center min-h-[70vh] text-center">
+             <div className="mb-6 p-4 bg-[#8B1515]/20 border border-[#8B1515] text-[#FDF3DC] rounded max-w-md w-full">
+               <p className="font-bold">{fetchError}</p>
+             </div>
+             <h2 className="text-2xl md:text-3xl font-cinzel font-bold text-[#D4A017] mb-4 drop-shadow-[0_2px_10px_rgba(212,160,23,0.3)]">📜 A Krónika most nem elérhető.</h2>
+             <p className="text-lg text-[#FDF3DC]/70 italic mb-10">Frater Benedek pihen egy pillanatot...</p>
+             
+             <div className="flex flex-col gap-4 w-full max-w-xs">
+                <button 
+                  onClick={handleGenerate}
+                  className="w-full py-4 bg-[#D4A017]/10 hover:bg-[#D4A017]/20 text-[#D4A017] font-cinzel font-bold rounded border border-[#D4A017] transition-all flex items-center justify-center gap-2"
+                >
+                  🔄 Újrapróbálás
+                </button>
+                <button 
+                  onClick={() => setPhase("setup")}
+                  className="w-full py-3 bg-[#1A0A00] hover:bg-[#2A1505] text-[#FDF3DC] font-cinzel text-sm rounded border border-[#D4A017]/30 transition-colors"
+                >
+                  ← Vissza
+                </button>
+             </div>
           </motion.div>
         )}
 
