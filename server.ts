@@ -11,14 +11,157 @@ import mammoth from "mammoth";
 // Load environment variables
 dotenv.config();
 
+const TOPIC_KEYWORDS: Record<string, string> = {
+  "Mohácsi csata": "1526, II. Lajos, Szulejmán szultán, Tomori Pál, Csele-patak, vereség, oszmán hódítás",
+  "Reformkor": "Széchenyi István (Hitel, Világ, Stádium, Lánchíd), Kossuth Lajos, 1848, Deák Ferenc, jobbágyfelszabadítás, közteherviselés, magyar nyelv hivatalossá tétele",
+  "1848-49": "március 15, Petőfi Sándor, Batthyány-kormány, Görgei Artúr, Bem József, Kossuth Lajos, tavaszi hadjárat, Világos, fegyverletétel, Kossuth-címer, Áprilisi törvények",
+  "Árpád-kor": "Szent István (államalapítás, vármegyerendszer, egyházszervezés, Gellért püspök), Koppány, Aranybulla (1222, II. András, nemesi ellenállási jog), tatárjárás (1241-42, Muhi csata), IV. Béla (második honalapító, kővárak építése)",
+  "Trianon": "1920. június 4., Apponyi Albert (védőbeszéd), békediktátum, területveszteség, lakosságcsere, Párizs (Nagy-Trianon kastély), utódállamok (Csehszlovákia, Románia, Szerb-Horvát-Szlovén Királyság)",
+  "Hunyadi": "Hunyadi János (születése, törökellenes harcok, nándorfehérvári diadal 1456, déli harangszó), Hunyadi Mátyás (igazságos Mátyás, 1458-1490, fekete sereg, renenszánsz udvar, Corvina könyvtár, füstpénz, rendkívüli hadiadó)",
+  "Középkor": "hűbériség, jobbágyság, céhek, skolasztika, pápaság és császárság harca, keresztes hadjáratok, Anjouk (I. Károly Róbert, kapuadó, harmincad, aranyforint, Nagy Lajos), Luxemburgi Zsigmond",
+  "Török hódoltság": "Budavár bevétele (1541), három részre szakadt Magyarország (Királyi Magyarország, Hódoltság, Erdélyi Fejedelemség), végvári harcok, Dobó István (Eger, 1552), Zrínyi Miklós (Szigetvár, 1566), vilajet, pasa, bég, janicsár, szpáhi, kettős adózás",
+  "Rákóczi": "II. Rákóczi Ferenc, szabadságharc (1703-1711), tábori kiáltvány (Breznai kiáltvány), kurucok, labancok, Ónodi országgyűlés (trónfosztás), Szatmári béke (1711, kompromisszumos béke)",
+  "Ipari forradalom": "gőzgép (James Watt), vasút (George Stephenson), gyáripar, urbanizáció, munkásosztály, monopólium, futószalagos gyártás, belső égésű motor, elektromosság",
+  "Első világháború": "1914-1918, szövetségi rendszerek (Antant, Központi Hatalmak), szarajevói merénylet (Ferenc Ferdinánd), állóháború, lövészárok, új fegyverek (gáz, tank), Osztrák-Magyar Monarchia, összeomlás",
+  "Második világháború": "1939-1945, tengelyhatalmak, szövetségesek, Lengyelország lerohanása, Barbarossa hadművelet, Sztálingrád, D-Day (normandiai partraszállás), Pearl Harbor, holokauszt, atombomba (Hirosima, Nagaszaki), kapituláció",
+  "Hidegháború": "szuperhatalmak (USA, Szovjetunió), fegyverkezési verseny, vasfüggöny, berlini fal, kubai rakétaválság, vietnami háború, NATO, Varsói Szerződés, űrverseny",
+  "Mohács": "1526. augusztus 29., II. Lajos király halála, Szulejmán szultán, Tomori Pál, Csele-patak, vereség, végvári vonal összeomlása",
+  "Rendszerváltás": "1989, Kádár-korszak vége, kerekasztal-tárgyalások, Nagy Imre újratemetése, Köztársaság kikiáltása, többpártrendszer, szovjet csapatok kivonulása, piacgazdaság",
+  "Kereszténység": "Jézus Krisztus, Pál apostol, konstantini ediktum (313), milánói ediktum, egyházszakadás (1054, kelet és nyugati egyház), szerzetesrendek, Biblia, reformáció (Luther Márton, 1517)"
+};
 
-const getKnowledge = async (topic: string) => {
-  try {
-    const { getKnowledgeForTopic } = await import('./src/data/knowledgeBase');
-    return getKnowledgeForTopic(topic);
-  } catch {
-    return "";
+const getKeywordsForTopic = (topic: string): string => {
+  if (!topic) return "";
+  const t = topic.toLowerCase();
+  
+  for (const [key, val] of Object.entries(TOPIC_KEYWORDS)) {
+    if (t.includes(key.toLowerCase()) || key.toLowerCase().includes(t)) {
+      return val;
+    }
   }
+  
+  const words = t.split(/[\s\-–,]+/).filter(w => w.length > 3);
+  for (const [key, val] of Object.entries(TOPIC_KEYWORDS)) {
+    const k = key.toLowerCase();
+    if (words.some(word => k.includes(word))) {
+      return val;
+    }
+  }
+  
+  return "";
+};
+
+const generateContentWithRetry = async (params: {
+  model: string;
+  contents: string;
+  config?: any;
+}, maxRetries = 3): Promise<any> => {
+  let attempt = 0;
+  let delay = 1000;
+
+  while (attempt < maxRetries) {
+    try {
+      if (!ai) {
+        throw new Error("AI client not initialized");
+      }
+      const response = await ai.models.generateContent(params);
+      return response;
+    } catch (error: any) {
+      attempt++;
+      console.warn(`[GEMINI-RETRY] Attempt ${attempt} failed: ${error?.message || error}`);
+      
+      const isTransient = 
+        error?.status === 503 || 
+        error?.status === 429 ||
+        error?.message?.includes("503") || 
+        error?.message?.includes("429") ||
+        error?.message?.includes("UNAVAILABLE") ||
+        error?.message?.includes("RESOURCE_EXHAUSTED") ||
+        error?.message?.includes("high demand") ||
+        error?.message?.includes("overloaded");
+
+      if (isTransient && attempt < maxRetries) {
+        console.log(`[GEMINI-RETRY] Transient error detected. Retrying in ${delay}ms...`);
+        await new Promise(resolve => setTimeout(resolve, delay));
+        delay *= 2.5; // exponential backoff with key multiplier
+      } else {
+        throw error;
+      }
+    }
+  }
+  throw new Error("Failed to generate content after retries");
+};
+
+const safeParseJSON = (text: string): any => {
+  if (!text) return null;
+  const trimmed = text.trim();
+  
+  try {
+    return JSON.parse(trimmed);
+  } catch (e) {}
+
+  const firstBrace = trimmed.indexOf('{');
+  const firstBracket = trimmed.indexOf('[');
+  
+  let startIdx = -1;
+  let endChar = '';
+  let startChar = '';
+  
+  if (firstBrace !== -1 && (firstBracket === -1 || firstBrace < firstBracket)) {
+    startIdx = firstBrace;
+    startChar = '{';
+    endChar = '}';
+  } else if (firstBracket !== -1) {
+    startIdx = firstBracket;
+    startChar = '[';
+    endChar = ']';
+  }
+  
+  if (startIdx !== -1) {
+    let depth = 0;
+    let insideQuote = false;
+    let escape = false;
+    
+    for (let i = startIdx; i < trimmed.length; i++) {
+      const char = trimmed[i];
+      if (escape) {
+        escape = false;
+        continue;
+      }
+      if (char === '\\') {
+        escape = true;
+        continue;
+      }
+      if (char === '"') {
+        insideQuote = !insideQuote;
+        continue;
+      }
+      if (!insideQuote) {
+        if (char === startChar) {
+          depth++;
+        } else if (char === endChar) {
+          depth--;
+          if (depth === 0) {
+            const potentialJson = trimmed.substring(startIdx, i + 1);
+            try {
+              return JSON.parse(potentialJson);
+            } catch (innerErr) {
+              // Ignore and carry on searching or fallback
+            }
+          }
+        }
+      }
+    }
+  }
+
+  const match = trimmed.match(/\[[\s\S]*\]|\{[\s\S]*\}/);
+  if (match) {
+    try {
+      return JSON.parse(match[0]);
+    } catch (e) {}
+  }
+
+  throw new Error("Invalid or truncated JSON response from AI");
 };
 
 const app = express();
@@ -53,7 +196,6 @@ if (API_KEY && API_KEY !== "MY_GEMINI_API_KEY" && API_KEY.trim() !== "") {
   console.log("No valid GEMINI_API_KEY environment variable found. Falling back to local NAT 2020 history questions database.");
 }
 
-import { MINIMUM_REQUIREMENTS } from "./src/data/minimumRequirements";
 
 // 1. API: Quiz Generation Endpoint
 app.post("/api/quiz/generate", async (req, res) => {
@@ -74,17 +216,10 @@ app.post("/api/quiz/generate", async (req, res) => {
     return;
   }
 
-  const knowledge = await getKnowledge(topic);
-  let knowledgePrompt = "";
-  if (knowledge) {
-    knowledgePrompt = `\nAz alábbi érettségi vázlat alapján generálj kérdéseket.\nCsak ebből az anyagból dolgozz, ne találj ki adatokat!\nVÁZLAT:\n${knowledge}\n\n`;
-  }
-
-  const minReqs = (MINIMUM_REQUIREMENTS as any)[topic];
+  const keywords = getKeywordsForTopic(topic);
+  const keywordHint = keywords ? `Fontos kulcsszavak: ${keywords}` : "";
+  let knowledgePrompt = keywordHint ? `\nAz alábbi érettségi kulcsszavak alapján generálj kérdéseket.\nKULCSSZAVAK:\n${keywordHint}\n\n` : "";
   let minReqText = "";
-  if (minReqs) {
-    minReqText = `\nFontos minimum követelmények ehhez a témához:\n Fogalmak: ${minReqs.fogalmak.join(", ")}\n Személyek: ${minReqs.szemelyek.join(", ")}\n Topográfia: ${minReqs.topografia.join(", ")}\n Évszámok: ${minReqs.evszamok.join(", ")}\n\n A kérdések legalább 60%-a ezekből a minimum követelményekből merítsen!\n`;
-  }
 
   // Define prompt for high quality NAT 2020 historical focus
   const typeInstruction = 
@@ -144,7 +279,7 @@ Fontos: Minden szöveg nyelvtanilag hibátlan magyar nyelven készüljön!
       const needed = requestedCount - finalQuestions.length;
       const currentPrompt = geminiPrompt.replace(`Generálj pontosan ${requestedCount} db`, `Generálj pontosan ${needed} db`);
 
-      const response = await ai.models.generateContent({
+      const response = await generateContentWithRetry({
         model: "gemini-flash-latest",
         contents: currentPrompt,
         config: {
@@ -156,12 +291,12 @@ Fontos: Minden szöveg nyelvtanilag hibátlan magyar nyelven készüljön!
               type: Type.OBJECT,
               properties: {
                 type: { 
-                  type: Type.STRING, 
-                  description: "A kérdés típusa: 'multiple_choice', 'true_false' vagy 'essay'." 
+                   type: Type.STRING, 
+                   description: "A kérdés típusa: 'multiple_choice', 'true_false' vagy 'essay'." 
                 },
                 question: { 
-                  type: Type.STRING, 
-                  description: "Maga a kérdés vagy állítás szövege magyarul." 
+                   type: Type.STRING, 
+                   description: "Maga a kérdés vagy állítás szövege magyarul." 
                 },
                 options: {
                   type: Type.ARRAY,
@@ -169,16 +304,16 @@ Fontos: Minden szöveg nyelvtanilag hibátlan magyar nyelven készüljön!
                   description: "Pontosan 4 válaszopció feleletválasztós kérdésnél. Igaz-Hamis és Esszé esetén hagyd üresen."
                 },
                 correctAnswer: { 
-                  type: Type.STRING, 
-                  description: "Helyes válasz. Feleletválasztósnál 'A', 'B', 'C' vagy 'D'. Igaz-Hamisnál 'Igaz' vagy 'Hamis'. Esszénél üres string." 
+                   type: Type.STRING, 
+                   description: "Helyes válasz. Feleletválasztósnál 'A', 'B', 'C' vagy 'D'. Igaz-Hamisnál 'Igaz' vagy 'Hamis'. Esszénél üres string." 
                 },
                 hint: { 
-                  type: Type.STRING, 
-                  description: "Rövid, segítőkész téma-specifikus segítség magyarul (pl. évszám vagy személy megemlítése)." 
+                   type: Type.STRING, 
+                   description: "Rövid, segítőkész téma-specifikus segítség magyarul (pl. évszám vagy személy megemlítése)." 
                 },
                 explanation: { 
-                  type: Type.STRING, 
-                  description: "Részletes, oktató jellegű történelmi magyarázat magyarul, miért ez a helyes válasz, vagy esszénél mik a főbb elvárt pontok." 
+                   type: Type.STRING, 
+                   description: "Részletes, oktató jellegű történelmi magyarázat magyarul, miért ez a helyes válasz, vagy esszénél mik a főbb elvárt pontok." 
                 }
               },
               required: ["type", "question", "hint", "explanation"]
@@ -186,21 +321,9 @@ Fontos: Minden szöveg nyelvtanilag hibátlan magyar nyelven készüljön!
           }
         }
       });
-
-      let parsedText = response.text || "[]";
-      const jsonMatch = parsedText.match(/\[[\s\S]*\]|\{[\s\S]*\}/);
-      if (jsonMatch) {
-         parsedText = jsonMatch[0];
-      } else {
-        if (parsedText.trim().startsWith("```json")) {
-          parsedText = parsedText.replace(/```json|```/g, "").trim();
-        } else if (parsedText.trim().startsWith("```")) {
-          parsedText = parsedText.replace(/```/g, "").trim();
-        }
-      }
-      
+ 
       try {
-        const parsed = JSON.parse(parsedText);
+        const parsed = safeParseJSON(response.text || "[]");
         const validBatch = parsed.filter((q: any) => {
           if (topicKeywords.length === 0) return true;
           const lowerQ = JSON.stringify(q).toLowerCase();
@@ -351,7 +474,7 @@ Minden szövegrész kiváló, barátságos, tanári hangvételű és helyes magy
 `;
 
   try {
-    const response = await ai.models.generateContent({
+    const response = await generateContentWithRetry({
       model: "gemini-flash-latest",
       contents: evaluationPrompt,
       config: {
@@ -371,18 +494,7 @@ Minden szövegrész kiváló, barátságos, tanári hangvételű és helyes magy
       }
     });
 
-    let parsedText = response.text || "{}";
-    const jsonMatch = parsedText.match(/\[[\s\S]*\]|\{[\s\S]*\}/);
-    if (jsonMatch) {
-       parsedText = jsonMatch[0];
-    } else {
-      if (parsedText.trim().startsWith("```json")) {
-        parsedText = parsedText.replace(/```json|```/g, "").trim();
-      } else if (parsedText.trim().startsWith("```")) {
-        parsedText = parsedText.replace(/```/g, "").trim();
-      }
-    }
-    const evaluation = JSON.parse(parsedText);
+    const evaluation = safeParseJSON(response.text || "{}");
     res.json(evaluation);
   } catch (error) {
     console.error("[GEMINI-HIBA] Hiba az esszéértékelés során. Szimuláció használata.", error);
@@ -401,11 +513,9 @@ app.post("/api/generate-pairs", async (req, res) => {
     return;
   }
   
-  const knowledge = await getKnowledge(topic);
-  let knowledgePrompt = "";
-  if (knowledge) {
-    knowledgePrompt = `\nAz alábbi érettségi vázlat alapján generálj kérdéseket.\nCsak ebből az anyagból dolgozz, ne találj ki adatokat!\nVÁZLAT:\n${knowledge}\n\n`;
-  }
+  const keywords = getKeywordsForTopic(topic);
+  const keywordHint = keywords ? `Fontos kulcsszavak: ${keywords}` : "";
+  let knowledgePrompt = keywordHint ? `\nAz alábbi érettségi kulcsszavak alapján generálj kérdéseket.\nKULCSSZAVAK:\n${keywordHint}\n\n` : "";
 
   try {
     const strictRule = `
@@ -450,7 +560,7 @@ CSAK valid JSON:
 
     while (!valid && attempts < 3) {
       attempts++;
-      const response = await ai.models.generateContent({
+      const response = await generateContentWithRetry({
         model: "gemini-flash-latest",
         contents: prompt,
         config: {
@@ -497,9 +607,10 @@ app.post("/api/generate", async (req, res) => {
 
   let finalPrompt = prompt;
   if (topic) {
-    const knowledge = await getKnowledge(topic);
-    if (knowledge) {
-      finalPrompt += `\n\nAz alábbi érettségi vázlat alapján generálj kérdéseket.\nCsak ebből az anyagból dolgozz, ne találj ki adatokat!\nVÁZLAT:\n${knowledge}\n\n`;
+    const keywords = getKeywordsForTopic(topic);
+    const keywordHint = keywords ? `Fontos kulcsszavak: ${keywords}` : "";
+    if (keywordHint) {
+      finalPrompt += `\n\nAz alábbi érettségi kulcsszavak alapján generálj kérdéseket:\nKULCSSZAVAK:\n${keywordHint}\n\n`;
     }
     const strictRule = `
 KRITIKUS SZABÁLY: KIZÁRÓLAG a következő témakörről generálj tartalmat: ${topic}
@@ -530,7 +641,7 @@ Például:
         let valid = false;
         while (!valid && attempts < 3) {
             attempts++;
-            const response = await ai.models.generateContent({
+            const response = await generateContentWithRetry({
               model: "gemini-flash-latest",
               contents: finalPrompt,
               config: { responseMimeType: "application/json" }
@@ -548,7 +659,7 @@ Például:
             }
         }
     } else {
-        const response = await ai.models.generateContent({
+        const response = await generateContentWithRetry({
           model: "gemini-flash-latest",
           contents: finalPrompt,
           config: {
@@ -726,27 +837,18 @@ app.post("/api/generate-lesson", async (req, res) => {
     return;
   }
   
-  const knowledge = await getKnowledge(topic);
-  const minReqs = (MINIMUM_REQUIREMENTS as any)[topic];
+  const keywords = getKeywordsForTopic(topic);
+  const keywordHint = keywords ? `Fontos kulcsszavak: ${keywords}` : "";
 
   let knowledgeSection = "";
-  if (knowledge) {
+  if (keywordHint) {
     knowledgeSection = `
-KÖTELEZŐ TUDÁSBÁZIS - CSAK EBBŐL DOLGOZZ:
-${knowledge.substring(0, 3000)}
+KÖTELEZŐ KULCSSZAVAK ÉS TUDÁSBÁZIS - CSAK EBBŐL DOLGOZZ:
+${keywordHint}
 `;
   }
 
   let minReqSection = "";
-  if (minReqs) {
-    minReqSection = `
-MINIMUM KÖVETELMÉNYEK - ezekből kell kérdezni:
-Fogalmak: ${minReqs.fogalmak?.join(", ")}
-Személyek: ${minReqs.szemelyek?.join(", ")}
-Topográfia: ${minReqs.topografia?.join(", ")}
-Évszámok: ${minReqs.evszamok?.join(", ")}
-`;
-  }
 
   try {
     const strictRule = `
@@ -802,7 +904,7 @@ CSAK valid JSON:
 
     while (!validResponseData && attempts < 3) {
       attempts++;
-      const response = await ai.models.generateContent({
+      const response = await generateContentWithRetry({
         model: "gemini-flash-latest",
         contents: prompt,
         config: {
@@ -811,19 +913,9 @@ CSAK valid JSON:
       });
 
       let rawResponse = response.text || "{}";
-      const jsonMatch = rawResponse.match(/\[[\s\S]*\]|\{[\s\S]*\}/);
-      if (jsonMatch) {
-         rawResponse = jsonMatch[0];
-      } else {
-        if (rawResponse.trim().startsWith("```json")) {
-          rawResponse = rawResponse.replace(/```json|```/g, "").trim();
-        } else if (rawResponse.trim().startsWith("```")) {
-          rawResponse = rawResponse.replace(/```/g, "").trim();
-        }
-      }
       
       try {
-        const parsed = JSON.parse(rawResponse);
+        const parsed = safeParseJSON(rawResponse);
         if (topicKeywords.length > 0) {
           const lowerResp = JSON.stringify(parsed).toLowerCase();
           if (topicKeywords.some(k => lowerResp.includes(k))) {

@@ -15,7 +15,7 @@ export function answersMatch(userAnswer: string | boolean | null | undefined, co
       return true;
   }
 
-  const normalize = (s: string) => String(s)
+  const normalize = (s: string) => s
     .toLowerCase()
     .trim()
     .normalize("NFD")
@@ -23,7 +23,7 @@ export function answersMatch(userAnswer: string | boolean | null | undefined, co
     .replace(/\s+/g, " ")           // normalize spaces
     .replace(/[.,;:!?]/g, "");      // remove punctuation
   
-  const result = normalize(userAnswer) === normalize(correct);
+  const result = normalize(userStr) === normalize(correctStr);
   console.log("Answer check:", {
      user: userAnswer, 
      correct: correct,
