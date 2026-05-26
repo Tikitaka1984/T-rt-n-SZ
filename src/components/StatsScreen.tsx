@@ -150,7 +150,7 @@ export default function StatsScreen({ onGoHome }: KronikaScreenProps) {
     
     while (attempts < 2) {
       const abortController = new AbortController();
-      const timeoutId = setTimeout(() => abortController.abort(new Error("Timeout")), 30000);
+      const timeoutId = setTimeout(() => abortController.abort(new Error("Timeout")), 90000);
 
       try {
         const resp = await fetch("/api/generate", {

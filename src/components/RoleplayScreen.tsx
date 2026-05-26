@@ -335,7 +335,7 @@ CSAK valid JSON válaszolj, formázás és sallang nélkül, ebben a formátumba
 
     try {
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(new Error("Timeout")), 12000);
+      const timeoutId = setTimeout(() => controller.abort(new Error("Timeout")), 90000);
 
       const response = await fetch("/api/generate", {
         method: "POST",
