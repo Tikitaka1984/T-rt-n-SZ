@@ -55,9 +55,9 @@ const generateContentWithRetry = async (params: {
   model: string;
   contents: string;
   config?: any;
-}, maxRetries = 3): Promise<any> => {
+}, maxRetries = 5): Promise<any> => {
   let attempt = 0;
-  let delay = 1000;
+  let delay = 1500;
 
   while (attempt < maxRetries) {
     try {
@@ -280,7 +280,7 @@ Fontos: Minden szöveg nyelvtanilag hibátlan magyar nyelven készüljön!
       const currentPrompt = geminiPrompt.replace(`Generálj pontosan ${requestedCount} db`, `Generálj pontosan ${needed} db`);
 
       const response = await generateContentWithRetry({
-        model: "gemini-flash-latest",
+        model: "gemini-3.5-flash",
         contents: currentPrompt,
         config: {
           systemInstruction: `Te egy tapasztalt, szigorú, de tanulóbarát magyar történelem szakos középiskolai tanár vagy. Feladatod prémium, történelmileg pontos NAT 2020-as kerettanterv szerinti gyakorlókérdések összeállítása és értékelése.`,
