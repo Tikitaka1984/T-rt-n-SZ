@@ -475,7 +475,7 @@ Minden szövegrész kiváló, barátságos, tanári hangvételű és helyes magy
 
   try {
     const response = await generateContentWithRetry({
-      model: "gemini-flash-latest",
+      model: "gemini-3.5-flash",
       contents: evaluationPrompt,
       config: {
         systemInstruction: "Te egy tapasztalt történelem érettségi javító tanár vagy, aki kiváló pedagógia érzékkel motiválja a diákokat a jobb eredmények elérésére.",
@@ -561,7 +561,7 @@ CSAK valid JSON:
     while (!valid && attempts < 3) {
       attempts++;
       const response = await generateContentWithRetry({
-        model: "gemini-flash-latest",
+        model: "gemini-3.5-flash",
         contents: prompt,
         config: {
           responseMimeType: "application/json",
@@ -642,7 +642,7 @@ Például:
         while (!valid && attempts < 3) {
             attempts++;
             const response = await generateContentWithRetry({
-              model: "gemini-flash-latest",
+              model: "gemini-3.5-flash",
               contents: finalPrompt,
               config: { responseMimeType: "application/json" }
             });
@@ -660,7 +660,7 @@ Például:
         }
     } else {
         const response = await generateContentWithRetry({
-          model: "gemini-flash-latest",
+          model: "gemini-3.5-flash",
           contents: finalPrompt,
           config: {
             responseMimeType: "application/json",
@@ -905,7 +905,7 @@ CSAK valid JSON:
     while (!validResponseData && attempts < 3) {
       attempts++;
       const response = await generateContentWithRetry({
-        model: "gemini-flash-latest",
+        model: "gemini-3.5-flash",
         contents: prompt,
         config: {
           responseMimeType: "application/json",

@@ -529,12 +529,6 @@ function MatchingCard({ card, onNext, onCorrect }: { card: any, onNext: () => vo
 
   // Call onCorrect when complete, but only once!
   // Wait, the button handles onCorrect. We can just keep it on the button to ensure they get points when advancing.
-  const handleNext = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    onCorrect();
-    onNext();
-  };
 
   return (
     <div className={`bg-[#1A1A2E] p-6 rounded-lg border shadow-xl min-h-[450px] flex flex-col transition-all duration-500 ${isComplete ? 'border-green-500 shadow-[0_0_20px_rgba(34,197,94,0.3)]' : 'border-gray-700'}`}>
@@ -593,7 +587,7 @@ function MatchingCard({ card, onNext, onCorrect }: { card: any, onNext: () => vo
             <span className="text-2xl">🛡️</span>
             <span className="text-green-300 font-bold font-lora italic">"Minden párt megtaláltál, vitéz!"</span>
           </div>
-          <button onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleNext(e); }} className="bg-green-700 hover:bg-green-600 text-white p-4 w-full rounded font-bold font-cinzel text-sm uppercase transition-colors flex items-center justify-center gap-2 shadow-[0_0_15px_rgba(34,197,94,0.4)]">
+          <button onClick={(e) => { e.preventDefault(); e.stopPropagation(); onCorrect(); onNext(); }} className="bg-green-700 hover:bg-green-600 text-white p-4 w-full rounded font-bold font-cinzel text-sm uppercase transition-colors flex items-center justify-center gap-2 shadow-[0_0_15px_rgba(34,197,94,0.4)]">
             Kiváló! Tovább <ArrowRight className="w-4 h-4" />
           </button>
         </motion.div>
