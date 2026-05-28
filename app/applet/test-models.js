@@ -1,11 +1,12 @@
 import { GoogleGenAI } from "@google/genai";
 import * as dotenv from "dotenv";
 dotenv.config();
-const ai = new GoogleGenAI();
+
+const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 async function run() {
   const result = await ai.models.list();
   for await (const m of result) {
-    if (m.name.includes('flash')) console.log(m.name);
+    console.log(m.name);
   }
 }
 run();
