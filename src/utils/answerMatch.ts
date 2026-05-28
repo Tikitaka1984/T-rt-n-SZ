@@ -7,11 +7,9 @@ export function answersMatch(userAnswer: string | boolean | null | undefined, co
 
   // Special case for true/false boolean matching
   if ((userStr === "igaz" || userStr === "true") && (correctStr === "igaz" || correctStr === "true")) {
-      console.log("Answer check:", { user: userAnswer, correct, match: true });
       return true;
   }
   if ((userStr === "hamis" || userStr === "false") && (correctStr === "hamis" || correctStr === "false")) {
-      console.log("Answer check:", { user: userAnswer, correct, match: true });
       return true;
   }
 
@@ -24,10 +22,5 @@ export function answersMatch(userAnswer: string | boolean | null | undefined, co
     .replace(/[.,;:!?]/g, "");      // remove punctuation
   
   const result = normalize(userStr) === normalize(correctStr);
-  console.log("Answer check:", {
-     user: userAnswer, 
-     correct: correct,
-     match: result
-  });
   return result;
 }

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Clock, Play, Loader2, Calendar, MapPin, Search, X } from "lucide-react";
+import { Clock, Play, Loader2, Calendar, MapPin, Search, X, Globe, Landmark, Swords, Palette, Coins, Users, Flame, Microscope, CircleDot } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { Grade, TimelineEvent } from "../types";
 import { TopicSelector } from "./TopicSelector";
@@ -124,14 +124,14 @@ export default function TimelineScreen({ onGoHome }: TimelineScreenProps) {
   const [relatedModalLoading, setRelatedModalLoading] = useState(false);
 
   const CATEGORIES = [
-    { id: 'mind', label: '⚡ Mind', color: '#6B1010' },
-    { id: 'politika', label: '👑 Politika', color: '#8B1A1A' },
-    { id: 'hadtortenet', label: '⚔️ Hadtörténet', color: '#4A0808' },
-    { id: 'kulttura', label: '🎨 Kultúra', color: '#7A5208' },
-    { id: 'gazdasag', label: '💰 Gazdaság', color: '#2D5A27' },
-    { id: 'tarsadalom', label: '👥 Társadalom', color: '#1A4A6B' },
-    { id: 'vallas', label: '✝️ Vallás', color: '#4A1A6B' },
-    { id: 'tudomany', label: '🔬 Tudomány', color: '#1A5A5A' }
+    { id: 'mind', label: '⚡ Mind', icon: Globe, color: '#6B1010' },
+    { id: 'politika', label: '👑 Politika', icon: Landmark, color: '#8B1A1A' },
+    { id: 'hadtortenet', label: '⚔️ Hadtörténet', icon: Swords, color: '#4A0808' },
+    { id: 'kulttura', label: '🎨 Kultúra', icon: Palette, color: '#7A5208' },
+    { id: 'gazdasag', label: '💰 Gazdaság', icon: Coins, color: '#2D5A27' },
+    { id: 'tarsadalom', label: '👥 Társadalom', icon: Users, color: '#1A4A6B' },
+    { id: 'vallas', label: '✝️ Vallás', icon: Flame, color: '#4A1A6B' },
+    { id: 'tudomany', label: '🔬 Tudomány', icon: Microscope, color: '#1A5A5A' }
   ];
 
   const fetchMapExplanation = async (currentTopic: string) => {
@@ -222,8 +222,6 @@ CSAK JSON: {"explanation": "Szöveg...", "keyPlaces": ["Helyszín 1", "Helyszín
    }
  ]}`;
       
-      console.log("Timeline request sent to /api/generate with prompt:", prompt);
-      
       const response = await fetch("/api/generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -237,7 +235,6 @@ CSAK JSON: {"explanation": "Szöveg...", "keyPlaces": ["Helyszín 1", "Helyszín
       }
       
       const rawText = await response.text();
-      console.log("Timeline response raw text:", rawText);
       let data: any = {};
       try {
         data = rawText ? JSON.parse(rawText) : {};
@@ -253,7 +250,6 @@ CSAK JSON: {"explanation": "Szöveg...", "keyPlaces": ["Helyszín 1", "Helyszín
         const jsonMatch = text.match(/\{[\s\S]*\}/);
         if (jsonMatch) {
           const parsed = JSON.parse(jsonMatch[0]);
-          console.log("Timeline parsed JSON match:", parsed);
           if (parsed.events) {
              setEvents(parsed.events);
           }
@@ -760,15 +756,14 @@ CSAK JSON:
                   
                   // Map category to color
                   const catId = (ev.category || "").toLowerCase().trim();
-                  const catData = CATEGORIES.find(c => catId === c.id || catId.includes(c.id)) || { id: 'unknown', label: '💠 Egyéb', color: '#B8860B' };
+                  const catData = CATEGORIES.find(c => catId === c.id || catId.includes(c.id)) || { id: 'unknown', label: '💠 Egyéb', icon: CircleDot, color: '#B8860B' };
                   
                   // Importance styles
                   const isHigh = ev.importance === "high";
                   const isLow = ev.importance === "low";
                   
-                  const dotSize = isHigh ? "w-4 h-4 scale-110" : (isLow ? "w-[6px] h-[6px]" : "w-[10px] h-[10px]");
-                  const dotColor = isHigh ? "bg-[#B8860B] shadow-[0_0_12px_rgba(184,134,11,0.8)]" : (isLow ? "bg-gray-400" : "bg-[#8B1A1A]");
-                  const dotWrapperSize = isHigh ? "w-8 h-8" : (isLow ? "w-4 h-4" : "w-6 h-6");
+                  const iconSize = isHigh ? "w-5 h-5 scale-110" : (isLow ? "w-3 h-3" : "w-4 h-4");
+                  const dotWrapperSize = isHigh ? "w-10 h-10" : (isLow ? "w-6 h-6" : "w-8 h-8");
                   
                   const yearBadgeBg = isHigh ? "bg-[#6B1010] border-[#B8860B] text-[#FFF5E0] py-1.5 px-3" : (isLow ? "bg-[#4A4A4A] border-[#2A2A2A] text-[#FFF5E0] py-0.5 px-1.5" : "bg-[#3A2210] border-[#1C0E04] text-[#FFF5E0] py-1 px-2.5");
                   const yearFontSize = isHigh ? "text-lg" : (isLow ? "text-xs" : "text-sm");
@@ -784,8 +779,11 @@ CSAK JSON:
                       <div className="hidden sm:block w-[45%]"></div>
                       
                       {/* Timeline Dot */}
-                      <div className={`absolute left-0 sm:left-1/2 transform sm:-translate-x-1/2 -translate-y-1/2 ${dotWrapperSize} rounded-full bg-[#1A0A03] border-[3px] border-[#B8860B] flex items-center justify-center z-10`} style={{ top: '24px' }}>
-                        <div className={`${dotSize} rounded-full ${dotColor} ${isHigh ? 'animate-pulse' : ''} transition-all duration-300`}></div>
+                      <div className={`absolute left-0 sm:left-1/2 transform sm:-translate-x-1/2 -translate-y-1/2 ${dotWrapperSize} rounded-full bg-[#1A0A03] border-[3px] border-[#B8860B] flex items-center justify-center z-10 shadow-md`} style={{ top: '24px' }}>
+                        <catData.icon 
+                          className={`${iconSize} ${isHigh ? 'animate-pulse text-[#B8860B]' : ''} transition-all duration-300 drop-shadow-md`} 
+                          style={{ color: isHigh ? '#B8860B' : catData.color }} 
+                        />
                       </div>
 
                       {/* Content Box */}

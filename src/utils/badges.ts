@@ -63,6 +63,15 @@ export function getLeaderboard(): LeaderboardEntry[] {
 }
 
 export function saveLeaderboardEntry(entry: LeaderboardEntry) {
+  if (entry.pct > 100 || entry.xp > 10000 || entry.name.length > 50) return;
+  
+  entry.name = entry.name
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#x27;");
+
   const board = getLeaderboard();
   board.push(entry);
   

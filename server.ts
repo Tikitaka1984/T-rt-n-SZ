@@ -11,6 +11,27 @@ import mammoth from "mammoth";
 // Load environment variables
 dotenv.config();
 
+const rateLimits = new Map<string, { count: number; resetTime: number }>();
+const rateLimit = (req: any, res: any, maxRequests: number, windowMs: number = 60000) => {
+  const ip = req.ip || req.connection?.remoteAddress || req.socket?.remoteAddress || 'unknown';
+  const now = Date.now();
+  const limitKey = `${req.path}_${ip}`;
+  const record = rateLimits.get(limitKey);
+
+  if (!record || now > record.resetTime) {
+    rateLimits.set(limitKey, { count: 1, resetTime: now + windowMs });
+    return false; // not rate limited
+  }
+  
+  if (record.count >= maxRequests) {
+    res.status(429).json({ error: "Túl sok kérés. Kérlek, várj egy kicsit!" });
+    return true; // rate limited
+  }
+  
+  record.count += 1;
+  return false; // not rate limited
+};
+
 const TOPIC_KEYWORDS: Record<string, string> = {
   "Mohácsi csata": "1526, II. Lajos, Szulejmán szultán, Tomori Pál, Csele-patak, vereség, oszmán hódítás",
   "Reformkor": "Széchenyi István (Hitel, Világ, Stádium, Lánchíd), Kossuth Lajos, 1848, Deák Ferenc, jobbágyfelszabadítás, közteherviselés, magyar nyelv hivatalossá tétele",
@@ -199,6 +220,7 @@ if (API_KEY && API_KEY !== "MY_GEMINI_API_KEY" && API_KEY.trim() !== "") {
 
 // 1. API: Quiz Generation Endpoint
 app.post("/api/quiz/generate", async (req, res) => {
+  if (rateLimit(req, res, 15)) return;
   const { grade, topic, difficulty, type, count } = req.body;
 
   if (!grade || !topic || !difficulty || !type || !count) {
@@ -219,7 +241,6 @@ app.post("/api/quiz/generate", async (req, res) => {
   const keywords = getKeywordsForTopic(topic);
   const keywordHint = keywords ? `Fontos kulcsszavak: ${keywords}` : "";
   let knowledgePrompt = keywordHint ? `\nAz alábbi érettségi kulcsszavak alapján generálj kérdéseket.\nKULCSSZAVAK:\n${keywordHint}\n\n` : "";
-  let minReqText = "";
 
   // Define prompt for high quality NAT 2020 historical focus
   const typeInstruction = 
@@ -254,7 +275,6 @@ Részletes beállítások:
 - Témakör: ${topic}
 - Nehézség: ${difficulty} (A kérdések mélysége és nyelvezete igazodjon ehhez!)
 - Kérdések típusa: ${type} (${typeInstruction})
-${minReqText}
 ${knowledgePrompt}
 ${strictRule}
 Kérdéstípusok specifikációi (a generált 'type' mező értéke):
@@ -412,6 +432,7 @@ app.post("/api/extract", upload.single("document"), async (req, res) => {
 
 // 3. API: Essay Evaluation Endpoint
 app.post("/api/essay/evaluate", async (req, res) => {
+  if (rateLimit(req, res, 10)) return;
   const { question, studentAnswer, difficulty } = req.body;
 
   if (!question || !studentAnswer) {
@@ -503,6 +524,7 @@ Minden szövegrész kiváló, barátságos, tanári hangvételű és helyes magy
 });
 
 app.post("/api/generate-pairs", async (req, res) => {
+  if (rateLimit(req, res, 10)) return;
   const { count, topic, grade, difficulty } = req.body;
   if (!topic || !grade || !difficulty) {
     res.status(400).json({ error: "Hiányzó paraméterek" });
@@ -593,6 +615,7 @@ CSAK valid JSON:
 });
 
 app.post("/api/generate", async (req, res) => {
+  if (rateLimit(req, res, 30)) return;
   const { prompt, topic } = req.body;
 
   if (!prompt) {
@@ -820,6 +843,7 @@ app.post("/api/validate-questions", async (req, res) => {
 });
 
 app.post("/api/generate-lesson", async (req, res) => {
+  if (rateLimit(req, res, 10)) return;
   const { grade, topic, lessonType } = req.body;
   if (!grade || !topic || !lessonType) {
     res.status(400).json({ error: "Hiányzó paraméterek" });
@@ -848,14 +872,11 @@ ${keywordHint}
 `;
   }
 
-  let minReqSection = "";
-
   try {
     const strictRule = `
 SZIGORÚ SZABÁLYOK:
 1. KIZÁRÓLAG erről a témáról: ${topic}
 2. ${knowledgeSection}
-3. ${minReqSection}
 4. Az intro kártyák tartalmazzanak konkrét évszámokat,
    neveket és helyszíneket!
 5. A kérdések legyenek specifikusak - 
